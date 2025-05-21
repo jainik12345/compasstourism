@@ -4,3 +4,25 @@ body {
   margin: 0;
   padding: 0;
 }
+.testimonial-scroll::-webkit-scrollbar {
+  display: none;
+}
+.testimonial-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+
+
+@theme {
+  --color-orange-color: #f68121;
+  --color-bg-color: #E6F2F8;
+  --color-green-btn: #62ab65;
+  --font-footer-font: "Oswald", sans-serif;
+  --font-text-font: "Quicksand", sans-serif;
+  --font-title-font: "Dancing Script", cursive;
+  --font-heading-font: "Yellowtail", cursive;
+  --font-layer-font: "Poetsen One", sans-serif;
+  --color-green-color: #128116;
+  --color-section-background-color: #ededed;
+}
