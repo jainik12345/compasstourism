@@ -15,10 +15,10 @@ import HomeCompassSpotlight from "./HomeCompassSpotlight/HomeCompassSpotlight";
 const HomePage = () => {
   return (
     <div>
-      <HomeHeroSection />
-      <HomeOffbeatHolidays />
-      <HomeWeekendGateways />
-      <HomeSpiritualTours />
+      {/* <HomeHeroSection /> */}
+      {/* <HomeOffbeatHolidays /> */}
+      {/* <HomeWeekendGateways /> */}
+      {/* <HomeSpiritualTours /> */}
       <HomeFestivalTours />
       <HomeIndianHolidays />
       <HomeServices />
