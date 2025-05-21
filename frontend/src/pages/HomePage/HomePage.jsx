@@ -16,7 +16,6 @@ const HomePage = () => {
   return (
     <div>
 
-      <h1>Hello</h1>
       <HomeHeroSection />
       <HomeOffbeatHolidays />
       <HomeWeekendGateways />

@@ -7,8 +7,8 @@ import AboutDetailsPage from './AboutDetailsPage/AboutDetailsPage';
 const AboutPage = () => {
   return (
     <div>
-      <AboutHeroSection/>
-      <AboutImageSection/>
+      {/* <AboutHeroSection/> */}
+      {/* <AboutImageSection/> */}
       <AboutServiceSection/>
       <AboutDetailsPage/>
     </div>
