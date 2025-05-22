@@ -1,6 +1,5 @@
 import SliderImg1 from "../../../assets/images/637921896094475779.png";
 import SliderImg2 from "../../../assets/images/637921896896248600.png";
-import Testimonial from "../../../components/CommanSections/Testimonial/Testimonial";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useRef, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
@@ -77,12 +76,6 @@ export const HomeBestHotelDeals = () => {
     <div className="container max-w-screen-xl mx-auto px-4 md:py-10 py-20 relative">
       <div className="flex md:flex-row flex-col justify-between items-center gap-5 mb-4 p-5">
         <h2 className="text-2xl font-bold text-[#2a3b57]">Best Hotel Deals</h2>
-
-        <NavLink>
-          <div className="text-[1rem] font-semibold px-4 py-2 transition-all duration-200 ease-in hover:text-white hover:bg-orange-color  shadow-[0px_0px_10px_5px_rgba(0,0,0,0.1)] rounded-full">
-            View More
-          </div>
-        </NavLink>
       </div>
 
       <div className="relative">
@@ -114,11 +107,18 @@ export const HomeBestHotelDeals = () => {
               key={index}
               className="flex-shrink-0 w-full md:w-1/4 px-2 snap-start"
             >
-              <Testimonial
-                ImgTitle={item.ImgTitle}
-                ImgUrl={item.ImgUrl}
-                nights={item.nights}
-              />
+              <NavLink>
+
+                <div className="relative rounded-xl overflow-hidden group shadow-md">
+                  <img
+                    src={item.ImgUrl}
+                    alt={item.ImgTitle}
+                    draggable={false}
+                    className="w-full h-72 object-cover"
+                  />
+                </div>
+
+              </NavLink>
             </div>
           ))}
         </div>

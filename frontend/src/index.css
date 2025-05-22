@@ -17,8 +17,8 @@ body {
 @theme {
   --color-orange-color: #f68121;
   --color-bg-color: #E6F2F8;
-  --color-green-btn: #62ab65;
-  --font-footer-font: "Oswald", sans-serif;
+  --color-blog-color: #2C3E50;
+  --color-hoverblog-color:#9A404C;
   --font-text-font: "Quicksand", sans-serif;
   --font-title-font: "Dancing Script", cursive;
   --font-heading-font: "Yellowtail", cursive;

@@ -25,9 +25,9 @@ const HomePage = () => {
       <HomeCompassSpotlight />
       <HomeServices />
       <HomeBestHotelDeals />
-      {/* <HomeImages />
       <HomeTestimonial />
-      <HomeBlogs /> */}
+      <HomeBlogs /> 
+      {/* <HomeImages /> */}
 
     </div>
   );
