@@ -98,22 +98,22 @@ const HomeTestimonial = () => {
       <div className="section bg-gray-200">
 
 
-        <div className="testimonial-cont flex flex-col gap-10 max-w-screen-xl mx-auto py-10">
+        <div className="testimonial-cont flex flex-col gap-10 max-w-screen-xl mx-auto py-10 px-2">
           <div className="testimonial-heading ">
-            <h3 className="text-orange-color font-bold text-[2rem] text-center">
+            <h3 className="text-orange-color font-bold md:text-[2rem] text-[1.2rem] text-center">
               Testimonial & Review by Customers
             </h3>
           </div>
 
 
-          <div className="testimonial-cards-cont flex  overflow-hidden justify-center max-w-[50%] shadow-2xl rounded-tl-[100px] rounded-br-[100px] bg-blue-200 mx-auto items-center gap-10 ">
+          <div className="testimonial-cards-cont flex  overflow-hidden justify-center md:max-w-[50%] max-w-full h-max shadow-2xl md:rounded-tl-[100px] md:rounded-br-[100px] rounded-2xl bg-blue-200 mx-auto items-center gap-10 ">
             {VisibleTestimonialCards.map((item, idx) => (
               <div
-                className={`testimonial-card shadow-xl flex flex-col justify-center items-center gap-5 py-20 px-10 text-center transition-opacity duration-500 ease-in-out ${Fade ? "opacity-100" : "opacity-0"}`}
+                className={`testimonial-card flex flex-col justify-center items-center gap-10 py-10 px-5 text-center transition-opacity duration-500 ease-in-out ${Fade ? "opacity-100" : "opacity-0"}`}
                 key={idx}
               >
 
-                <h2 className="text-[1.1rem] font-semibold h-20 ">{item.Para}</h2>
+                <h2 className="md:text-[1.1rem] text-[1rem] flex items-center font-semibold h-30 w-full text-center">{item.Para}</h2>
                 <h2 className="text-[1rem] font-semibold text-gray-600">{item.Name}</h2>
 
               </div>

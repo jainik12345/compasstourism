@@ -315,7 +315,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="max-w-screen-xl mx-auto py-20 px-10">
+    <div className="max-w-screen-xl mx-auto py-20 md:px-10 px-5">
       <div className="header flex max-w-screen-xl mx-auto mb-10">
         <h2 className="text-[2rem] text-gray-600 font-semibold">
           Leave Us A Message
@@ -325,7 +325,7 @@ const ContactForm = () => {
       <div className="form-cont max-w-screen-xl mx-auto p-5 flex justify-around shadow-2xl">
         <form
           onSubmit={handleOnSubmit}
-          className="grid md:grid-cols-2 rounded-2xl p-5 w-[50%] grid-cols-1 gap-4"
+          className="grid md:grid-cols-2 rounded-2xl p-5 md:w-[50%] w-full grid-cols-1 gap-4"
           style={{
             boxShadow:
               "rgba(50, 50, 93, 0.25) 0px 0px 20px 0px inset, rgba(0, 0, 0, 0.3) 0px 0px 0px -100px inset",
@@ -494,7 +494,7 @@ const ContactForm = () => {
           </Button>
         </form>
 
-        <div className="w-[40%]">
+        <div className="w-[40%] md:block hidden">
           <img src={FormImg} alt="Contact Us" className="h-100 w-full" />
         </div>
       </div>

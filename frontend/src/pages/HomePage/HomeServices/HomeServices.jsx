@@ -23,7 +23,7 @@ const HomeServices = () => {
 
           </div>
 
-          <div className="flex justify-center items-center translate-x-10">
+          <div className="flex justify-center items-center ps-20 w-fit">
 
             <img src={Img2} alt="IMG" className="rounded-full z-45 h-20 w-20 " />
             <img src={Img1} alt="IMG" className="rounded-full z-40 h-20 w-20 -translate-x-5" />

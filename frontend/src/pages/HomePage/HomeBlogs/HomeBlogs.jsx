@@ -19,17 +19,17 @@ export const HomeBlogs = () => {
 
       <div className="section bg-blog-color">
 
-        <div className="container mx-auto max-w-screen-xl px-10 py-20 flex flex-col gap-10">
+        <div className="container mx-auto max-w-screen-xl md:px-10 px-5 md:py-20 py-20 flex flex-col gap-20">
 
-          <div className="header flex flex-col gap-5 text-center text-white  ">
+          <div className="header flex flex-col md:gap-5 gap-10 text-center text-white  ">
 
-            <h2 className="text-[1.5rem] tracking-[1rem] ">DAYS TO COME</h2>
-            <h2 className="text-[2rem] tracking-[.5rem]">BLOG</h2>
-            <h2 className="text-[1rem] tracking-[.5rem]">A TRAVEL MAGAZINE BY COMPASS TOURISM </h2>
+            <h2 className="md:text-[1.5rem] text-[1rem] tracking-[1rem] ">DAYS TO COME</h2>
+            <h2 className="md:text-[2rem] text-[1rem] tracking-[.5rem]">BLOG</h2>
+            <h2 className="md:text-[1rem] text-[.7rem] tracking-[.5rem]">A TRAVEL MAGAZINE BY COMPASS TOURISM </h2>
 
           </div>
 
-          <div className="grid grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-3 grid-cols-1 gap-10">
 
             {
 

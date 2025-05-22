@@ -8,9 +8,9 @@ const AboutPage = () => {
   return (
     <div>
       <AboutHeroSection/>
-      <AboutImageSection/>
+      {/* <AboutImageSection/>
       <AboutServiceSection/>
-      <AboutDetailsPage/>
+      <AboutDetailsPage/> */}
     </div>
   )
 }
