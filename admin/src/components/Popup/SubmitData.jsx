@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from "react";
 
-const SubmitData = () => {
+const SubmitData = ({ onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
   return (
-    <div>
-      SubmitData
+    <div className="fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-slide-down">
+      <p className="font-medium">Data Submitted Successfully</p>
     </div>
-  )
-}
+  );
+};
 
-export default SubmitData
+export default SubmitData;

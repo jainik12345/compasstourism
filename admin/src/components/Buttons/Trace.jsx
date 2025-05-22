@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
 
-const Trace = () => {
+const Trace = ({ onClick }) => {
   return (
-    <div>
-      Trace
-    </div>
-  )
-}
+    <button
+      onClick={onClick}
+      className="bg-red-500 cursor-pointer  hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-200"
+    >
+      Trace (Soft Delete)
+    </button>
+  );
+};
 
-export default Trace
+export default Trace;

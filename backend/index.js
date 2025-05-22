@@ -27,10 +27,10 @@ app.get("/", (req, res) => {
 
 /**Call Routes.. */
 
-// const admin = require("./routes/admin");
+const admin = require("./routes/admin");
 const privatePolicy = require("./routes/privatePolicy");
 
-// app.use("/admin", admin);
+app.use("/admin", admin);
 app.use("/private-policy", privatePolicy);
 
 /**---------------Start Server ---------------*/

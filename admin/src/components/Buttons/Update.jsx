@@ -1,11 +1,17 @@
-import React from 'react'
+import React from "react";
 
-const Update = () => {
+const Update = ({ onClick }) => {
   return (
-    <div>
+    <button
+      type="submit"
+      onClick={onClick}
+      className="bg-blue-500 text-white px-5 py-2.5 text-[18px] cursor-pointer 
+      hover:bg-blue-600 w-[120px] text-center rounded-[8px]
+      transition-all duration-500 ease-in-out"
+    >
       Update
-    </div>
-  )
-}
+    </button>
+  );
+};
 
-export default Update
+export default Update;
