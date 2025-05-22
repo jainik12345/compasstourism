@@ -4,9 +4,7 @@
 
 // const ContactForm = () => {
 
-
 //   const [FormData, setFormData] = useState({
-
 
 //     FirstName: "",
 //     LastName: "",
@@ -30,7 +28,6 @@
 //     return Object.keys(errors).length === 0;
 //   };
 
-
 //   const HandleOnSubmit = (event) => {
 
 //     event.preventDefault();
@@ -42,8 +39,6 @@
 //     console.log("Form submitted", FormData);
 //     HandleOnReset();
 //   };
-
-
 
 //   const HandleOnReset = () => {
 
@@ -120,7 +115,6 @@
 //               setFormData({ ...FormData, LastName: event.target.value });
 //             }}
 //           />
-
 
 //           <TextField
 //             id="filled-email-input"
@@ -248,7 +242,7 @@
 import { TextField, Button } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
-import BE_URL from "../../../config";  // adjust the import path as needed
+import BE_URL from "../../../config";
 import FormImg from "../../../assets/images/contact_us.27233847ed00de276994.jpg";
 
 const ContactForm = () => {
@@ -261,12 +255,13 @@ const ContactForm = () => {
   });
 
   const [formErrors, setFormErrors] = useState({});
-  const [submitStatus, setSubmitStatus] = useState(null); // for success/error messages
-  const [isSubmitting, setIsSubmitting] = useState(false); // track submitting state
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateForm = () => {
     const errors = {};
-    if (!formData.FirstName.trim()) errors.FirstName = "First Name is required.";
+    if (!formData.FirstName.trim())
+      errors.FirstName = "First Name is required.";
     if (!formData.LastName.trim()) errors.LastName = "Last Name is required.";
     if (!formData.Email.trim()) errors.Email = "Email is required.";
     if (!formData.Number.trim()) errors.Number = "Phone number is required.";
@@ -287,9 +282,9 @@ const ContactForm = () => {
 
     try {
       const response = await axios.post(`${BE_URL}/contact-form/`, {
-        first_name: formData.FirstName,
-        last_name: formData.LastName,
-        email: formData.Email,
+        firstname: formData.FirstName,
+        lastname: formData.LastName,
+        email_id: formData.Email,
         mobile_number: formData.Number,
         message: formData.Message,
       });
@@ -322,7 +317,9 @@ const ContactForm = () => {
   return (
     <div className="max-w-screen-xl mx-auto py-20 px-10">
       <div className="header flex max-w-screen-xl mx-auto mb-10">
-        <h2 className="text-[2rem] text-gray-600 font-semibold">Leave Us A Message</h2>
+        <h2 className="text-[2rem] text-gray-600 font-semibold">
+          Leave Us A Message
+        </h2>
       </div>
 
       <div className="form-cont max-w-screen-xl mx-auto p-5 flex justify-around shadow-2xl">
@@ -358,7 +355,9 @@ const ContactForm = () => {
               },
             }}
             value={formData.FirstName}
-            onChange={(e) => setFormData({ ...formData, FirstName: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, FirstName: e.target.value })
+            }
           />
 
           <TextField
@@ -384,7 +383,9 @@ const ContactForm = () => {
               },
             }}
             value={formData.LastName}
-            onChange={(e) => setFormData({ ...formData, LastName: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, LastName: e.target.value })
+            }
           />
 
           <TextField
@@ -411,7 +412,9 @@ const ContactForm = () => {
               },
             }}
             value={formData.Email}
-            onChange={(e) => setFormData({ ...formData, Email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, Email: e.target.value })
+            }
           />
 
           <TextField
@@ -439,7 +442,9 @@ const ContactForm = () => {
               },
             }}
             value={formData.Number}
-            onChange={(e) => setFormData({ ...formData, Number: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, Number: e.target.value })
+            }
           />
 
           <TextField
@@ -467,7 +472,9 @@ const ContactForm = () => {
               },
             }}
             value={formData.Message}
-            onChange={(e) => setFormData({ ...formData, Message: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, Message: e.target.value })
+            }
           />
 
           <Button
@@ -495,7 +502,9 @@ const ContactForm = () => {
       {submitStatus && (
         <p
           className={`mt-6 max-w-screen-xl mx-auto text-center font-semibold ${
-            submitStatus.includes("successfully") ? "text-green-600" : "text-red-600"
+            submitStatus.includes("successfully")
+              ? "text-green-600"
+              : "text-red-600"
           }`}
         >
           {submitStatus}
@@ -505,4 +514,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default ContactForm;
