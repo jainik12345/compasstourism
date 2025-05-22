@@ -4,66 +4,54 @@ import Submit from "../../../components/Buttons/Submit";
 import Cancel from "../../../components/Buttons/Cancel";
 import SubmitData from "../../../components/Popup/SubmitData";
 
-const ContactSectionAddressInsert = () => {
+const HomeImageSliderInsert = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [address, setAddress] = useState("");
+  const [images, setImages] = useState([]);
   const [success, setSuccess] = useState(false);
+
+  const handleImageChange = (e) => {
+    setImages(Array.from(e.target.files));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!title.trim() || !address.trim()) {
-      console.log("Validation failed: Fields are required");
+    if (images.length === 0) {
+      console.log("Validation failed: No images selected");
       return;
     }
 
-    // Show success popup
+    // Trigger success popup
     setSuccess(true);
 
     // Reset form
-    setTitle("");
-    setAddress("");
+    setImages([]);
+    document.querySelector('input[type="file"]').value = "";
   };
 
   const handleCancel = () => {
-    navigate("/contact-section-address");
+    navigate("/home-image-slider");
   };
 
   return (
     <div className="p-6">
       <div className="border-2 border-blue-300 rounded-2xl p-6 shadow-md">
         <h2 className="bg-blue-600 text-white text-lg font-semibold py-3 px-5 rounded-md mb-8">
-          Add Contact Section Address
+          Add Home Image Slider
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Title Input */}
+          {/* Multiple Image Upload */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
-              Title
+              Select Multiple Slider Images
             </label>
             <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="border border-blue-500 rounded-md p-2 w-full"
-              placeholder="Enter title"
-              required
-            />
-          </div>
-
-          {/* Address Input */}
-          <div>
-            <label className="block mb-2 text-blue-700 font-semibold">
-              Address
-            </label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="border border-blue-500 rounded-md p-2 w-full"
-              placeholder="Enter address"
+              type="file"
+              onChange={handleImageChange}
+              multiple
+              accept="image/*"
+              className="border border-blue-500 cursor-pointer rounded-md p-2 w-full"
               required
             />
           </div>
@@ -82,4 +70,4 @@ const ContactSectionAddressInsert = () => {
   );
 };
 
-export default ContactSectionAddressInsert;
+export default HomeImageSliderInsert;
