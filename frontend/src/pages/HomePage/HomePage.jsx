@@ -22,12 +22,13 @@ const HomePage = () => {
       <HomeSpiritualTours />
       <HomeFestivalTours />
       <HomeIndianHolidays />
-      <HomeServices />
-      <HomeTestimonial />
-      <HomeBlogs />
-      <HomeBestHotelDeals />
-      <HomeImages />
       <HomeCompassSpotlight />
+      <HomeServices />
+      <HomeBestHotelDeals />
+      {/* <HomeImages />
+      <HomeTestimonial />
+      <HomeBlogs /> */}
+
     </div>
   );
 };
