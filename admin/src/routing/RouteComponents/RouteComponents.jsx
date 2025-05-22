@@ -39,6 +39,10 @@ import TermsConditions from './../../pages/TermsConditions/TermsConditions';
 import TermsConditionsInsert from './../../pages/TermsConditions/TermsConditionsInsert';
 import TermsConditionsUpdate from './../../pages/TermsConditions/TermsConditionsUpdate';
 import TermsConditionsTrace from './../../pages/TermsConditions/TermsConditionsTrace';
+import HomeImageSlider from "../../pages/HomePage/HomeImageSlider/HomeImageSlider";
+import HomeImageSliderInsert from './../../pages/HomePage/HomeImageSlider/HomeImageSliderInsert';
+import HomeImageSliderUpdate from './../../pages/HomePage/HomeImageSlider/HomeImageSliderUpdate';
+import HomeImageSliderTrace from './../../pages/HomePage/HomeImageSlider/HomeImageSliderTrace';
 
 const RouteComponents = () => {
   return (
@@ -53,6 +57,12 @@ const RouteComponents = () => {
         <Route path="/" element={<Navigate to="/admin" replace />} />
         <Route path="/" element={<MainLayout />}>
           {/* Home Pages */}
+
+          <Route path="/home-image-slider" element={<HomeImageSlider/>} />
+          <Route path="/home-image-slider/insert" element={<HomeImageSliderInsert/>} />
+          <Route path="/home-image-slider/update" element={<HomeImageSliderUpdate/>} />
+          <Route path="/home-image-slider/trace" element={<HomeImageSliderTrace/>} />
+
           <Route path="/home-blogs" element={<HomeBlogs/>} />
           <Route path="/home-blogs/insert" element={<HomeBlogsInsert/>} />
           <Route path="/home-blogs/update" element={<HomeBlogsUpdate/>} />

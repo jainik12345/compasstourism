@@ -28,6 +28,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       name: "Home",
       icon: <FaInfoCircle />,
       children: [
+        { path: "/home-image-slider", name: "Home Image Slider" },
         { path: "/home-blogs", name: "Home Blogs" },
         { path: "/home-testimonial", name: "Home Testimonial" },
       ],

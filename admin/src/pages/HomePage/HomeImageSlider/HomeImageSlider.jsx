@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+
 import React, { useState } from "react";
 import {
   Table,
@@ -15,17 +16,17 @@ import Add from "../../../components/Buttons/Add";
 import Trace from "../../../components/Buttons/Trace";
 import DeleteData from "../../../components/Popup/DeleteData";
 import { useNavigate } from "react-router-dom";
+import sampleImage from "../../../assets/react.svg";  
 
-const HomeTestimonial = () => {
+const HomeImageSlider = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const navigate = useNavigate();
 
-  const data = Array.from({ length: 5 }, (_, i) => ({
+  const data = Array.from({ length: 15 }, (_, i) => ({
     id: i + 1,
-    description: `Sample testimonial description ${i + 1}`,
-    name: `User ${i + 1}`,
+    images: [sampleImage, sampleImage, sampleImage],  
   }));
 
   const displayedRows = data.slice(
@@ -34,15 +35,15 @@ const HomeTestimonial = () => {
   );
 
   const handleAddClick = () => {
-    navigate("/home-testimonial/insert");
+    navigate("/home-image-slider/insert");
   };
 
   const handleTraceClick = () => {
-    navigate("/home-testimonial/trace");
+    navigate("/home-image-slider/trace");
   };
 
   const handleEditClick = (row) => {
-    navigate("/home-testimonial/update", { state: { rowData: row } });
+    navigate("/home-image-slider/update", { state: { rowData: row } });
   };
 
   const handleDelete = (id) => {
@@ -59,7 +60,7 @@ const HomeTestimonial = () => {
       <div className="flex justify-between mb-4">
         <Trace onClick={handleTraceClick} />
         <Add
-          text="Add Testimonial"
+          text="Add Slider Image"
           width="w-[200px]"
           onClick={handleAddClick}
         />
@@ -76,10 +77,7 @@ const HomeTestimonial = () => {
                 ID
               </TableCell>
               <TableCell className="border-r !font-extrabold text-base text-left">
-                Description
-              </TableCell>
-              <TableCell className="border-r !font-extrabold text-base text-left">
-                Name
+                Multiple Images
               </TableCell>
               <TableCell className="!font-extrabold text-base text-left">
                 Action
@@ -96,9 +94,17 @@ const HomeTestimonial = () => {
                   {(page - 1) * rowsPerPage + index + 1}
                 </TableCell>
                 <TableCell className="border-r text-left">
-                  {row.description}
+                  <div className="flex space-x-2 overflow-x-auto max-w-[300px]">
+                    {row.images.map((img, idx) => (
+                      <img
+                        key={idx}
+                        src={img}
+                        alt={`Slider ${idx}`}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                    ))}
+                  </div>
                 </TableCell>
-                <TableCell className="border-r text-left">{row.name}</TableCell>
                 <TableCell className="text-left">
                   <div className="flex space-x-4">
                     <button
@@ -134,4 +140,4 @@ const HomeTestimonial = () => {
   );
 };
 
-export default HomeTestimonial;
+export default HomeImageSlider;

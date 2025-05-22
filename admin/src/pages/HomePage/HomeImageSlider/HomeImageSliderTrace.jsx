@@ -10,22 +10,22 @@ import {
   Pagination,
 } from "@mui/material";
 import { FaRecycle } from "react-icons/fa";
-import Back from "../../components/Buttons/Back";
-import RestoreData from "../../components/Popup/RestoreData";
+import Back from "../../../components/Buttons/Back";
+import RestoreData from "../../../components/Popup/RestoreData";
+import sampleImage from "../../../assets/react.svg";
 import { useNavigate } from "react-router-dom";
 
-const PrivatePolicyTrace = () => {
+const HomeImageSliderTrace = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const [showRestorePopup, setShowRestorePopup] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
 
-  // Dummy private policy data
+  // Dummy data simulating multiple images
   const data = Array.from({ length: 5 }, (_, i) => ({
     id: i + 1,
-    title: `Policy Title ${i + 1}`,
-    description: `This is the description for policy ${i + 1}.`,
+    images: [sampleImage, sampleImage, sampleImage], // Replace with real images if available
   }));
 
   const displayedRows = data.slice(
@@ -39,7 +39,7 @@ const PrivatePolicyTrace = () => {
   };
 
   const handleBackClick = () => {
-    navigate("/private-policy");
+    navigate("/home-image-slider");
   };
 
   return (
@@ -55,10 +55,10 @@ const PrivatePolicyTrace = () => {
         />
       )}
 
-      {/* Header and Back */}
+      {/* Top Section */}
       <div className="flex justify-between mb-4">
         <h2 className="text-left font-semibold text-xl">
-          Private Policy Trace
+          Home Image Slider Trace
         </h2>
         <Back onClick={handleBackClick} />
       </div>
@@ -74,10 +74,7 @@ const PrivatePolicyTrace = () => {
                 ID
               </TableCell>
               <TableCell className="border-r !font-extrabold text-base text-left">
-                Title
-              </TableCell>
-              <TableCell className="border-r !font-extrabold text-base text-left">
-                Description
+                Images
               </TableCell>
               <TableCell className="!font-extrabold text-base text-left">
                 Restore
@@ -94,13 +91,16 @@ const PrivatePolicyTrace = () => {
                   {(page - 1) * rowsPerPage + index + 1}
                 </TableCell>
                 <TableCell className="border-r text-left">
-                  {row.title}
-                </TableCell>
-                <TableCell
-                  className="border-r text-left"
-                  style={{ maxWidth: 300, whiteSpace: "pre-wrap" }}
-                >
-                  {row.description}
+                  <div className="flex gap-2 flex-wrap">
+                    {row.images.map((img, idx) => (
+                      <img
+                        key={idx}
+                        src={img}
+                        alt={`Image ${idx + 1}`}
+                        className="w-16 h-16 object-cover rounded"
+                      />
+                    ))}
+                  </div>
                 </TableCell>
                 <TableCell className="text-left">
                   <button
@@ -129,4 +129,4 @@ const PrivatePolicyTrace = () => {
   );
 };
 
-export default PrivatePolicyTrace;
+export default HomeImageSliderTrace;

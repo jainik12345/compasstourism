@@ -28,10 +28,12 @@ app.get("/", (req, res) => {
 /**Call Routes.. */
 
 const admin = require("./routes/admin");
+const contatForm = require("./routes/contactFormDetails");
 const privatePolicy = require("./routes/privatePolicy");
 
 app.use("/admin", admin);
 app.use("/private-policy", privatePolicy);
+app.use("/contact-form", contatForm);
 
 /**---------------Start Server ---------------*/
 app.listen(port, () => {
