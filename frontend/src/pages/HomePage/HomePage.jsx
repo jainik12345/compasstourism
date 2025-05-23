@@ -23,11 +23,11 @@ const HomePage = () => {
       <HomeFestivalTours />
       <HomeIndianHolidays />
       <HomeCompassSpotlight />
+      <HomeImages />
       <HomeServices />
       <HomeBestHotelDeals />
       <HomeTestimonial />
-      <HomeBlogs /> 
-      {/* <HomeImages /> */}
+      <HomeBlogs />
 
     </div>
   );

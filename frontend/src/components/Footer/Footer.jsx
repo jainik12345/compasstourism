@@ -1,10 +1,40 @@
-import React from "react";
+import "./Footer.css";
 import { NavLink } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import comapassLogo from "../../assets/images/compass-logo.png";
 import { Link } from "react-router-dom";
 
+import AssociateImg1 from "../../assets/images/GUJARATTOURISM.jpg";
+import AssociateImg2 from "../../assets/images/usiic.png";
+import AssociateImg3 from "../../assets/images/ADTOI.jpg";
+import AssociateImg4 from "../../assets/images/atoai.jpg";
+import AssociateImg5 from "../../assets/images/etaa.jpg";
+import AssociateImg6 from "../../assets/images/gtaa.jpg";
+import AssociateImg7 from "../../assets/images/iato.jpg";
+import AssociateImg8 from "../../assets/images/incredible-india.jpg";
+import AssociateImg9 from "../../assets/images/tafi.jpg";
+import AssociateImg10 from "../../assets/images/tag.jpg";
+import AssociateImg11 from "../../assets/images/toa.jpg";
+
+
+
 const Footer = () => {
+
+  const clientLogos = [
+    { src: AssociateImg1, },
+    { src: AssociateImg2, },
+    { src: AssociateImg3, },
+    { src: AssociateImg4, },
+    { src: AssociateImg5, },
+    { src: AssociateImg6, },
+    { src: AssociateImg7, },
+    { src: AssociateImg8, },
+    { src: AssociateImg9, },
+    { src: AssociateImg10, },
+    { src: AssociateImg11, },
+  ];
+
+
   const linkStyle =
     "relative inline-block pb-1 transition-colors duration-300 hover:text-red-400";
 
@@ -13,6 +43,16 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white">
+
+      <div className="client_logo_main_container ">
+        <div className="client_logo_content">
+          {clientLogos.concat(clientLogos).map((logo, index) => (
+            <img key={index} src={logo.src} alt={logo.alt} />
+          ))}
+        </div>
+      </div>
+
+
       {/* Top Footer */}
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* Left Section */}

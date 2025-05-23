@@ -3,7 +3,8 @@ import React from 'react'
 const HomeImages = () => {
   return (
     <div>
-      HomeImages
+
+        <h1>HomeImgaes</h1>
     </div>
   )
 }
