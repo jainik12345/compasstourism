@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaInstagram, FaBars } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
@@ -73,7 +73,7 @@ const Header = () => {
 
       {/* Main Navbar */}
       <div className="bg-white shadow-md sticky top-0">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto  flex items-center py-3 px-5 md:py-0 md:px-0 justify-between">
           {/* Logo */}
           <div className="text-2xl font-bold text-[#193531]">
             <NavLink to="/">
@@ -89,12 +89,11 @@ const Header = () => {
               onMouseEnter={() => setHoverIndia(true)}
               onMouseLeave={() => setHoverIndia(false)}
             >
-              <button className="flex cursor-pointer items-center gap-1 pb-1 transition-all hover:text-red-600 relative">
+              <button className="flex cursor-pointer items-center gap-1 py-5 transition-all hover:text-red-600 relative">
                 India
                 <span
-                  className={`transition-transform duration-500 ${
-                    hoverIndia ? "rotate-[360deg]" : ""
-                  }`}
+                  className={`transition-transform duration-500 ${hoverIndia ? "rotate-[360deg]" : ""
+                    }`}
                 >
                   {hoverIndia ? <IoChevronUpSharp /> : <IoChevronDownSharp />}
                 </span>
@@ -103,7 +102,7 @@ const Header = () => {
 
               {/* DROPDOWN */}
               {hoverIndia && (
-                <div className="absolute -left-55 top-7.5 bg-sky-50 shadow-lg border rounded-md grid grid-cols-2 gap-4 p-5 mt-0 w-[500px]">
+                <div className="absolute -left-55 top-16 border bg-white shadow-lg  rounded-md grid grid-cols-2 gap-4 p-5 mt-0 w-[500px]">
                   {cities.map((city, idx) => (
                     <NavLink
                       key={idx}
@@ -130,10 +129,9 @@ const Header = () => {
                 key={path}
                 to={path}
                 className={({ isActive }) =>
-                  `relative pb-1 transition-all ${
-                    isActive
-                      ? "text-red-600 font-semibold border-b-2 border-red-600"
-                      : "hover:text-red-600"
+                  `relative py-5 transition-all ${isActive
+                    ? "text-red-600 font-semibold border-b-4 border-red-600"
+                    : "hover:text-red-600"
                   } after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 hover:after:w-full after:transition-all after:duration-300`
                 }
               >
@@ -150,9 +148,9 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Nav */}
+        {/* Mobile Nav  */}
         {menuOpen && (
-          <div className="md:hidden bg-white shadow-md px-4 pb-4 space-y-2">
+          <div className="md:hidden bg-white shadow-md px-4 pb-4 py-5 space-y-2">
             {[
               { name: "Home", path: "/" },
               { name: "About Us", path: "/about-us" },
@@ -182,7 +180,7 @@ const Header = () => {
                 {showMobileIndia ? <FaMinus /> : <FaPlus />}
               </div>
               {showMobileIndia && (
-                <ul className="pl-4 mt-1 space-y-1">
+                <ul className="pl-4 mt-1 space-y-1 transition-all duration-300 ease-in-out">
                   {cities.map((city, idx) => (
                     <li key={idx}>
                       <NavLink
@@ -203,6 +201,8 @@ const Header = () => {
             </div>
           </div>
         )}
+
+
       </div>
       <FloatingButtons />
     </header>
