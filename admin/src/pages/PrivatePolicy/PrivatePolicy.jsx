@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -15,19 +15,29 @@ import Add from "../../components/Buttons/Add";
 import Trace from "../../components/Buttons/Trace";
 import DeleteData from "../../components/Popup/DeleteData";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BE_URL from "../../config";
 
 const PrivatePolicy = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  // Dummy data
-  const data = Array.from({ length: 5 }, (_, i) => ({
-    id: i + 1,
-    title: `Policy Title ${i + 1}`,
-    description: `This is the description for policy ${i + 1}.`,
-  }));
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${BE_URL}/private-policy`);
+      setData(res.data.data);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const displayedRows = data.slice(
     (page - 1) * rowsPerPage,
@@ -46,8 +56,15 @@ const PrivatePolicy = () => {
     navigate("/private-policy/update", { state: { rowData: row } });
   };
 
-  const handleDelete = (id) => {
-    setShowDeletePopup(true);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${BE_URL}/private-policy/delete/${id}`);
+      setShowDeletePopup(true);
+      setSelectedId(id);
+      fetchData();
+    } catch (err) {
+      console.error("Error deleting:", err);
+    }
   };
 
   return (
@@ -56,7 +73,6 @@ const PrivatePolicy = () => {
         <DeleteData onClose={() => setShowDeletePopup(false)} />
       )}
 
-      {/* Top Buttons */}
       <div className="flex justify-between mb-4">
         <Trace onClick={handleTraceClick} />
         <Add
@@ -68,7 +84,6 @@ const PrivatePolicy = () => {
 
       <hr className="border-gray-300 mb-6" />
 
-      {/* Table */}
       <TableContainer component={Paper} className="shadow-md">
         <Table className="border border-gray-300">
           <TableHead>
@@ -97,13 +112,13 @@ const PrivatePolicy = () => {
                   {(page - 1) * rowsPerPage + index + 1}
                 </TableCell>
                 <TableCell className="border-r text-left">
-                  {row.title}
+                  {row.private_policy_title}
                 </TableCell>
                 <TableCell
                   className="border-r text-left"
                   style={{ maxWidth: 300, whiteSpace: "pre-wrap" }}
                 >
-                  {row.description}
+                  {row.private_policy_description}
                 </TableCell>
                 <TableCell className="text-left">
                   <div className="flex space-x-4">
@@ -126,7 +141,6 @@ const PrivatePolicy = () => {
           </TableBody>
         </Table>
 
-        {/* Pagination */}
         <div className="flex justify-end p-4">
           <Pagination
             count={Math.ceil(data.length / rowsPerPage)}

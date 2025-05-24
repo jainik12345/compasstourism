@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Submit from "../../../components/Buttons/Submit";
 import Cancel from "../../../components/Buttons/Cancel";
 import SubmitData from "../../../components/Popup/SubmitData";
+import BE_URL from "../../../config";
 
 const BlueTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -48,7 +50,7 @@ const AboutHeroSectionInsert = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.description || !formData.image) {
@@ -56,15 +58,26 @@ const AboutHeroSectionInsert = () => {
       return;
     }
 
-    // Success logic (no API call)
-    setSuccess(true);
+    const data = new FormData();
+    data.append("description", formData.description);
+    data.append("image", formData.image);
 
-    setFormData({
-      description: "",
-      image: null,
-    });
+    try {
+      await axios.post(`${BE_URL}/aboutHeroSection`, data);
 
-    document.querySelector('input[type="file"]').value = "";
+      setSuccess(true);
+
+      // Reset form
+      setFormData({ description: "", image: null });
+      document.querySelector('input[type="file"]').value = "";
+ 
+      setTimeout(() => {
+        setSuccess(false);
+        navigate("/about-hero-section");
+      }, 2500);
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
   };
 
   const handleCancel = () => {
@@ -93,7 +106,7 @@ const AboutHeroSectionInsert = () => {
             />
           </div>
 
-          {/* Single Image Upload */}
+          {/* Image Upload */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
               Upload Image

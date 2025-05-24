@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -10,50 +10,66 @@ import {
   Pagination,
 } from "@mui/material";
 import { FaRecycle } from "react-icons/fa";
-import Trace from "../../../components/Buttons/Trace";
 import Back from "../../../components/Buttons/Back";
-import RestoreData from "../../../components/Popup/RestoreData";
-import sampleImage from "../../../assets/react.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BE_URL from "../../../config";
+import RestoreData from './../../../components/Popup/RestoreData';
 
 const AboutHeroSectionTrace = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
-  const [showRestorePopup, setShowRestorePopup] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  const [trashedData, setTrashedData] = useState([]);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [restoringId, setRestoringId] = useState(null); // to disable button while restoring
   const navigate = useNavigate();
 
-  const data = Array.from({ length: 5 }, (_, i) => ({
-    id: i + 1,
-    description: `Archived description for Hero Section ${i + 1}`,
-    image: sampleImage,
-  }));
+  const fetchTrashedData = async () => {
+    try {
+      const res = await axios.get(`${BE_URL}/aboutHeroSection/trashed`);
+      if (res.data.status === "success") {
+        setTrashedData(res.data.data);
+      }
+    } catch (error) {
+      console.error("Failed to fetch trashed data", error);
+    }
+  };
 
-  const displayedRows = data.slice(
+  useEffect(() => {
+    fetchTrashedData();
+  }, []);
+
+  const handleRestoreClick = async (id) => {
+    try {
+      setRestoringId(id); // disable the clicked button during restore
+      await axios.patch(`${BE_URL}/aboutHeroSection/restore/${id}`);
+      setRestoringId(null);
+      setShowSuccessPopup(true);
+      fetchTrashedData();
+
+      setTimeout(() => {
+        setShowSuccessPopup(false);
+      }, 2500);
+    } catch (error) {
+      setRestoringId(null);
+      console.error("Restore failed", error);
+    }
+  };
+
+  const displayedRows = trashedData.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
-
-  const handleRestoreClick = (id) => {
-    setSelectedId(id);
-    setShowRestorePopup(true);
-  };
 
   const handleBackClick = () => {
     navigate("/about-hero-section");
   };
 
   return (
-    <div className="p-4 rounded-xl bg-white">
-      {/* Restore Popup */}
-      {showRestorePopup && (
-        <RestoreData
-          onClose={() => {
-            setShowRestorePopup(false);
-            setSelectedId(null);
-          }}
-          id={selectedId}
-        />
+    <div className="p-4 rounded-xl bg-white relative">
+      {/* Success Popup */}
+      {showSuccessPopup && (
+        <RestoreData/>
       )}
 
       {/* Top Buttons */}
@@ -101,15 +117,17 @@ const AboutHeroSectionTrace = () => {
                 </TableCell>
                 <TableCell className="border-r text-left">
                   <img
-                    src={row.image}
+                    src={`${BE_URL}/Images/AboutImages/AboutHeroSection/${row.image}`}
                     alt="Hero Section"
                     className="w-16 h-16 object-cover rounded"
                   />
                 </TableCell>
                 <TableCell className="text-left">
                   <button
-                    className="text-blue-600 cursor-pointer hover:text-blue-800"
+                    className="text-blue-600 cursor-pointer hover:text-blue-800 disabled:text-gray-400"
                     onClick={() => handleRestoreClick(row.id)}
+                    disabled={restoringId === row.id}
+                    title={restoringId === row.id ? "Restoring..." : "Restore"}
                   >
                     <FaRecycle size={22} />
                   </button>
@@ -122,7 +140,7 @@ const AboutHeroSectionTrace = () => {
         {/* Pagination */}
         <div className="flex justify-end p-4">
           <Pagination
-            count={Math.ceil(data.length / rowsPerPage)}
+            count={Math.ceil(trashedData.length / rowsPerPage)}
             page={page}
             onChange={(e, value) => setPage(value)}
             color="primary"

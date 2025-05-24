@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SubmitData from "../../../components/Popup/SubmitData";
+import axios from "axios";
+import BE_URL from "../../../config";
 import Submit from "../../../components/Buttons/Submit";
 import Cancel from "../../../components/Buttons/Cancel";
-import SubmitData from "../../../components/Popup/SubmitData";
 
 const ContactSectionAddressInsert = () => {
   const navigate = useNavigate();
@@ -10,20 +12,32 @@ const ContactSectionAddressInsert = () => {
   const [address, setAddress] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title.trim() || !address.trim()) {
-      console.log("Validation failed: Fields are required");
+      alert("Both fields are required.");
       return;
     }
 
-    // Show success popup
-    setSuccess(true);
+    try {
+      await axios.post(`${BE_URL}/contact-section-address/insert`, {
+        title,
+        address,
+      });
 
-    // Reset form
-    setTitle("");
-    setAddress("");
+      setSuccess(true);
+      setTitle("");
+      setAddress("");
+
+      // Auto-close popup after 2.5 seconds
+      setTimeout(() => {
+        setSuccess(false);
+      }, 2500);
+    } catch (err) {
+      console.error("Insert error:", err);
+      alert("Insert failed. Check console for details.");
+    }
   };
 
   const handleCancel = () => {

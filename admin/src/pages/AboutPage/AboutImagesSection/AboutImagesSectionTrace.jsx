@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -10,53 +10,70 @@ import {
   Pagination,
 } from "@mui/material";
 import { FaRecycle } from "react-icons/fa";
-import Trace from "../../../components/Buttons/Trace";
 import Back from "../../../components/Buttons/Back";
 import RestoreData from "../../../components/Popup/RestoreData";
-import sampleImage from "../../../assets/react.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BE_URL from "../../../config";
 
 const AboutImagesSectionTrace = () => {
   const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
+  const [data, setData] = useState([]);
   const [showRestorePopup, setShowRestorePopup] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  const [rowsPerPage] = useState(10);
   const navigate = useNavigate();
 
-  // Dummy data with multiple images per entry
-  const data = Array.from({ length: 5 }, (_, i) => ({
-    id: i + 1,
-    images: [sampleImage, sampleImage, sampleImage], // Simulated multiple images
-  }));
+  const fetchTrashedData = async () => {
+    try {
+      const res = await axios.get(`${BE_URL}/aboutImageSection/trashed`);
+      // IMPORTANT: about_images is already an array, no need to parse
+      const formatted = res.data.data.map((item) => ({
+        ...item,
+        images: item.about_images
+          ? item.about_images.map(
+              (filename) =>
+                `${BE_URL}/Images/AboutImages/AboutImageSection/${filename}`
+            )
+          : [],
+      }));
+      setData(formatted);
+    } catch (err) {
+      console.error("Error fetching trashed data:", err);
+    }
+  };
+
+  const handleRestore = async (id) => {
+    try {
+      await axios.patch(`${BE_URL}/aboutImageSection/restore/${id}`);
+      setShowRestorePopup(true);
+      setTimeout(() => {
+        setShowRestorePopup(false);
+        fetchTrashedData();
+      }, 2500);
+    } catch (err) {
+      console.error("Error restoring item:", err);
+    }
+  };
 
   const displayedRows = data.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
 
-  const handleRestoreClick = (id) => {
-    setSelectedId(id);
-    setShowRestorePopup(true);
-  };
-
   const handleBackClick = () => {
     navigate("/about-images-section");
   };
 
+  useEffect(() => {
+    fetchTrashedData();
+  }, []);
+
   return (
     <div className="p-4 rounded-xl bg-white">
-      {/* Restore Popup */}
       {showRestorePopup && (
-        <RestoreData
-          onClose={() => {
-            setShowRestorePopup(false);
-            setSelectedId(null);
-          }}
-          id={selectedId}
-        />
+        <RestoreData onClose={() => setShowRestorePopup(false)} />
       )}
 
-      {/* Top Buttons */}
       <div className="flex justify-between mb-4">
         <h2 className="text-left font-semibold text-xl">
           About Images Section Trace
@@ -66,7 +83,6 @@ const AboutImagesSectionTrace = () => {
 
       <hr className="border-gray-300 mb-6" />
 
-      {/* Table */}
       <TableContainer component={Paper} className="shadow-md">
         <Table className="border border-gray-300">
           <TableHead>
@@ -94,11 +110,27 @@ const AboutImagesSectionTrace = () => {
                 <TableCell className="border-r text-left">
                   <div className="flex gap-2 flex-wrap">
                     {row.images.map((img, idx) => (
+                      // <img
+                      //   key={idx}
+                      //   src={img}
+                      //   alt={`Image ${idx + 1}`}
+                      //   className="w-16 h-16 object-cover rounded"
+                      //   onError={(e) => {
+                      //     e.target.src = "/placeholder.jpg"; // fallback image if needed
+                      //   }}
+                      // />
                       <img
                         key={idx}
                         src={img}
                         alt={`Image ${idx + 1}`}
                         className="w-16 h-16 object-cover rounded"
+                        onError={(e) => {
+                          // Prevent infinite loop by only replacing src once
+                          if (!e.target.dataset.error) {
+                            e.target.dataset.error = "true";
+                            e.target.src = "/placeholder.jpg";
+                          }
+                        }}
                       />
                     ))}
                   </div>
@@ -106,7 +138,7 @@ const AboutImagesSectionTrace = () => {
                 <TableCell className="text-left">
                   <button
                     className="text-blue-600 cursor-pointer hover:text-blue-800"
-                    onClick={() => handleRestoreClick(row.id)}
+                    onClick={() => handleRestore(row.id)}
                   >
                     <FaRecycle size={22} />
                   </button>
@@ -116,7 +148,6 @@ const AboutImagesSectionTrace = () => {
           </TableBody>
         </Table>
 
-        {/* Pagination */}
         <div className="flex justify-end p-4">
           <Pagination
             count={Math.ceil(data.length / rowsPerPage)}

@@ -1,29 +1,40 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {  useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Update from "../../../components/Buttons/Update";
 import Cancel from "../../../components/Buttons/Cancel";
 import UpdateData from "../../../components/Popup/UpdateData";
+import axios from "axios";
+import BE_URL from "../../../config";
 
 const HomeTestimonialUpdate = () => {
   const navigate = useNavigate();
-  const [description, setDescription] = useState("");
-  const [name, setName] = useState("");
+  const location = useLocation();
+  const { rowData } = location.state || {};
+
+  const [description, setDescription] = useState(rowData?.description || "");
+  const [name, setName] = useState(rowData?.name || "");
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!description.trim() || !name.trim()) {
-      console.log("Validation failed: Fields are required");
       return;
     }
 
-    // Show success popup
-    setSuccess(true);
-
-    // Reset form
-    setDescription("");
-    setName("");
+    try {
+      await axios.put(`${BE_URL}/homeTestimonial/update/${rowData.id}`, {
+        description,
+        name,
+      });
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        navigate("/home-testimonial");
+      }, 2500);
+    } catch (error) {
+      console.error("Update failed:", error);
+    }
   };
 
   const handleCancel = () => {
@@ -38,7 +49,6 @@ const HomeTestimonialUpdate = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Description Input */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
               Description
@@ -53,7 +63,6 @@ const HomeTestimonialUpdate = () => {
             />
           </div>
 
-          {/* Name Input */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
               Name
@@ -68,7 +77,6 @@ const HomeTestimonialUpdate = () => {
             />
           </div>
 
-          {/* Buttons */}
           <div className="flex justify-end gap-4">
             <Update type="submit" />
             <Cancel onClick={handleCancel} />
@@ -76,7 +84,6 @@ const HomeTestimonialUpdate = () => {
         </form>
       </div>
 
-      {/* Success Popup */}
       {success && <UpdateData />}
     </div>
   );

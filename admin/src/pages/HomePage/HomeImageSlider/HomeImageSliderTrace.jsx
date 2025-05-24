@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -12,50 +12,70 @@ import {
 import { FaRecycle } from "react-icons/fa";
 import Back from "../../../components/Buttons/Back";
 import RestoreData from "../../../components/Popup/RestoreData";
-import sampleImage from "../../../assets/react.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BE_URL from "../../../config";
 
 const HomeImageSliderTrace = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
-  const [showRestorePopup, setShowRestorePopup] = useState(false);
-  const [selectedId, setSelectedId] = useState(null);
+  const [data, setData] = useState([]);
+  const [showRestorePopup, setShowRestorePopup] = useState(false); 
   const navigate = useNavigate();
 
-  // Dummy data simulating multiple images
-  const data = Array.from({ length: 5 }, (_, i) => ({
-    id: i + 1,
-    images: [sampleImage, sampleImage, sampleImage], // Replace with real images if available
-  }));
+  const fetchTrashedData = async () => {
+    try {
+      const res = await axios.get(`${BE_URL}/homeImageSlider/trashed`);
+      const formatted = res.data.data.map((item) => ({
+        ...item,
+        images: item.home_slider_images.map
+          ? item.home_slider_images.map(
+              (filename) =>
+                `${BE_URL}/Images/HomeImages/HomeImageSlider/${filename}`
+            )
+          : JSON.parse(item.home_slider_images).map(
+              (filename) =>
+                `${BE_URL}/Images/HomeImages/HomeImageSlider/${filename}`
+            ),
+      }));
+      setData(formatted);
+    } catch (err) {
+      console.error("Error fetching trashed data:", err);
+    }
+  };
+
+  const handleRestore = async (id) => {
+    try {
+      await axios.patch(`${BE_URL}/homeImageSlider/restore/${id}`);
+      setShowRestorePopup(true);
+      setTimeout(() => {
+        setShowRestorePopup(false);
+        fetchTrashedData();
+      }, 2500);
+    } catch (err) {
+      console.error("Error restoring item:", err);
+    }
+  };
 
   const displayedRows = data.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
 
-  const handleRestoreClick = (id) => {
-    setSelectedId(id);
-    setShowRestorePopup(true);
-  };
-
   const handleBackClick = () => {
     navigate("/home-image-slider");
   };
 
+  useEffect(() => {
+    fetchTrashedData();
+  }, []);
+
   return (
     <div className="p-4 rounded-xl bg-white">
-      {/* Restore Popup */}
       {showRestorePopup && (
-        <RestoreData
-          onClose={() => {
-            setShowRestorePopup(false);
-            setSelectedId(null);
-          }}
-          id={selectedId}
-        />
+        <RestoreData onClose={() => setShowRestorePopup(false)} />
       )}
 
-      {/* Top Section */}
       <div className="flex justify-between mb-4">
         <h2 className="text-left font-semibold text-xl">
           Home Image Slider Trace
@@ -65,7 +85,6 @@ const HomeImageSliderTrace = () => {
 
       <hr className="border-gray-300 mb-6" />
 
-      {/* Table */}
       <TableContainer component={Paper} className="shadow-md">
         <Table className="border border-gray-300">
           <TableHead>
@@ -105,7 +124,7 @@ const HomeImageSliderTrace = () => {
                 <TableCell className="text-left">
                   <button
                     className="text-blue-600 cursor-pointer hover:text-blue-800"
-                    onClick={() => handleRestoreClick(row.id)}
+                    onClick={() => handleRestore(row.id)}
                   >
                     <FaRecycle size={22} />
                   </button>
@@ -115,7 +134,6 @@ const HomeImageSliderTrace = () => {
           </TableBody>
         </Table>
 
-        {/* Pagination */}
         <div className="flex justify-end p-4">
           <Pagination
             count={Math.ceil(data.length / rowsPerPage)}

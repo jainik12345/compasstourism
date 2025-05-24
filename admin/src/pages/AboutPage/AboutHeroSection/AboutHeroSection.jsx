@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -10,30 +10,45 @@ import {
   TableRow,
   Paper,
   Pagination,
+  IconButton,
 } from "@mui/material";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Add from "../../../components/Buttons/Add";
 import Trace from "../../../components/Buttons/Trace";
 import DeleteData from "../../../components/Popup/DeleteData";
 import { useNavigate } from "react-router-dom";
-import sampleImage from "../../../assets/react.svg";
+import axios from "axios";
+import BE_URL from "../../../config";
 
 const AboutHeroSection = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
+  const [data, setData] = useState([]);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const navigate = useNavigate();
 
-  const data = Array.from({ length: 15 }, (_, i) => ({
-    id: i + 1,
-    description: `Sample description for Hero Section ${i + 1}`,
-    image: sampleImage,
-  }));
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const displayedRows = data.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage
-  );
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${BE_URL}/aboutHeroSection`);
+      const normalizedData = Array.isArray(response.data?.data)
+        ? response.data.data.map((item) => ({
+            ...item,
+            image: `${BE_URL}/Images/AboutImages/AboutHeroSection/${item.image}`,
+          }))
+        : [];
+      setData(normalizedData);
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+
+  const displayedRows = Array.isArray(data)
+    ? data.slice((page - 1) * rowsPerPage, page * rowsPerPage)
+    : [];
 
   const handleAddClick = () => {
     navigate("/about-hero-section/insert");
@@ -47,8 +62,17 @@ const AboutHeroSection = () => {
     navigate("/about-hero-section/update", { state: { rowData: row } });
   };
 
-  const handleDelete = (id) => {
-    setShowDeletePopup(true);
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${BE_URL}/aboutHeroSection/${id}`);
+      setShowDeletePopup(true);
+      setTimeout(() => {
+        setShowDeletePopup(false);
+        fetchData();
+      }, 2500);
+    } catch (error) {
+      console.error("Delete error:", error);
+    }
   };
 
   return (
@@ -133,7 +157,9 @@ const AboutHeroSection = () => {
         {/* Pagination */}
         <div className="flex justify-end p-4">
           <Pagination
-            count={Math.ceil(data.length / rowsPerPage)}
+            count={Math.ceil(
+              (Array.isArray(data) ? data.length : 0) / rowsPerPage
+            )}
             page={page}
             onChange={(e, value) => setPage(value)}
             color="primary"

@@ -1,32 +1,62 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Submit from "../../../components/Buttons/Submit";
 import Cancel from "../../../components/Buttons/Cancel";
 import SubmitData from "../../../components/Popup/SubmitData";
+import BE_URL from "../../../config";
 
 const HomeImageSliderInsert = () => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleImageChange = (e) => {
+    setErrorMsg("");
     setImages(Array.from(e.target.files));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (images.length === 0) {
-      console.log("Validation failed: No images selected");
+      setErrorMsg("Please select at least one image.");
       return;
     }
 
-    // Trigger success popup
-    setSuccess(true);
+    setLoading(true);
+    setErrorMsg("");
 
-    // Reset form
-    setImages([]);
-    document.querySelector('input[type="file"]').value = "";
+    try {
+      const formData = new FormData();
+      images.forEach((image) => formData.append("images", image));
+
+      const response = await axios.post(`${BE_URL}/homeImageSlider`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.status === "success") {
+        setSuccess(true);
+        setImages([]); 
+        const fileInput = document.querySelector('input[type="file"]');
+        if (fileInput) fileInput.value = "";
+ 
+        setTimeout(() => setSuccess(false), 2500);
+      } else {
+        setErrorMsg("Failed to insert data. Please try again.");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      setErrorMsg(
+        error.response?.data?.error || "An unexpected error occurred."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCancel = () => {
@@ -40,7 +70,7 @@ const HomeImageSliderInsert = () => {
           Add Home Image Slider
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-8" noValidate>
           {/* Multiple Image Upload */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
@@ -54,11 +84,14 @@ const HomeImageSliderInsert = () => {
               className="border border-blue-500 cursor-pointer rounded-md p-2 w-full"
               required
             />
+            {errorMsg && (
+              <p className="mt-1 text-sm text-red-600">{errorMsg}</p>
+            )}
           </div>
 
           {/* Buttons */}
           <div className="flex justify-end gap-4">
-            <Submit type="submit" />
+            <Submit type="submit" disabled={loading} />
             <Cancel onClick={handleCancel} />
           </div>
         </form>

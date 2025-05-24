@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Submit from "../../components/Buttons/Submit";
 import Cancel from "../../components/Buttons/Cancel";
 import SubmitData from "../../components/Popup/SubmitData";
+import axios from "axios";
+import BE_URL from "../../config";
 
 const PrivatePolicyInsert = () => {
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ const PrivatePolicyInsert = () => {
   const [description, setDescription] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title.trim() || !description.trim()) {
@@ -18,17 +20,38 @@ const PrivatePolicyInsert = () => {
       return;
     }
 
-    // Trigger success popup
-    setSuccess(true);
+    try {
+      const res = await axios.post(`${BE_URL}/private-policy/insert`, {
+        private_policy_title: title,
+        private_policy_description: description,
+      });
 
-    // Reset form
-    setTitle("");
-    setDescription("");
+      if (res.data.status === "success") {
+        setSuccess(true);
+        setTitle("");
+        setDescription("");
+      } else {
+        alert("Something went wrong while saving.");
+      }
+    } catch (err) {
+      console.error("Error saving policy:", err);
+      alert("Failed to save policy.");
+    }
   };
 
   const handleCancel = () => {
     navigate("/private-policy");
   };
+
+  // Auto-hide success popup after 2.5 seconds
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setSuccess(false);
+      }, 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
 
   return (
     <div className="p-6">

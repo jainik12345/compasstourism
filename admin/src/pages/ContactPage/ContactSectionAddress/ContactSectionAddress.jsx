@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -15,23 +14,30 @@ import Add from "../../../components/Buttons/Add";
 import Trace from "../../../components/Buttons/Trace";
 import DeleteData from "../../../components/Popup/DeleteData";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BE_URL from "../../../config";
 
 const ContactSectionAddress = () => {
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
-  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
+
   const navigate = useNavigate();
 
-  const data = Array.from({ length: 5 }, (_, i) => ({
-    id: i + 1,
-    title: `Office ${i + 1}`,
-    address: `123 Example Street, City ${i + 1}, Country`,
-  }));
+  // Fetch data from backend
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${BE_URL}/contact-section-address`);
+      setData(res.data.data || []);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  };
 
-  const displayedRows = data.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage
-  );
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleAddClick = () => {
     navigate("/contact-section-address/insert");
@@ -41,18 +47,42 @@ const ContactSectionAddress = () => {
     navigate("/contact-section-address/trace");
   };
 
+  // Navigate to update page and send row data via state
   const handleEditClick = (row) => {
     navigate("/contact-section-address/update", { state: { rowData: row } });
   };
 
-  const handleDelete = (id) => {
-    setShowDeletePopup(true);
+  const handleDeleteRow = async (id) => {
+    try {
+      const response = await axios.delete(
+        `${BE_URL}/contact-section-address/delete/${id}`
+      );
+      if (response.data.status === "success") {
+        setData((prevData) => prevData.filter((row) => row.id !== id));
+
+        // Show DeleteData popup
+        setShowDeleteSuccess(true);
+        setTimeout(() => {
+          setShowDeleteSuccess(false);
+        }, 2000);
+      } else {
+        alert("Failed to delete the address entry.");
+      }
+    } catch (error) {
+      console.error("Error deleting address:", error);
+      alert("An error occurred while deleting. Please try again.");
+    }
   };
+
+  const displayedRows = data.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
 
   return (
     <div className="p-4 rounded-xl bg-white">
-      {showDeletePopup && (
-        <DeleteData onClose={() => setShowDeletePopup(false)} />
+      {showDeleteSuccess && (
+        <DeleteData onClose={() => setShowDeleteSuccess(false)} />
       )}
 
       {/* Top Buttons */}
@@ -105,11 +135,12 @@ const ContactSectionAddress = () => {
                     >
                       <FaEdit size={22} />
                     </button>
+
                     <button
-                      className="text-red-600 cursor-pointer hover:text-red-800"
-                      onClick={() => handleDelete(row.id)}
+                      className="text-red-600 hover:text-red-800"
+                      onClick={() => handleDeleteRow(row.id)}
                     >
-                      <FaTrash size={22} />
+                      <FaTrash size={20} />
                     </button>
                   </div>
                 </TableCell>

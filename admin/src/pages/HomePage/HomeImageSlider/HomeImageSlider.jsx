@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import BE_URL from "../../../config";
 import {
   Table,
   TableBody,
@@ -12,43 +12,55 @@ import {
   Pagination,
 } from "@mui/material";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import Add from "../../../components/Buttons/Add";
 import Trace from "../../../components/Buttons/Trace";
 import DeleteData from "../../../components/Popup/DeleteData";
-import { useNavigate } from "react-router-dom";
-import sampleImage from "../../../assets/react.svg";  
 
 const HomeImageSlider = () => {
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const rowsPerPage = 10;
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const rowsPerPage = 10;
   const navigate = useNavigate();
 
-  const data = Array.from({ length: 15 }, (_, i) => ({
-    id: i + 1,
-    images: [sampleImage, sampleImage, sampleImage],  
-  }));
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${BE_URL}/homeImageSlider`);
+      const formatted = res.data.data.map((item) => ({
+        ...item,
+        images: item.home_slider_images.map(
+          (filename) =>
+            `${BE_URL}/Images/HomeImages/HomeImageSlider/${filename}`
+        ),
+      }));
+      setData(formatted);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${BE_URL}/HomeImageSlider/${id}`);
+      setShowDeletePopup(true);
+      setTimeout(() => {
+        setShowDeletePopup(false);
+        fetchData();
+      }, 2500);
+    } catch (err) {
+      console.error("Delete failed", err);
+    }
+  };
 
   const displayedRows = data.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
 
-  const handleAddClick = () => {
-    navigate("/home-image-slider/insert");
-  };
-
-  const handleTraceClick = () => {
-    navigate("/home-image-slider/trace");
-  };
-
-  const handleEditClick = (row) => {
-    navigate("/home-image-slider/update", { state: { rowData: row } });
-  };
-
-  const handleDelete = (id) => {
-    setShowDeletePopup(true);
-  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="p-4 rounded-xl bg-white">
@@ -58,11 +70,11 @@ const HomeImageSlider = () => {
 
       {/* Top Buttons */}
       <div className="flex justify-between mb-4">
-        <Trace onClick={handleTraceClick} />
+        <Trace onClick={() => navigate("/home-image-slider/trace")} />
         <Add
           text="Add Slider Image"
           width="w-[200px]"
-          onClick={handleAddClick}
+          onClick={() => navigate("/home-image-slider/insert")}
         />
       </div>
 
@@ -94,7 +106,7 @@ const HomeImageSlider = () => {
                   {(page - 1) * rowsPerPage + index + 1}
                 </TableCell>
                 <TableCell className="border-r text-left">
-                  <div className="flex space-x-2 overflow-x-auto max-w-[300px]">
+                  <div className="flex space-x-2 overflow-x-auto max-w-[95%]">
                     {row.images.map((img, idx) => (
                       <img
                         key={idx}
@@ -109,7 +121,11 @@ const HomeImageSlider = () => {
                   <div className="flex space-x-4">
                     <button
                       className="text-green-600 cursor-pointer hover:text-green-800"
-                      onClick={() => handleEditClick(row)}
+                      onClick={() =>
+                        navigate("/home-image-slider/update", {
+                          state: { rowData: row },
+                        })
+                      }
                     >
                       <FaEdit size={22} />
                     </button>
@@ -131,7 +147,7 @@ const HomeImageSlider = () => {
           <Pagination
             count={Math.ceil(data.length / rowsPerPage)}
             page={page}
-            onChange={(e, value) => setPage(value)}
+            onChange={(e, val) => setPage(val)}
             color="primary"
           />
         </div>

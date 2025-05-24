@@ -1,16 +1,27 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Update from "../../components/Buttons/Update";
 import Cancel from "../../components/Buttons/Cancel";
 import UpdateData from "../../components/Popup/UpdateData";
+import axios from "axios";
+import BE_URL from "../../config";
 
 const PrivatePolicyUpdate = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [success, setSuccess] = useState(false);
+  const rowData = location.state?.rowData;
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (rowData) {
+      setTitle(rowData.private_policy_title);
+      setDescription(rowData.private_policy_description);
+    }
+  }, [rowData]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!title.trim() || !description.trim()) {
@@ -18,12 +29,25 @@ const PrivatePolicyUpdate = () => {
       return;
     }
 
-    // Trigger success popup
-    setSuccess(true);
+    try {
+      const res = await axios.put(
+        `${BE_URL}/private-policy/update/${rowData.id}`,
+        {
+          private_policy_title: title,
+          private_policy_description: description,
+        }
+      );
 
-    // Reset form
-    setTitle("");
-    setDescription("");
+      if (res.data.status === "success") {
+        setSuccess(true);
+        setTimeout(() => {
+          navigate("/private-policy");
+        }, 2500);
+      }
+    } catch (err) {
+      console.error("Error updating policy:", err);
+      alert("Failed to update policy");
+    }
   };
 
   const handleCancel = () => {
@@ -38,7 +62,6 @@ const PrivatePolicyUpdate = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Title Field */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
               Title
@@ -53,7 +76,6 @@ const PrivatePolicyUpdate = () => {
             />
           </div>
 
-          {/* Description Field */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
               Description
@@ -68,7 +90,6 @@ const PrivatePolicyUpdate = () => {
             />
           </div>
 
-          {/* Buttons */}
           <div className="flex justify-end gap-4">
             <Update type="submit" />
             <Cancel onClick={handleCancel} />
@@ -76,7 +97,6 @@ const PrivatePolicyUpdate = () => {
         </form>
       </div>
 
-      {/* Success Popup */}
       {success && <UpdateData />}
     </div>
   );

@@ -1,29 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Submit from "../../../components/Buttons/Submit";
 import Cancel from "../../../components/Buttons/Cancel";
 import SubmitData from "../../../components/Popup/SubmitData";
+import BE_URL from "../../../config";
+import axios from "axios";
 
 const HomeTestimonialInsert = () => {
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setSuccess(false);
+      }, 2500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!description.trim() || !name.trim()) {
-      console.log("Validation failed: Fields are required");
+      setError("Description and Name are required");
       return;
     }
 
-    // Show success popup
-    setSuccess(true);
+    try {
+      // ✅ Use BE_URL from your config
+      const response = await axios.post(`${BE_URL}/homeTestimonial`, {
+        description,
+        name,
+      });
 
-    // Reset form
-    setDescription("");
-    setName("");
+      if (response.data.status === "success") {
+        setSuccess(true);
+        setError(null);
+        setDescription("");
+        setName("");
+      } else {
+        setError("Failed to insert testimonial");
+      }
+    } catch (err) {
+      setError(err.response?.data?.error || "Something went wrong");
+    }
   };
 
   const handleCancel = () => {
@@ -38,7 +63,6 @@ const HomeTestimonialInsert = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Description Input */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
               Description
@@ -53,7 +77,6 @@ const HomeTestimonialInsert = () => {
             />
           </div>
 
-          {/* Name Input */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
               Name
@@ -68,7 +91,8 @@ const HomeTestimonialInsert = () => {
             />
           </div>
 
-          {/* Buttons */}
+          {error && <p className="text-red-600 font-semibold">{error}</p>}
+
           <div className="flex justify-end gap-4">
             <Submit type="submit" />
             <Cancel onClick={handleCancel} />
@@ -76,7 +100,6 @@ const HomeTestimonialInsert = () => {
         </form>
       </div>
 
-      {/* Success Popup */}
       {success && <SubmitData />}
     </div>
   );

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -16,23 +16,36 @@ import Add from "../../../components/Buttons/Add";
 import Trace from "../../../components/Buttons/Trace";
 import DeleteData from "../../../components/Popup/DeleteData";
 import { useNavigate } from "react-router-dom";
-import sampleImage from "../../../assets/react.svg";
+import axios from "axios";
+import BE_URL from "../../../config";
 
 const AboutImagesSection = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [data, setData] = useState([]);
+  const [deleteId, setDeleteId] = useState(null);
   const navigate = useNavigate();
 
-  const data = Array.from({ length: 5 }, (_, i) => ({
-    id: i + 1,
-    images: [sampleImage, sampleImage, sampleImage],  
-  }));
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const displayedRows = data.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage
-  );
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${BE_URL}/aboutImageSection`);
+      const formatted = res.data.data.map((item) => ({
+        ...item,
+        images: item.about_images.map(
+          (filename) =>
+            `${BE_URL}/Images/AboutImages/AboutImageSection/${filename}`
+        ),
+      }));
+      setData(formatted);
+    } catch (err) {
+      console.error("Fetch failed:", err);
+    }
+  };
 
   const handleAddClick = () => {
     navigate("/about-images-section/insert");
@@ -46,9 +59,23 @@ const AboutImagesSection = () => {
     navigate("/about-images-section/update", { state: { rowData: row } });
   };
 
-  const handleDelete = (id) => {
-    setShowDeletePopup(true);
+  const handleDeleteClick = async (id) => {
+    try {
+      await axios.delete(`${BE_URL}/aboutImageSection/${id}`);
+      setShowDeletePopup(true);
+      setTimeout(() => {
+        setShowDeletePopup(false);
+        fetchData();
+      }, 2500);
+    } catch (err) {
+      console.error("Soft delete failed:", err);
+    }
   };
+
+  const displayedRows = data.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
 
   return (
     <div className="p-4 rounded-xl bg-white">
@@ -112,7 +139,7 @@ const AboutImagesSection = () => {
                     </button>
                     <button
                       className="text-red-600 cursor-pointer hover:text-red-800"
-                      onClick={() => handleDelete(row.id)}
+                      onClick={() => handleDeleteClick(row.id)}
                     >
                       <FaTrash size={22} />
                     </button>

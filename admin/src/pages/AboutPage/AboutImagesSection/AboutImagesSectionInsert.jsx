@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BE_URL from "../../../config";
 import Submit from "../../../components/Buttons/Submit";
 import Cancel from "../../../components/Buttons/Cancel";
 import SubmitData from "../../../components/Popup/SubmitData";
@@ -8,12 +10,13 @@ const AboutImagesSectionInsert = () => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleImageChange = (e) => {
     setImages(Array.from(e.target.files));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (images.length === 0) {
@@ -21,12 +24,40 @@ const AboutImagesSectionInsert = () => {
       return;
     }
 
-    // Trigger success popup
-    setSuccess(true);
+    const formData = new FormData();
+    images.forEach((img) => formData.append("images", img));
 
-    // Reset form
-    setImages([]);
-    document.querySelector('input[type="file"]').value = "";
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        `${BE_URL}/aboutImageSection`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        // Show success popup
+        setSuccess(true);
+
+        // Reset form and state
+        setImages([]);
+        document.querySelector('input[type="file"]').value = "";
+
+        // Hide popup after 2.5 seconds
+        setTimeout(() => setSuccess(false), 2500);
+      } else {
+        console.error("Unexpected response", response);
+      }
+    } catch (error) {
+      console.error("Insert failed:", error.response?.data || error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCancel = () => {
@@ -41,7 +72,6 @@ const AboutImagesSectionInsert = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Multiple Image Upload */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
               Select Multiple Images
@@ -56,15 +86,13 @@ const AboutImagesSectionInsert = () => {
             />
           </div>
 
-          {/* Buttons */}
           <div className="flex justify-end gap-4">
-            <Submit type="submit" />
+            <Submit type="submit" disabled={loading} />
             <Cancel onClick={handleCancel} />
           </div>
         </form>
       </div>
 
-      {/* Success Popup */}
       {success && <SubmitData />}
     </div>
   );

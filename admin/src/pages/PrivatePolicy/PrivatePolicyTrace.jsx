@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -13,34 +13,49 @@ import { FaRecycle } from "react-icons/fa";
 import Back from "../../components/Buttons/Back";
 import RestoreData from "../../components/Popup/RestoreData";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BE_URL from "../../config";
 
 const PrivatePolicyTrace = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const [showRestorePopup, setShowRestorePopup] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  // Dummy private policy data
-  const data = Array.from({ length: 5 }, (_, i) => ({
-    id: i + 1,
-    title: `Policy Title ${i + 1}`,
-    description: `This is the description for policy ${i + 1}.`,
-  }));
+  const fetchDeletedData = async () => {
+    try {
+      const res = await axios.get(`${BE_URL}/private-policy/trashed`);
+      setData(res.data.data || []);
+    } catch (err) {
+      console.error("Error fetching deleted data:", err);
+    }
+  };
 
-  const displayedRows = data.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage
-  );
+  useEffect(() => {
+    fetchDeletedData();
+  }, []);
 
-  const handleRestoreClick = (id) => {
-    setSelectedId(id);
-    setShowRestorePopup(true);
+  const handleRestoreClick = async (id) => {
+    try {
+      await axios.patch(`${BE_URL}/private-policy/restore/${id}`);
+      setSelectedId(id);
+      setShowRestorePopup(true);
+      fetchDeletedData();
+    } catch (err) {
+      console.error("Error restoring data:", err);
+    }
   };
 
   const handleBackClick = () => {
     navigate("/private-policy");
   };
+
+  const displayedRows = data.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage
+  );
 
   return (
     <div className="p-4 rounded-xl bg-white">
@@ -94,13 +109,13 @@ const PrivatePolicyTrace = () => {
                   {(page - 1) * rowsPerPage + index + 1}
                 </TableCell>
                 <TableCell className="border-r text-left">
-                  {row.title}
+                  {row.private_policy_title}
                 </TableCell>
                 <TableCell
                   className="border-r text-left"
                   style={{ maxWidth: 300, whiteSpace: "pre-wrap" }}
                 >
-                  {row.description}
+                  {row.private_policy_description}
                 </TableCell>
                 <TableCell className="text-left">
                   <button

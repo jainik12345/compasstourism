@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -13,29 +13,61 @@ import { FaRecycle } from "react-icons/fa";
 import Back from "../../../components/Buttons/Back";
 import RestoreData from "../../../components/Popup/RestoreData";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import BE_URL from "../../../config";
 
 const ContactSectionAddressTrace = () => {
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const [showRestorePopup, setShowRestorePopup] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const navigate = useNavigate();
+  const [refreshFlag, setRefreshFlag] = useState(false);
 
-  // Dummy address data
-  const data = Array.from({ length: 55 }, (_, i) => ({
-    id: i + 1,
-    title: `Office ${i + 1}`,
-    address: `123 Example Street, City ${i + 1}, Country`,
-  }));
+  // Fetch soft-deleted addresses
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${BE_URL}/contact-section-address/trashed`);
+      setData(res.data.data || []);
+    } catch (err) {
+      console.error("Error fetching deleted addresses:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [refreshFlag]);  
 
   const displayedRows = data.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
   );
 
-  const handleRestoreClick = (id) => {
-    setSelectedId(id);
-    setShowRestorePopup(true);
+  const handleRestoreClick = async (id) => {
+    try {
+      const res = await axios.patch(
+        `${BE_URL}/contact-section-address/restore/${id}`
+      );
+      if (res.data.status === "success") {
+        setSelectedId(id);
+        setShowRestorePopup(true);
+
+        // Trigger table refresh immediately
+        setRefreshFlag((prev) => !prev);
+
+        // Hide popup after 2s
+        setTimeout(() => {
+          setShowRestorePopup(false);
+          setSelectedId(null);
+        }, 2000);
+      } else {
+        alert("Failed to restore the address.");
+      }
+    } catch (err) {
+      console.error("Error restoring address:", err);
+      alert("An error occurred while restoring.");
+    }
   };
 
   const handleBackClick = () => {
@@ -47,10 +79,7 @@ const ContactSectionAddressTrace = () => {
       {/* Restore Popup */}
       {showRestorePopup && (
         <RestoreData
-          onClose={() => {
-            setShowRestorePopup(false);
-            setSelectedId(null);
-          }}
+          onClose={() => setShowRestorePopup(false)}
           id={selectedId}
         />
       )}
