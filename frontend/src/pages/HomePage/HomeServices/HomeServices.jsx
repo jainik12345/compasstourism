@@ -25,11 +25,11 @@ const HomeServices = () => {
 
           <div className="flex justify-center items-center ps-20 w-fit">
 
-            <img src={Img2} alt="IMG" className="rounded-full z-45 h-20 w-20 " />
-            <img src={Img1} alt="IMG" className="rounded-full z-40 h-20 w-20 -translate-x-5" />
-            <img src={Img2} alt="IMG" className="rounded-full z-30 h-20 w-20 -translate-x-10" />
-            <img src={Img1} alt="IMG" className="rounded-full z-20 h-20 w-20 -translate-x-15" />
-            <img src={Img2} alt="IMG" className="rounded-full z-10 h-20 w-20 -translate-x-20" />
+            <img src={Img2} alt="IMG" className="rounded-full z-45 h-20 w-20 object-cover" />
+            <img src={Img1} alt="IMG" className="rounded-full z-40 h-20 w-20 -translate-x-5 object-cover" />
+            <img src={Img2} alt="IMG" className="rounded-full z-30 h-20 w-20 -translate-x-10 object-cover" />
+            <img src={Img1} alt="IMG" className="rounded-full z-20 h-20 w-20 -translate-x-15 object-cover" />
+            <img src={Img2} alt="IMG" className="rounded-full z-10 h-20 w-20 -translate-x-20 object-cover" />
 
           </div>
 

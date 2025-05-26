@@ -61,6 +61,8 @@ import IndianCityPage from "../../pages/IndianCityPage/IndianCityPage"; // ✅ I
 import PrivatePolicy from "./../../pages/Terms/PrivatePolicy/PrivatePolicy";
 import TermsConditions from "./../../pages/Terms/TermsConditions/TermsConditions";
 import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
+import HomeBlogInnerPage from "../../pages/HomePage/HomeBlogs/HomeBlogInnerPage/HomeBlogInnerPage";
+import HomePackagesCardInnerPage from "../../pages/HomePage/HomePackages/HomePackagesCardInnerPage/HomePackagesCardInnerPage";
 
 const WebsitePage = ({ children }) => {
   return (
@@ -110,6 +112,27 @@ const RouteComponent = () => {
             </WebsitePage>
           }
         />
+
+        {/* ✅ Dynamic route for blogs */}
+        <Route
+          path="/blog/:blogSlag"
+          element={
+            <WebsitePage>
+              <HomeBlogInnerPage />
+            </WebsitePage>
+          }
+        />
+
+        {/* ✅ Dynamic route for blogs */}
+        <Route
+          path="/tour-package/:tourpackageSlag"
+          element={
+            <WebsitePage>
+              <HomePackagesCardInnerPage />
+            </WebsitePage>
+          }
+        />
+
         <Route
           path="/private-policy"
           element={

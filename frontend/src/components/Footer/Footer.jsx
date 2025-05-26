@@ -42,9 +42,12 @@ const Footer = () => {
     `${linkStyle} ${isActive ? "text-red-500" : ""}`;
 
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="bg-gray-900 text-white pt-10">
 
       <div className="client_logo_main_container ">
+
+        <h2 className="text-center text-[1.5rem] font-semibold text-gray-300">Our Associations, We are recognized by</h2>
+
         <div className="client_logo_content">
           {clientLogos.concat(clientLogos).map((logo, index) => (
             <img key={index} src={logo.src} alt={logo.alt} />

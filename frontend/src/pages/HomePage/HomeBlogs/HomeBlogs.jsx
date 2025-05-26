@@ -38,9 +38,9 @@ export const HomeBlogs = () => {
 
                 return (
 
-                  <NavLink>
+                  <NavLink to={`/blog/${item.ImgTitle.toLowerCase().replace(/\s+/g, "-")}`}  key={idx}>
 
-                    <div className="relative rounded-xl overflow-hidden group shadow-md" key={idx}>
+                    <div className="relative rounded-xl overflow-hidden group shadow-md" >
                       <img
                         src={item.ImgUrl}
                         alt={item.ImgTitle}
