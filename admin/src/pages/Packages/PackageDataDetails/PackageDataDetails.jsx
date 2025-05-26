@@ -1,189 +1,3 @@
-// import React, { useState, useEffect } from "react";
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableContainer,
-//   TableHead,
-//   TableRow,
-//   Paper,
-//   MenuItem,
-//   Select,
-//   InputLabel,
-//   FormControl,
-//   Typography,
-//   Box,
-// } from "@mui/material";
-// import axios from "axios";
-// import BE_URL from "../../../config";
-
-// const PackageDataDetails = () => {
-//   const [packageNames, setPackageNames] = useState([]);
-//   const [selectedPackageId, setSelectedPackageId] = useState("");
-//   const [details, setDetails] = useState([]);
-//   const [cityMap, setCityMap] = useState({});
-
-//   // Fetch package names
-//   useEffect(() => {
-//     axios
-//       .get(`${BE_URL}/packageName`)
-//       .then((res) => setPackageNames(res.data.data))
-//       .catch((err) => console.error("Failed to fetch package names:", err));
-//   }, []);
-
-//   // Fetch cities and build ID => name map
-//   useEffect(() => {
-//     axios
-//       .get(`${BE_URL}/city`)
-//       .then((res) => {
-//         const map = {};
-//         res.data.data.forEach((city) => {
-//           map[city.id] = city.city_name;
-//         });
-//         setCityMap(map);
-//       })
-//       .catch((err) => console.error("Failed to fetch cities:", err));
-//   }, []);
-
-//   // Fetch details when package selected
-//   useEffect(() => {
-//     if (selectedPackageId) {
-//       axios
-//         .get(`${BE_URL}/packageDataDetails/${selectedPackageId}`)
-//         .then((res) => {
-//           const data = Array.isArray(res.data.data)
-//             ? res.data.data
-//             : [res.data.data];
-//           setDetails(data);
-//         })
-//         .catch((err) => console.error("Failed to fetch details:", err));
-//     } else {
-//       setDetails([]);
-//     }
-//   }, [selectedPackageId]);
-
-//   const handlePackageChange = (event) => {
-//     setSelectedPackageId(event.target.value);
-//   };
-
-//   return (
-//     <div className="p-4 rounded-xl bg-white">
-//       <Typography variant="h6" gutterBottom>
-//         Package Data Details
-//       </Typography>
-
-//       {/* Package Name Selector */}
-//       <FormControl fullWidth margin="normal">
-//         <InputLabel>Select Package Name</InputLabel>
-//         <Select
-//           value={selectedPackageId}
-//           onChange={handlePackageChange}
-//           label="Select Package Name"
-//         >
-//           {packageNames.map((pkg) => (
-//             <MenuItem key={pkg.id} value={pkg.id}>
-//               {pkg.package_name}
-//             </MenuItem>
-//           ))}
-//         </Select>
-//       </FormControl>
-
-//       {/* Details Table */}
-//       {details.length > 0 && (
-//         <TableContainer component={Paper} className="shadow-md mt-4">
-//           <Table>
-//             <TableHead>
-//               <TableRow>
-//                 <TableCell>Data Title</TableCell>
-//                 <TableCell>Single Image</TableCell>
-//                 <TableCell>Night</TableCell>
-//                 <TableCell>Day</TableCell>
-//                 <TableCell>Description</TableCell>
-//                 <TableCell>Multiple Images</TableCell>
-//                 <TableCell>Highlight</TableCell>
-//                 <TableCell>From City</TableCell>
-//                 <TableCell>To City</TableCell>
-//                 <TableCell>Inclusions</TableCell>
-//                 <TableCell>Attraction</TableCell>
-//                 <TableCell>FAQs</TableCell>
-//               </TableRow>
-//             </TableHead>
-//             <TableBody>
-//               {details.map((item) => (
-//                 <TableRow key={item.id}>
-//                   <TableCell>{item.data_title}</TableCell>
-//                   <TableCell>
-//                     <img
-//                       src={item.single_image}
-//                       alt="Single"
-//                       style={{ width: 80, height: 80, objectFit: "cover" }}
-//                     />
-//                   </TableCell>
-//                   <TableCell>{item.night}</TableCell>
-//                   <TableCell>{item.day}</TableCell>
-//                   <TableCell>{item.data_description}</TableCell>
-//                   <TableCell>
-//                     <Box display="flex" flexWrap="wrap" gap={1}>
-//                       {Array.isArray(item.multiple_images) &&
-//                         item.multiple_images.map((img, idx) => (
-//                           <img
-//                             key={idx}
-//                             src={img}
-//                             alt={`Multiple ${idx}`}
-//                             style={{
-//                               width: 50,
-//                               height: 50,
-//                               objectFit: "cover",
-//                             }}
-//                           />
-//                         ))}
-//                     </Box>
-//                   </TableCell>
-//                   <TableCell>{item.highlight}</TableCell>
-//                   <TableCell>{cityMap[item.from_city_id] || "N/A"}</TableCell>
-//                   <TableCell>{cityMap[item.to_city_id] || "N/A"}</TableCell>
-//                   <TableCell>
-//                     <ul>
-//                       {Array.isArray(item.inclusions) &&
-//                         item.inclusions.map((inc, idx) => (
-//                           <li key={idx}>{inc}</li>
-//                         ))}
-//                     </ul>
-//                   </TableCell>
-//                   <TableCell>
-//                     <ul>
-//                       {Array.isArray(item.attraction) &&
-//                         item.attraction.map((att, idx) => (
-//                           <li key={idx}>{att}</li>
-//                         ))}
-//                     </ul>
-//                   </TableCell>
-//                   <TableCell>
-//                     <ul>
-//                       {Array.isArray(item.faqs) &&
-//                         item.faqs.map((faq, idx) => (
-//                           <li key={idx}>
-//                             <strong>Q:</strong> {faq.question}
-//                             <br />
-//                             <strong>A:</strong> {faq.answer}
-//                           </li>
-//                         ))}
-//                     </ul>
-//                   </TableCell>
-//                 </TableRow>
-//               ))}
-//             </TableBody>
-//           </Table>
-//         </TableContainer>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default PackageDataDetails;
-
-/** */
-
 import React, { useState, useEffect } from "react";
 import {
   Table,
@@ -202,11 +16,18 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import BE_URL from "../../../config";
+import { useNavigate } from "react-router-dom";
+import Add from "../../../components/Buttons/Add";
+import Trace from "../../../components/Buttons/Trace";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import DeleteData from "./../../../components/Popup/DeleteData";
 
 const PackageDataDetails = () => {
   const [packageNames, setPackageNames] = useState([]);
   const [selectedPackageId, setSelectedPackageId] = useState("");
   const [details, setDetails] = useState([]);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -214,16 +35,6 @@ const PackageDataDetails = () => {
       .then((res) => setPackageNames(res.data.data))
       .catch((err) => console.error("Failed to fetch package names:", err));
   }, []);
-
-  // const fetchCityName = async (id) => {
-  //   if (!id) return "";
-  //   try {
-  //     const res = await axios.get(`${BE_URL}/packageAreaName/data/${id}`);
-  //     return res.data.data?.name || "-";
-  //   } catch {
-  //     return "-";
-  //   }
-  // };
 
   const fetchCityName = async (id) => {
     if (!id) return "-";
@@ -234,40 +45,6 @@ const PackageDataDetails = () => {
       return "-";
     }
   };
-
-  // useEffect(() => {
-  //   if (!selectedPackageId) {
-  //     setDetails([]);
-  //     return;
-  //   }
-
-  //   axios
-  //     .get(`${BE_URL}/packageDataDetails/byPackageId/${selectedPackageId}`)
-  //     .then(async (res) => {
-  //       const items = Array.isArray(res.data.data)
-  //         ? res.data.data
-  //         : [res.data.data];
-
-  //       const enriched = await Promise.all(
-  //         items.map(async (item) => {
-  //           const fromCityName = await fetchCityName(item.from_city_id);
-  //           const toCityName = await fetchCityName(item.to_city_id);
-  //           return {
-  //             ...item,
-  //             from_city_name: fromCityName,
-  //             to_city_name: toCityName,
-  //             multiple_images: JSON.parse(item.multiple_images || "[]"),
-  //             inclusions: JSON.parse(item.inclusions || "[]"),
-  //             attraction: JSON.parse(item.attraction || "[]"),
-  //             faqs: JSON.parse(item.faqs || "[]"),
-  //           };
-  //         })
-  //       );
-
-  //       setDetails(enriched);
-  //     })
-  //     .catch((err) => console.error("Failed to fetch details:", err));
-  // }, [selectedPackageId]);
 
   useEffect(() => {
     if (!selectedPackageId) {
@@ -294,6 +71,7 @@ const PackageDataDetails = () => {
               inclusions: item.inclusions || [],
               attraction: item.attraction || [],
               faqs: item.faqs || [],
+              highlight: item.highlight || [],
             };
           })
         );
@@ -303,11 +81,49 @@ const PackageDataDetails = () => {
       .catch((err) => console.error("Failed to fetch details:", err));
   }, [selectedPackageId]);
 
+  const handleAdd = () => {
+    navigate("/package-data-details/insert");
+  };
+
+  const handleTraceClick = () => {
+    navigate("/package-data-details/trace");
+  };
+
+  const handleUpdate = (item) => {
+    navigate("/package-data-details/update", {
+      state: { packageStateData: item },
+    });
+  };
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`${BE_URL}/packageDataDetails/${id}`)
+      .then((res) => {
+        if (res.data.status === "success") {
+          // Remove from local state
+          setDetails((prev) => prev.filter((item) => item.id !== id));
+          setDeleteSuccess(true); // Show popup
+          setTimeout(() => setDeleteSuccess(false), 2500); // Hide popup after 2.5s
+        } else {
+          console.error("Deletion failed");
+        }
+      })
+      .catch((err) => {
+        console.error("Delete error:", err);
+      });
+  };
+
   return (
-    <div className="p-4 rounded-xl bg-white">
-      <Typography variant="h6" gutterBottom>
-        Package Data Details
-      </Typography>
+    <div className="p-6 rounded-xl bg-white">
+      {deleteSuccess && <DeleteData />}
+      <div className="justify-between mb-4 flex">
+        <Trace onClick={handleTraceClick} />
+        <Add
+          text="Add Package State Name"
+          width="w-[250px]"
+          onClick={handleAdd}
+        />
+      </div>
 
       <FormControl fullWidth margin="normal">
         <InputLabel>Select Package Name</InputLabel>
@@ -325,74 +141,109 @@ const PackageDataDetails = () => {
       </FormControl>
 
       {details.length > 0 ? (
-        <TableContainer component={Paper} className="shadow-md mt-4">
-          <Table>
+        <TableContainer component={Paper}>
+          <Table stickyHeader>
             <TableHead>
               <TableRow>
+                <TableCell>ID</TableCell>
                 <TableCell>Data Title</TableCell>
                 <TableCell>Single Image</TableCell>
                 <TableCell>Night</TableCell>
                 <TableCell>Day</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Multiple Images</TableCell>
-                <TableCell>Highlight</TableCell>
+                <TableCell>Inclusions</TableCell>
                 <TableCell>From City</TableCell>
                 <TableCell>To City</TableCell>
                 <TableCell>Attraction</TableCell>
                 <TableCell>FAQs</TableCell>
+                <TableCell>Highlight</TableCell>
+                <TableCell className="font-bold text-base">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {details.map((item) => (
+              {details.map((item, index) => (
                 <TableRow key={item.id}>
+                  <TableCell>{index + 1}</TableCell>
                   <TableCell>{item.data_title}</TableCell>
                   <TableCell>
                     <img
                       src={`${BE_URL}/Images/PackageImages/PackageDataDetails/${item.single_image}`}
-                      alt="Single"
-                      style={{ width: 80, height: 80, objectFit: "cover" }}
+                      style={{
+                        width: 70,
+                        height: 70,
+                        objectFit: "cover",
+                        borderRadius: 4,
+                      }}
                     />
                   </TableCell>
                   <TableCell>{item.night}</TableCell>
                   <TableCell>{item.day}</TableCell>
+
+                  {/* Scrollable Description */}
                   <TableCell>{item.data_description}</TableCell>
-                  <TableCell>
+
+                  {/* Scrollable Multiple Images */}
+                  <TableCell sx={{ maxHeight: 120, overflowY: "auto" }}>
                     <Box display="flex" flexWrap="wrap" gap={1}>
                       {item.multiple_images.map((img, idx) => (
                         <img
                           key={idx}
                           src={`${BE_URL}/Images/PackageImages/PackageDataDetails/${img}`}
-                          alt={`img-${idx}`}
                           style={{ width: 50, height: 50, objectFit: "cover" }}
                         />
                       ))}
                     </Box>
                   </TableCell>
-                  <TableCell>
-                    <ul>
-                      {item.inclusions.map((inc, idx) => (
-                        <li key={idx}>{inc}</li>
+
+                  {/* Inclusions */}
+                  <TableCell sx={{ maxHeight: 120, overflowY: "auto" }}>
+                    <ul style={{ paddingLeft: 16 }}>
+                      {item.inclusions.map((inc, i) => (
+                        <li key={i}>{inc}</li>
                       ))}
                     </ul>
                   </TableCell>
+
                   <TableCell>{item.from_city_name}</TableCell>
                   <TableCell>{item.to_city_name}</TableCell>
-                  <TableCell>
-                    <ul>
-                      {item.attraction.map((att, idx) => (
-                        <li key={idx}>{att}</li>
+
+                  {/* Attraction */}
+                  <TableCell sx={{ maxHeight: 120, overflowY: "auto" }}>
+                    <ul style={{ paddingLeft: 16 }}>
+                      {item.attraction.map((att, i) => (
+                        <li key={i}>{att}</li>
                       ))}
                     </ul>
                   </TableCell>
+
+                  {/* FAQs */}
                   <TableCell>
-                    <ul>
-                      {item.faqs.map((faq, idx) => (
-                        <li key={idx}>
+                    <ul style={{ paddingLeft: 16 }}>
+                      {item.faqs.map((faq, i) => (
+                        <li key={i}>
                           <strong>Q:</strong> {faq.question} <br />
                           <strong>A:</strong> {faq.answer}
                         </li>
                       ))}
                     </ul>
+                  </TableCell>
+                  <TableCell>{item.highlight}</TableCell>
+                  <TableCell>
+                    <div className="flex space-x-4">
+                      <button
+                        className="text-green-600  cursor-pointer hover:text-green-800"
+                        onClick={() => handleUpdate(item)}
+                      >
+                        <FaEdit size={22} />
+                      </button>
+                      <button
+                        className="text-red-600 cursor-pointer hover:text-red-800"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        <FaTrash size={22} />
+                      </button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

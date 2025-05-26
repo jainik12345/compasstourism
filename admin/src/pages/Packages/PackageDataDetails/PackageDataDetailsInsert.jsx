@@ -17,6 +17,7 @@ import Submit from "../../../components/Buttons/Submit";
 import Cancel from "../../../components/Buttons/Cancel";
 import SubmitData from "../../../components/Popup/SubmitData";
 import BE_URL from "../../../config";
+import { useNavigate } from "react-router-dom";
 
 const BlueTextField = styled(TextField)({
   "& label.Mui-focused": { color: "#1976d2" },
@@ -49,6 +50,7 @@ const PackageDataDetailsInsert = () => {
   const [packageAreas, setPackageAreas] = useState([]);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch package names
@@ -210,6 +212,9 @@ const PackageDataDetailsInsert = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate("/package-data-details");
+  };
   return (
     <div className="p-6">
       <div className=" border-2 border-blue-300 rounded-2xl p-6 shadow-md">
@@ -509,7 +514,7 @@ const PackageDataDetailsInsert = () => {
           {/* Submit / Cancel */}
           <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
             <Submit type="submit" />
-            <Cancel />
+            <Cancel onClick={handleCancel} />
           </Box>
         </form>
 

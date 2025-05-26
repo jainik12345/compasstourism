@@ -106,13 +106,11 @@ exports.insertPackageData = (req, res) => {
 
     db.query(query, values, (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
-      res
-        .status(201)
-        .json({
-          status: "success",
-          message: "Inserted",
-          insertedId: result.insertId,
-        });
+      res.status(201).json({
+        status: "success",
+        message: "Inserted",
+        insertedId: result.insertId,
+      });
     });
   });
 };
@@ -245,6 +243,27 @@ exports.getPackageDataByPackageNameId = (req, res) => {
     (err, results) => {
       if (err) return res.status(500).json({ error: err.message });
       // Return 200 with empty array if no data found
+      res.status(200).json({ status: "success", data: results });
+    }
+  );
+};
+
+
+
+exports.getPackageNames = (req, res) => {
+  db.query("SELECT id, package_name FROM package_name", (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(200).json({ status: "success", data: results });
+  });
+};
+
+exports.getTrashedByPackageId = (req, res) => {
+  const { id } = req.params;
+  db.query(
+    "SELECT * FROM package_data_details WHERE deleted_at = 1 AND package_name_id = ?",
+    [id],
+    (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
       res.status(200).json({ status: "success", data: results });
     }
   );
