@@ -1,10 +1,4 @@
-import React from "react";
 import HomeHeroSection from "./HomeHeroSection/HomeHeroSection";
-import HomeOffbeatHolidays from "./HomeOffbeatHolidays/HomeOffbeatHolidays";
-import HomeWeekendGateways from "./HomeWeekendGateways/HomeWeekendGateways";
-import HomeSpiritualTours from "./HomeSpiritualTours/HomeSpiritualTours";
-import HomeFestivalTours from "./HomeFestivalTours/HomeFestivalTours";
-import HomeIndianHolidays from "./HomeIndianHolidays/HomeIndianHolidays";
 import HomeServices from "./HomeServices/HomeServices";
 import HomeTestimonial from "./HomeTestimonial/HomeTestimonial";
 import HomeBlogs from "./HomeBlogs/HomeBlogs";
@@ -17,21 +11,16 @@ import HomeCertificate from "./HomeCertificate/HomeCertificate";
 const HomePage = () => {
   return (
     <div>
-      {/* 
+
       <HomeHeroSection />
-      <HomePackages/> */}
-      {/* <HomeOffbeatHolidays />
-      <HomeWeekendGateways />
-      <HomeSpiritualTours />
-      <HomeFestivalTours />
-      <HomeIndianHolidays /> */}
-      {/* <HomeCompassSpotlight /> */}
-      {/* <HomeImages /> */}
-      {/* <HomeServices />
+      <HomePackages />
+      <HomeCompassSpotlight />
+      <HomeImages />
+      <HomeServices />
       <HomeBestHotelDeals />
       <HomeTestimonial />
-      {/* <HomeBlogs /> */}
       <HomeCertificate />
+      <HomeBlogs />
 
     </div>
   );

@@ -18,6 +18,7 @@ const cities = [
   "Rajasthan",
   "South India",
   "Uttar Pradesh",
+  "Gujarat",
 ];
 
 const Header = () => {

@@ -16,8 +16,6 @@ const HomePackagesCardInnerPage = () => {
         .replace(/[^a-z0-9\s]/g, "") // optional: remove non-alphanumeric
         .replace(/\b\w/g, (char) => char.toUpperCase()); // capitalizes each word
 
-
-
     const TourPackagesInnerDataArr = {
 
         "wildlife-tour": {
@@ -80,6 +78,7 @@ const HomePackagesCardInnerPage = () => {
             ]
 
         },
+        
         "textile-&-handicraft-tour": {
 
             HeroImgs: [HeroImg2, HeroImg1],
