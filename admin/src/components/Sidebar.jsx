@@ -8,6 +8,7 @@ import {
   FaLock,
   FaPhotoVideo,
   FaFileContract,
+  FaHandshake,
 } from "react-icons/fa";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { FaChevronRight } from "react-icons/fa";
@@ -31,6 +32,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: "/home-image-slider", name: "Home Image Slider" },
         { path: "/home-blogs", name: "Home Blogs" },
         { path: "/home-testimonial", name: "Home Testimonial" },
+        { path: "/home-certificate", name: "Home Certificate" },
       ],
     },
     {
@@ -52,7 +54,25 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: "/contact-section-address", name: "Section Address" },
       ],
     },
+
+    {
+      path: "/package",
+      name: "Package",
+      icon: <FaPhotoVideo />,
+      children: [
+        { path: "/package-country", name: "Package Country Name" },
+        { path: "/package-state-name", name: "Package State Name" },
+        { path: "/package-area-name", name: "Package Area Name" },
+        { path: "/package-name", name: "Packages  Name" },
+        { path: "/package-data-details", name: "Packages  Data Details" },
+      ],
+    },
     { path: "/private-policy", name: "Private Policy", icon: <FaLock /> },
+    {
+      path: "/our-associations",
+      name: "Our Associations",
+      icon: <FaHandshake />,
+    },
     {
       path: "/terms-conditions",
       name: "Terms & Conditions",

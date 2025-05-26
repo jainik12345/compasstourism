@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Submit from "../../../components/Buttons/Submit";
-import Cancel from "../../../components/Buttons/Cancel";
-import SubmitData from "../../../components/Popup/SubmitData";
-import BE_URL from "../../../config";
+import Submit from "../../components/Buttons/Submit";
+import Cancel from "../../components/Buttons/Cancel";
+import SubmitData from "../../components/Popup/SubmitData";
+import BE_URL from "../../config";
 
-const HomeImageSliderInsert = () => {
+const OurAssociationsInsert = () => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [success, setSuccess] = useState(false);
@@ -33,7 +33,7 @@ const HomeImageSliderInsert = () => {
       const formData = new FormData();
       images.forEach((image) => formData.append("images", image));
 
-      const response = await axios.post(`${BE_URL}/homeImageSlider`, formData, {
+      const response = await axios.post(`${BE_URL}/ourAssociations`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -41,10 +41,10 @@ const HomeImageSliderInsert = () => {
 
       if (response.data.status === "success") {
         setSuccess(true);
-        setImages([]); 
+        setImages([]);
         const fileInput = document.querySelector('input[type="file"]');
         if (fileInput) fileInput.value = "";
- 
+
         setTimeout(() => setSuccess(false), 2500);
       } else {
         setErrorMsg("Failed to insert data. Please try again.");
@@ -60,21 +60,21 @@ const HomeImageSliderInsert = () => {
   };
 
   const handleCancel = () => {
-    navigate("/home-image-slider");
+    navigate("/our-associations");
   };
 
   return (
     <div className="p-6">
-      <div className="border-2 border-blue-300 rounded-2xl p-6 shadow-md">
+      <div className="border-2 border-blue-400 rounded-2xl p-6 shadow-md">
         <h2 className="bg-blue-600 text-white text-lg font-semibold py-3 px-5 rounded-md mb-8">
-          Add Home Image Slider
+          Add Our Associations Images
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-8" noValidate>
           {/* Multiple Image Upload */}
           <div>
             <label className="block mb-2 text-blue-700 font-semibold">
-              Select Multiple Slider Images
+              Select Multiple Association Images
             </label>
             <input
               type="file"
@@ -103,6 +103,4 @@ const HomeImageSliderInsert = () => {
   );
 };
 
-export default HomeImageSliderInsert;
-
- 
+export default OurAssociationsInsert;

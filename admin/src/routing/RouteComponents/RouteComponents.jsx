@@ -43,6 +43,35 @@ import HomeImageSlider from "../../pages/HomePage/HomeImageSlider/HomeImageSlide
 import HomeImageSliderInsert from './../../pages/HomePage/HomeImageSlider/HomeImageSliderInsert';
 import HomeImageSliderUpdate from './../../pages/HomePage/HomeImageSlider/HomeImageSliderUpdate';
 import HomeImageSliderTrace from './../../pages/HomePage/HomeImageSlider/HomeImageSliderTrace';
+import HomePage from "../../pages/HomePage/HomePage";
+import HomeCertificate from "../../pages/HomePage/HomeCertificate/HomeCertificate";
+import HomeCertificateInsert from "../../pages/HomePage/HomeCertificate/HomeCertificateInsert";
+import HomeCertificateUpdate from "../../pages/HomePage/HomeCertificate/HomeCertificateUpdate";
+import HomeCertificateTrace from "../../pages/HomePage/HomeCertificate/HomeCertificateTrace";
+import OurAssociations from "../../pages/OurAssociations/OurAssociations";
+import OurAssociationsInsert from "../../pages/OurAssociations/OurAssociationsInsert";
+import OurAssociationsUpdate from "../../pages/OurAssociations/OurAssociationsUpdate";
+import OurAssociationsTrace from "../../pages/OurAssociations/OurAssociationsTrace";
+import PackageCountry from "../../pages/Packages/PackageCountry/PackageCountry";
+import PackageCountryInsert from "../../pages/Packages/PackageCountry/PackageCountryInsert";
+import PackageCountryUpdate from './../../pages/Packages/PackageCountry/PackageCountryUpdate';
+import PackageCountryTrace from './../../pages/Packages/PackageCountry/PackageCountryTrace';
+import PackageName from "../../pages/Packages/PackageName/PackageName";
+import PackageNameInsert from './../../pages/Packages/PackageName/PackageNameInsert';
+import PackageNameUpdate from './../../pages/Packages/PackageName/PackageNameUpdate';
+import PackageNameTrace from './../../pages/Packages/PackageName/PackageNameTrace';
+import PackageStateName from "../../pages/Packages/PackageStateName/PackageStateName";
+import PackageStateNameUpdate from "../../pages/Packages/PackageStateName/PackageStateNameUpdate";
+import PackageStateNameInsert from "../../pages/Packages/PackageStateName/PackageStateNameInsert";
+import PackageStateNameTrace from "../../pages/Packages/PackageStateName/PackageStateNameTrace";
+import PackageAreaName from "../../pages/Packages/PackageAreaName/PackageAreaName";
+import PackageAreaNameInsert from './../../pages/Packages/PackageAreaName/PackageAreaNameInsert';
+import PackageAreaNameUpdate from "../../pages/Packages/PackageAreaName/PackageAreaNameUpdate";
+import PackageAreaNameTrace from "../../pages/Packages/PackageAreaName/PackageAreaNameTrace";
+import PackageDataDetails from "../../pages/Packages/PackageDataDetails/PackageDataDetails";
+import PackageDataDetailsInsert from "../../pages/Packages/PackageDataDetails/PackageDataDetailsInsert";
+import PackageDataDetailsUpdate from "../../pages/Packages/PackageDataDetails/PackageDataDetailsUpdate";
+import PackageDataDetailsTrace from "../../pages/Packages/PackageDataDetails/PackageDataDetailsTrace";
 
 const RouteComponents = () => {
   return (
@@ -58,6 +87,7 @@ const RouteComponents = () => {
         <Route path="/" element={<MainLayout />}>
           {/* Home Pages */}
 
+          <Route path="/home-page" element={<HomePage/>} />
           <Route path="/home-image-slider" element={<HomeImageSlider/>} />
           <Route path="/home-image-slider/insert" element={<HomeImageSliderInsert/>} />
           <Route path="/home-image-slider/update" element={<HomeImageSliderUpdate/>} />
@@ -72,6 +102,12 @@ const RouteComponents = () => {
           <Route path="/home-testimonial/insert" element={<HomeTestimonialInsert/>} />
           <Route path="/home-testimonial/update" element={<HomeTestimonialUpdate/>} />
           <Route path="/home-testimonial/trace" element={<HomeTestimonialTrace/>} />
+
+          <Route path="/home-certificate" element={<HomeCertificate/>} />
+          <Route path="/home-certificate/insert" element={<HomeCertificateInsert/>} />
+          <Route path="/home-certificate/update" element={<HomeCertificateUpdate/>} />
+          <Route path="/home-certificate/trace" element={<HomeCertificateTrace/>} />
+ 
 
           {/* About Pages */}
 
@@ -114,6 +150,46 @@ const RouteComponents = () => {
           <Route path="/terms-conditions/insert" element={<TermsConditionsInsert/>} />
           <Route path="/terms-conditions/update" element={<TermsConditionsUpdate/>} />
           <Route path="/terms-conditions/trace" element={<TermsConditionsTrace/>} />
+
+
+          {/* Our Associations */}
+
+          <Route path="/our-associations" element={<OurAssociations/>} />
+          <Route path="/our-associations/insert" element={<OurAssociationsInsert/>} />
+          <Route path="/our-associations/update" element={<OurAssociationsUpdate/>} />
+          <Route path="/our-associations/trace" element={<OurAssociationsTrace/>} />
+
+
+           {/* Packages */}
+
+           <Route path="/package-country" element={<PackageCountry/>} />
+           <Route path="/package-country/insert" element={<PackageCountryInsert/>} />
+           <Route path="/package-country/update" element={<PackageCountryUpdate/>} />
+           <Route path="/package-country/trace" element={<PackageCountryTrace/>} />
+
+           <Route path="/package-name" element={<PackageName/>} />
+           <Route path="/package-name/insert" element={<PackageNameInsert/>} />
+           <Route path="/package-name/update" element={<PackageNameUpdate/>} />
+           <Route path="/package-name/trace" element={<PackageNameTrace/>} />
+
+
+           <Route path="/package-state-name" element={<PackageStateName/>} />
+           <Route path="/package-state-name/insert" element={<PackageStateNameInsert/>} />
+           <Route path="/package-state-name/update" element={<PackageStateNameUpdate/>} />
+           <Route path="/package-state-name/trace" element={<PackageStateNameTrace/>} />
+
+           <Route path="/package-area-name" element={<PackageAreaName/>} />
+           <Route path="/package-area-name/insert" element={<PackageAreaNameInsert/>} />
+           <Route path="/package-area-name/update" element={<PackageAreaNameUpdate/>} />
+           <Route path="/package-area-name/trace" element={<PackageAreaNameTrace/>} />
+
+
+
+           <Route path="/package-data-details" element={<PackageDataDetails/>} />
+           <Route path="/package-data-details/insert" element={<PackageDataDetailsInsert/>} />
+           <Route path="/package-data-details/update" element={<PackageDataDetailsUpdate/>} />
+           <Route path="/package-data-details/trace" element={<PackageDataDetailsTrace/>} />
+
 
 
         </Route>

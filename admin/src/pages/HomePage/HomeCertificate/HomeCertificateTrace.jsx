@@ -8,8 +8,6 @@ import {
   TableRow,
   Paper,
   Pagination,
-  Typography,
-  Box,
 } from "@mui/material";
 import { FaRecycle } from "react-icons/fa";
 import Back from "../../../components/Buttons/Back";
@@ -18,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BE_URL from "../../../config";
 
-const HomeBlogsTrace = () => {
+const HomeCertificateTrace = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const [data, setData] = useState([]);
@@ -27,28 +25,27 @@ const HomeBlogsTrace = () => {
 
   const fetchTrashedData = async () => {
     try {
-      const res = await axios.get(`${BE_URL}/homeBlog/trashed`);
+      const res = await axios.get(`${BE_URL}/homeCertificate/trashed`);
       const formatted = res.data.data.map((item) => ({
         ...item,
-        imageUrl: `${BE_URL}/Images/HomeImages/HomeBlog/${item.image}`,
-        data: Array.isArray(item.data) ? item.data : [item.data],
+        imageUrl: `${BE_URL}/Images/HomeImages/HomeCertificate/${item.image}`,
       }));
       setData(formatted);
     } catch (err) {
-      console.error("Error fetching trashed blogs:", err);
+      console.error("Error fetching trashed certificates:", err);
     }
   };
 
   const handleRestore = async (id) => {
     try {
-      await axios.patch(`${BE_URL}/homeBlog/restore/${id}`);
+      await axios.patch(`${BE_URL}/homeCertificate/restore/${id}`);
       setShowRestorePopup(true);
       setTimeout(() => {
         setShowRestorePopup(false);
         fetchTrashedData();
       }, 2500);
     } catch (err) {
-      console.error("Error restoring blog:", err);
+      console.error("Error restoring certificate:", err);
     }
   };
 
@@ -58,7 +55,7 @@ const HomeBlogsTrace = () => {
   );
 
   const handleBackClick = () => {
-    navigate("/home-blogs");
+    navigate("/home-certificate");
   };
 
   useEffect(() => {
@@ -72,7 +69,9 @@ const HomeBlogsTrace = () => {
       )}
 
       <div className="flex justify-between mb-4">
-        <h2 className="text-left font-semibold text-xl">Home Blogs Trace</h2>
+        <h2 className="text-left font-semibold text-xl">
+          Home Certificates Trace
+        </h2>
         <Back onClick={handleBackClick} />
       </div>
 
@@ -90,9 +89,6 @@ const HomeBlogsTrace = () => {
               </TableCell>
               <TableCell className="border-r !font-extrabold text-base text-left">
                 Image
-              </TableCell>
-              <TableCell className="border-r !font-extrabold text-base text-left">
-                Data
               </TableCell>
               <TableCell className="!font-extrabold text-base text-left">
                 Restore
@@ -112,24 +108,9 @@ const HomeBlogsTrace = () => {
                 <TableCell className="border-r">
                   <img
                     src={row.imageUrl}
-                    alt="Blog"
+                    alt="Certificate"
                     className="w-16 h-16 object-cover rounded"
                   />
-                </TableCell>
-                <TableCell className="border-r">
-                  <Box>
-                    {row.data.map((block, idx) => (
-                      <Box key={idx} className="mb-2">
-                        <Typography
-                          variant="subtitle1"
-                          className="font-semibold"
-                        >
-                          {block.data_h}
-                        </Typography>
-                        <Typography variant="body2">{block.data_p}</Typography>
-                      </Box>
-                    ))}
-                  </Box>
                 </TableCell>
                 <TableCell>
                   <button
@@ -157,7 +138,4 @@ const HomeBlogsTrace = () => {
   );
 };
 
-export default HomeBlogsTrace;
-
-
- 
+export default HomeCertificateTrace;

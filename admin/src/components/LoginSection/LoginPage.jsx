@@ -1,16 +1,15 @@
+/* eslint-disable no-unused-vars */
 // import React from 'react'
 
 // const LoginPage = () => {
 //   return (
 //     <div>
-//       Jainik 
+//       Jainik
 //     </div>
 //   )
 // }
 
 // export default LoginPage
-
-
 
 import React, { useState } from "react";
 import {
@@ -62,10 +61,10 @@ const LoginPage = () => {
           Swal.fire({
             icon: "success",
             title: "Login Successful",
-            text: "Welcome to Renest Admin Panel!",
+            text: "Welcome to Compass Tourism!",
           });
 
-          navigate("/private-policy");
+          navigate("/home-page");
         }
       } catch (error) {
         Swal.fire({

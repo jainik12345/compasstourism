@@ -31,21 +31,35 @@ const admin = require("./routes/admin");
 const homeImageSlider = require("./routes/home/homeImageSlider");
 const homeTestimonial = require("./routes/home/homeTestimonial");
 const homeBlog = require("./routes/home/homeBlog");
+const homeCertificate = require("./routes/home/homeCertificate");
 const aboutHeroSection = require("./routes/about/aboutHeroSection");
 const aboutImageSection = require("./routes/about/aboutImageSection");
 const contatForm = require("./routes/contactFormDetails");
 const contactSectionAddress = require("./routes/ContactSectionAddress");
 const privatePolicy = require("./routes/privatePolicy");
+const ourAssociations = require("./routes/ourAssociations");
+const packageCountry = require("./routes/packages/packageCountry");
+const packageStateName = require("./routes/packages/packageStateName");
+const packageAreaName = require("./routes/packages/packageAreaName");
+const packageName = require("./routes/packages/packageName");
+const packageDataDetails = require("./routes/packages/packageDataDetails");
 
 app.use("/admin", admin);
 app.use("/homeImageSlider", homeImageSlider);
 app.use("/homeTestimonial", homeTestimonial);
 app.use("/homeBlog", homeBlog);
+app.use("/homeCertificate", homeCertificate);
 app.use("/aboutHeroSection", aboutHeroSection);
 app.use("/aboutImageSection", aboutImageSection);
 app.use("/private-policy", privatePolicy);
 app.use("/contact-form", contatForm);
 app.use("/contact-section-address", contactSectionAddress);
+app.use("/ourAssociations", ourAssociations);
+app.use("/packageCountry", packageCountry);
+app.use("/packageStateName", packageStateName);
+app.use("/packageAreaName", packageAreaName);
+app.use("/packageName", packageName);
+app.use("/packageDataDetails", packageDataDetails);
 
 // Static Images
 app.use(
@@ -59,6 +73,11 @@ app.use(
 );
 
 app.use(
+  "/Images/HomeImages/HomeCertificate",
+  express.static(path.join(__dirname, "Images/HomeImages/HomeCertificate"))
+);
+
+app.use(
   "/Images/AboutImages/AboutHeroSection",
   express.static(path.join(__dirname, "Images/AboutImages/AboutHeroSection"))
 );
@@ -66,6 +85,18 @@ app.use(
 app.use(
   "/Images/AboutImages/AboutImageSection",
   express.static(path.join(__dirname, "Images/AboutImages/AboutImageSection"))
+);
+
+app.use(
+  "/Images/OurAssociations",
+  express.static(path.join(__dirname, "Images/OurAssociations"))
+);
+
+app.use(
+  "/Images/PackageImages/PackageDataDetails",
+  express.static(
+    path.join(__dirname, "Images/PackageImages/PackageDataDetails")
+  )
 );
 
 /**---------------Start Server ---------------*/

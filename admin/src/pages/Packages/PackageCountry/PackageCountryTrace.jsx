@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -8,8 +8,6 @@ import {
   TableRow,
   Paper,
   Pagination,
-  Typography,
-  Box,
 } from "@mui/material";
 import { FaRecycle } from "react-icons/fa";
 import Back from "../../../components/Buttons/Back";
@@ -18,38 +16,40 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import BE_URL from "../../../config";
 
-const HomeBlogsTrace = () => {
+const PackageCountryTrace = () => {
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
-  const [data, setData] = useState([]);
   const [showRestorePopup, setShowRestorePopup] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  const fetchTrashedData = async () => {
+  const fetchDeletedData = async () => {
     try {
-      const res = await axios.get(`${BE_URL}/homeBlog/trashed`);
-      const formatted = res.data.data.map((item) => ({
-        ...item,
-        imageUrl: `${BE_URL}/Images/HomeImages/HomeBlog/${item.image}`,
-        data: Array.isArray(item.data) ? item.data : [item.data],
-      }));
-      setData(formatted);
+      const res = await axios.get(`${BE_URL}/packageCountry/trashed`);
+      setData(res.data.data || []);
     } catch (err) {
-      console.error("Error fetching trashed blogs:", err);
+      console.error("Error fetching deleted data:", err);
     }
   };
 
-  const handleRestore = async (id) => {
+  useEffect(() => {
+    fetchDeletedData();
+  }, []);
+
+  const handleRestoreClick = async (id) => {
     try {
-      await axios.patch(`${BE_URL}/homeBlog/restore/${id}`);
+      await axios.patch(`${BE_URL}/packageCountry/restore/${id}`);
+      setSelectedId(id);
       setShowRestorePopup(true);
-      setTimeout(() => {
-        setShowRestorePopup(false);
-        fetchTrashedData();
-      }, 2500);
+      fetchDeletedData();
     } catch (err) {
-      console.error("Error restoring blog:", err);
+      console.error("Error restoring data:", err);
     }
+  };
+
+  const handleBackClick = () => {
+    navigate("/package-country");
   };
 
   const displayedRows = data.slice(
@@ -57,22 +57,22 @@ const HomeBlogsTrace = () => {
     page * rowsPerPage
   );
 
-  const handleBackClick = () => {
-    navigate("/home-blogs");
-  };
-
-  useEffect(() => {
-    fetchTrashedData();
-  }, []);
-
   return (
     <div className="p-4 rounded-xl bg-white">
       {showRestorePopup && (
-        <RestoreData onClose={() => setShowRestorePopup(false)} />
+        <RestoreData
+          onClose={() => {
+            setShowRestorePopup(false);
+            setSelectedId(null);
+          }}
+          id={selectedId}
+        />
       )}
 
       <div className="flex justify-between mb-4">
-        <h2 className="text-left font-semibold text-xl">Home Blogs Trace</h2>
+        <h2 className="text-left font-semibold text-xl">
+          Package Country Trace
+        </h2>
         <Back onClick={handleBackClick} />
       </div>
 
@@ -86,13 +86,7 @@ const HomeBlogsTrace = () => {
                 ID
               </TableCell>
               <TableCell className="border-r !font-extrabold text-base text-left">
-                Title
-              </TableCell>
-              <TableCell className="border-r !font-extrabold text-base text-left">
-                Image
-              </TableCell>
-              <TableCell className="border-r !font-extrabold text-base text-left">
-                Data
+                Country Name
               </TableCell>
               <TableCell className="!font-extrabold text-base text-left">
                 Restore
@@ -108,33 +102,13 @@ const HomeBlogsTrace = () => {
                 <TableCell className="border-r">
                   {(page - 1) * rowsPerPage + index + 1}
                 </TableCell>
-                <TableCell className="border-r">{row.title}</TableCell>
-                <TableCell className="border-r">
-                  <img
-                    src={row.imageUrl}
-                    alt="Blog"
-                    className="w-16 h-16 object-cover rounded"
-                  />
+                <TableCell className="border-r text-left">
+                  {row.package_country_name}
                 </TableCell>
-                <TableCell className="border-r">
-                  <Box>
-                    {row.data.map((block, idx) => (
-                      <Box key={idx} className="mb-2">
-                        <Typography
-                          variant="subtitle1"
-                          className="font-semibold"
-                        >
-                          {block.data_h}
-                        </Typography>
-                        <Typography variant="body2">{block.data_p}</Typography>
-                      </Box>
-                    ))}
-                  </Box>
-                </TableCell>
-                <TableCell>
+                <TableCell className="text-left">
                   <button
                     className="text-blue-600 cursor-pointer hover:text-blue-800"
-                    onClick={() => handleRestore(row.id)}
+                    onClick={() => handleRestoreClick(row.id)}
                   >
                     <FaRecycle size={22} />
                   </button>
@@ -157,7 +131,4 @@ const HomeBlogsTrace = () => {
   );
 };
 
-export default HomeBlogsTrace;
-
-
- 
+export default PackageCountryTrace;
