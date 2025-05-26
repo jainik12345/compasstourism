@@ -39,7 +39,7 @@ const IndianCityPage = () => {
       single_image: PackageImg,
       night: 6,
       day: 7,
-      data_description: "The Main Highlight of this itinerary is Visiting all the beautiful Beaches like Candolim Beach, Baga Beach, and all the UNESCO-listed Churches and doing all the adventure stuff like Parasailing, Scuba Diving, and Snorkeling.",
+      data_description: "The Main Highlight of this itinerary is Visiting all the beautiful Beaches like Candolim Beach, Baga Beach, and all the UNESCO-listed Churches and doing all the adventure stuff like Parasailing, Scuba Diving, and Snorkeling.The Main Highlight of this itinerary is Visiting all the beautiful Beaches like Candolim Beach, Baga Beach, and all the UNESCO-listed Churches and doing all the adventure stuff like Parasailing, Scuba Diving, and Snorkeling.",
       inclusions: ["Breakfast", "Lunch", "Dinner"],
       multiple_images: [
         "1748241823440-about_bg_image.jpeg",
@@ -56,7 +56,32 @@ const IndianCityPage = () => {
           question: "Ahmedabad Question"
         }
       ],
-    }
+    },
+    {
+
+      data_title: "Wildlife Tour",
+      single_image: PackageImg,
+      night: 6,
+      day: 7,
+      data_description: "The Main Highlight of this itinerary is Visiting all the beautiful Beaches like Candolim Beach, Baga Beach, and all the UNESCO-listed Churches and doing all the adventure stuff like Parasailing, Scuba Diving, and Snorkeling.The Main Highlight of this itinerary is Visiting all the beautiful Beaches like Candolim Beach, Baga Beach, and all the UNESCO-listed Churches and doing all the adventure stuff like Parasailing, Scuba Diving, and Snorkeling.",
+      inclusions: ["Breakfast", "Lunch", "Dinner"],
+      multiple_images: [
+        "1748241823440-about_bg_image.jpeg",
+        "1748241823445-about_image_1.webp",
+        "1748241823452-about_image_2.webp"
+      ],
+      highlight: null,
+      from_city_id: 1,
+      to_city_id: 3,
+      attraction: ["Velavadar", "Gir", "Bajana", "Nal Sarovar"],
+      faqs: [
+        {
+          answer: "Ahmedabad Answer",
+          question: "Ahmedabad Question"
+        }
+      ],
+    },
+
 
   ]
 
@@ -100,7 +125,7 @@ const IndianCityPage = () => {
 
       {/* Package Details section */}
 
-      <div className="package-details-container flex flex-col gap-5 p-10 max-w-screen-xl mx-auto">
+      <div className="package-details-container flex flex-col gap-5 py-10 md:px-10 px-5 max-w-screen-xl mx-auto">
 
         <h2 className="text-[1.5rem] font-bold ">{FormattedPath} Tour Packages</h2>
 
@@ -140,7 +165,7 @@ const IndianCityPage = () => {
 
           return (
 
-            <TourPackageCard key={idx} data_title={val.data_title} single_image={val.single_image} night={val.night} day={val.day} data_description={val.data_description} inclusions={val.inclusions} multiple_images={val.multiple_images} highlight={val.highlight} from_city_id={val.from_city_id} to_city_id={val.to_city_id} attraction={val.attraction} faqs={val.faqs} />
+            <TourPackageCard key={idx} data_title={val.data_title} single_image={val.single_image} night={val.night} day={val.day} data_description={val.data_description} inclusions={val.inclusions} multiple_images={val.multiple_images} from_city_id={val.from_city_id}  attraction={val.attraction} />
 
           )
 
