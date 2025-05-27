@@ -2,13 +2,7 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useRef, useState, useEffect } from "react";
 import InquiryForm from "../../../../../components/CommanSections/InquiryForm/InquiryForm";
 
-const HomePackagesCardinnnerHeroSection = ({
-  TourDetails,
-  HeroImgs,
-  Heading,
-  MapImg,
-  Highlight,
-}) => {
+const HomePackagesCardinnnerHeroSection = ({}) => {
   // Testimonial Cards Logic
 
   const containerRef = useRef(null);

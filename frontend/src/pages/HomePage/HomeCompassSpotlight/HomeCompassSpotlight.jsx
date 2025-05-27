@@ -14,7 +14,7 @@ const HomeCompassSpotlight = () => {
 
       <div className="compass-spotlight-section">
 
-        <div className="container max-w-screen-xl mx-auto flex flex-col gap-10 py-10 md:px-10 px-5">
+        <div className="container max-w-screen-xl mx-a  uto flex flex-col gap-10 py-10 md:px-10 px-5">
 
           <div className="header flex flex-col justify-between">
             <h2 className="text-[1.5rem] font-semibold ">Compass Spotlight</h2>

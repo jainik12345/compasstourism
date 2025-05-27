@@ -1,5 +1,9 @@
 import { useParams } from "react-router-dom"
 import BlogImg from "../../../../assets/images/637921896094475779.png";
+import axios from "axios"
+import { useEffect, useState } from "react"
+import BE_URL from "../../../../config";
+
 
 export const HomeBlogInnerPage = () => {
 

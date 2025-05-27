@@ -1,17 +1,31 @@
-import SliderImg1 from "../../../assets/images/637921896094475779.png"
-import SliderImg2 from "../../../assets/images/637921896896248600.png"
 import { NavLink } from "react-router-dom"
+import BE_URL from "../../../config"
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 export const HomeBlogs = () => {
 
-  const BlogDataArr = [
+  const [BlogDataArr, setBlogDataArr] = useState([]);
 
-    { ImgUrl: SliderImg1, ImgTitle: "A Comprehensive Guide on Planning Your Perfect Trip to the Raan of Kutch, Gujarat", },
-    { ImgUrl: SliderImg2, ImgTitle: "Why Companies Turn to the Top B2B Travel Agents for Seamless Journeys", },
-    { ImgUrl: SliderImg1, ImgTitle: "Unraveling the Famous Heritage and Heritage Tour Packages", },
-    { ImgUrl: SliderImg2, ImgTitle: "Wildlife Wonders in Gujarat: Unveiling the Best Destinations for Gujarat Wildlife Holidays", },
+  useEffect(() => {
+    const fetchBlogData = async () => {
+      try {
+        const response = await axios.get(`${BE_URL}/homeBlog`);
+        if (response.status === 200) {
+          setBlogDataArr(response.data.data);
+        } else {
+          console.error("Error fetching blog data:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching blog data:", error);
+      }
+    };
+    fetchBlogData();
+  }, []);
 
-  ]
+
+
+  console.log("BlogDataArr", BlogDataArr);
 
   return (
 
@@ -32,32 +46,28 @@ export const HomeBlogs = () => {
           <div className="grid md:grid-cols-3 grid-cols-1 gap-10">
 
             {
-
               BlogDataArr && BlogDataArr.map((item, idx) => {
-
+                const titleSlug = item.title.toLowerCase().replace(/\s+/g, "-");
+                const imageUrl = `${BE_URL}/Images/HomeImages/HomeBlog/${item.image}`; // Assuming this is where images are served from
 
                 return (
-
-                  <NavLink to={`/blog/${item.ImgTitle.toLowerCase().replace(/\s+/g, "-")}`}  key={idx}>
-
-                    <div className="relative rounded-xl overflow-hidden group shadow-md" >
+                  <NavLink to={`/blog/${titleSlug}`} key={idx}>
+                    <div className="relative rounded-xl overflow-hidden group shadow-md">
                       <img
-                        src={item.ImgUrl}
-                        alt={item.ImgTitle}
+                        src={imageUrl}
+                        alt={item.title}
                         draggable={false}
                         className="w-full h-72 object-cover"
                       />
-                      <div className="absolute bottom-0 left-0 w-full flex flex-col justify-center items-center bg-[linear-gradient(rgba(72,0,72,0.8),rgba(192,72,72,0.8))] opacity-80 text-white px-4 transition-all duration-300 ease-in-out h-[64px] group-hover:h-75  overflow-hidden">
-                        <h3 className="text-[1rem] text-center font-semibold">{item.ImgTitle}</h3>
+                      <div className="absolute bottom-0 left-0 w-full flex flex-col justify-center items-center bg-[linear-gradient(rgba(72,0,72,0.8),rgba(192,72,72,0.8))] opacity-80 text-white px-4 transition-all duration-300 ease-in-out h-[64px] group-hover:h-75 overflow-hidden">
+                        <h3 className="text-[1rem] text-center font-semibold">{item.title}</h3>
                       </div>
                     </div>
                   </NavLink>
-
-                )
-
+                );
               })
-
             }
+
 
           </div>
 

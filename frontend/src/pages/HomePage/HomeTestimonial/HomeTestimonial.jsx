@@ -1,34 +1,25 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
-
-const TestimonialDataaArr = [
-
-  {
-    Para: `" Good service provide in our kashmir tour. Thank u so much for this good service "`,
-    Name: "- Patel Bhumi",
-  },
-
-  {
-    Para: `" My journey under compass tourism,i never forget it. Skilled staff with good behaiver and cooperative nature impress me. Excellent. "`,
-    Name: "- Gopi Upadhyay",
-  },
-
-  {
-    Para: `" Good service provide in our kashmir tour. Thank u so much for this good service "`,
-    Name: "- Satyam Dabhi",
-  },
-
-  {
-    Para: `" Compass Tourism.and staff members understands curiosity of the customer thereafter provide excellent itinerary resulting tour ends with sweet memories and happiness. Good Luck to all "`,
-    Name: "- Girish Gupta",
-  }
-
-]
+import BE_URL from "../../../config";
 
 const HomeTestimonial = () => {
 
 
   const [Fade, setFade] = useState(true);
 
+  const [TestimonialDataArr, setTestimonialDataaArr] = useState([]);
+
+  useEffect(() => {
+    const fetchTestimonialData = async () => {
+      try {
+        const response = await axios.get(`${BE_URL}/homeTestimonial`);
+        setTestimonialDataaArr(response.data.data);
+      } catch (error) {
+        console.error("Error fetching testimonial data:", error);
+      }
+    };
+    fetchTestimonialData();
+  }, []);
   // Review Testimonial logic
 
   useEffect(() => {
@@ -54,7 +45,7 @@ const HomeTestimonial = () => {
   const [TestimonialCardsPerPage, setTestimonialCardsPerPage] = useState(1);
 
 
-  const TotalTestimonialSlides = Math.ceil(TestimonialDataaArr.length / TestimonialCardsPerPage);
+  const TotalTestimonialSlides = Math.ceil(TestimonialDataArr.length / TestimonialCardsPerPage);
   const CurrentTestimonialSlides = Math.floor(CurrentTestimonialIdx / TestimonialCardsPerPage)
 
 
@@ -68,7 +59,7 @@ const HomeTestimonial = () => {
 
     return () => clearInterval(TestiMonialInterval);
 
-  }, [TestimonialCardsPerPage])
+  }, [TestimonialCardsPerPage, TestimonialDataArr]);
 
   const HandleNextTestimonial = () => {
     setFade(false); // Trigger fade-out
@@ -77,7 +68,7 @@ const HomeTestimonial = () => {
 
       setCurrentTestimonialIdx((prev) => {
 
-        return prev + TestimonialCardsPerPage >= TestimonialDataaArr.length ? 0 : prev + TestimonialCardsPerPage;
+        return prev + TestimonialCardsPerPage >= TestimonialDataArr.length ? 0 : prev + TestimonialCardsPerPage;
 
       })
       setFade(true); // Trigger fade-in
@@ -86,7 +77,7 @@ const HomeTestimonial = () => {
 
   }
 
-  const VisibleTestimonialCards = TestimonialDataaArr.slice(CurrentTestimonialIdx, CurrentTestimonialIdx + TestimonialCardsPerPage);
+  const VisibleTestimonialCards = TestimonialDataArr.slice(CurrentTestimonialIdx, CurrentTestimonialIdx + TestimonialCardsPerPage);
 
 
 
@@ -106,15 +97,15 @@ const HomeTestimonial = () => {
           </div>
 
 
-          <div className="testimonial-cards-cont flex  overflow-hidden justify-center md:max-w-[50%] max-w-full h-max shadow-2xl md:rounded-tl-[100px] md:rounded-br-[100px] rounded-2xl bg-blue-200 mx-auto items-center gap-10 ">
+          <div className="testimonial-cards-cont flex  overflow-hidden justify-center md:min-w-[50%] max-w-full h-max shadow-2xl md:rounded-tl-[100px] md:rounded-br-[100px] rounded-2xl bg-blue-200 mx-auto items-center gap-10 ">
             {VisibleTestimonialCards.map((item, idx) => (
               <div
-                className={`testimonial-card flex flex-col justify-center items-center gap-10 py-10 px-5 text-center transition-opacity duration-500 ease-in-out ${Fade ? "opacity-100" : "opacity-0"}`}
+                className={`testimonial-card flex flex-col justify-center items-center gap-10 py-10 px-5  max-w-[500px] text-center transition-opacity duration-500 ease-in-out ${Fade ? "opacity-100" : "opacity-0"}`}
                 key={idx}
               >
 
-                <h2 className="md:text-[1.1rem] text-[1rem] flex items-center font-semibold h-30 w-full text-center">{item.Para}</h2>
-                <h2 className="text-[1rem] font-semibold text-gray-600">{item.Name}</h2>
+                <h2 className="md:text-[1.1rem] text-[1rem] flex items-center font-semibold h-30 text-center">{item.description}</h2>
+                <h2 className="text-[1rem] font-semibold text-gray-600">-{item.name}</h2>
 
               </div>
 

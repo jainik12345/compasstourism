@@ -11,6 +11,8 @@ const HomePackagesCardinnnerFaqSection = ({ FaqData }) => {
       return prev === Idx ? null : Idx;
     });
   };
+
+
   return (
     <>
       <div className="FAQ-cont gap-3 flex flex-col ">
@@ -43,7 +45,7 @@ const HomePackagesCardinnnerFaqSection = ({ FaqData }) => {
                       openIndex === Idx ? "rotate-[180deg]" : ""
                     }`}
                   />
-                  {Val.FaqTitle}
+                  {Val.question}
                 </h3>
               </div>
 
@@ -58,7 +60,7 @@ const HomePackagesCardinnnerFaqSection = ({ FaqData }) => {
                     className="overflow-hidden"
                   >
                     <div className="mt-4 text-gray-600 text-base p-2">
-                      {Val.FaqFact}
+                      {Val.answer}
                     </div>
                   </motion.div>
                 )}
