@@ -10,7 +10,7 @@ import HomeCertificate from "./HomeCertificate/HomeCertificate";
 
 const HomePage = () => {
   return (
-    <div>
+    <div> 
 
       <HomeHeroSection />
       <HomePackages />

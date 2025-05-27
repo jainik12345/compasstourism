@@ -1,17 +1,41 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import SliderImg1 from "../../../assets/images/637921896094475779.png";
 import SliderImg2 from "../../../assets/images/637921896896248600.png";
 import ImageSlider from "../../../components/CommanSections/ImageSlider/ImageSlider";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
+import BE_URL from "../../../config";
+import axios from "axios";
 
+const HomeHeroSection = () => {
 
+  const [SliderImgArr, setSliderImgArr] = useState([]);
 
-const HomeHeroSection = () => { 
-  const SliderImgArr = [
-    { ImgUrl: SliderImg1 },
-    { ImgUrl: SliderImg2 },
-  ];
+  useEffect(() => {
+    const FetchHomeImgSliderData = async () => {
+      try {
+        const response = await axios.get(`${BE_URL}/homeImageSlider`);
+
+        if (response.status === 200) {
+          const images = response.data.data[0].home_slider_images;
+
+          const formattedImages = images.map((imgName) => ({
+            ImgUrl: `${BE_URL}/Images/HomeImages/HomeImageSlider/${imgName}`,
+            ImgDescription: "", // optional, if you plan to use it later
+          }));
+
+          setSliderImgArr(formattedImages);
+        } else {
+          console.error("Error fetching hero slider data:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching details for", error);
+      }
+    };
+
+    FetchHomeImgSliderData();
+  }, []);
+
 
   const ImgTestimonialArr = [
     { ImgUrl: SliderImg1, ImgTitle: "Weekend Getaways" },

@@ -245,7 +245,7 @@ const HomePackages = () => {
     <div className="section">
       {HomePackagesDataArr.map((Val, Idx) => (
         <HomePackagesSlider
-          key={Idx}
+          IdKey={Idx}
           PackageHeading={Val.PackageHeading}
           CardsData={Val.CardsData}
         />

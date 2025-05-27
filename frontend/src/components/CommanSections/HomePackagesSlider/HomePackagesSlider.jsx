@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useRef, useState, useEffect } from "react";
 
-const HomePackagesSlider = ({ CardsData, PackageHeading, key }) => {
+const HomePackagesSlider = ({ CardsData, PackageHeading, IdKey }) => {
 
     const containerRef = useRef(null);
     const [cardsPerPage, setCardsPerPage] = useState(4);
@@ -62,7 +62,7 @@ const HomePackagesSlider = ({ CardsData, PackageHeading, key }) => {
 
 
         <>
-            <div className="container max-w-screen-xl mx-auto px-4 md:py-10 py-20 relative" key={key}>
+            <div className="container max-w-screen-xl mx-auto px-4 md:py-10 py-20 relative" key={IdKey}>
 
 
 
