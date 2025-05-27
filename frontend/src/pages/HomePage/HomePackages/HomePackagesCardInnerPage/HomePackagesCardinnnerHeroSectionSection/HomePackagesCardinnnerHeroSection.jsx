@@ -2,10 +2,13 @@ import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useRef, useState, useEffect } from "react";
 import InquiryForm from "../../../../../components/CommanSections/InquiryForm/InquiryForm";
 
-const HomePackagesCardinnnerHeroSection = ({ TourDetails, HeroImgs, Heading, MapImg, Highlight }) => {
-
-
-
+const HomePackagesCardinnnerHeroSection = ({
+  TourDetails,
+  HeroImgs,
+  Heading,
+  MapImg,
+  Highlight,
+}) => {
   // Testimonial Cards Logic
 
   const containerRef = useRef(null);
@@ -62,21 +65,13 @@ const HomePackagesCardinnnerHeroSection = ({ TourDetails, HeroImgs, Heading, Map
     containerRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
-
-
-
   return (
-
     // hero section
 
     <div className="hero-cont flex md:flex-row flex-col justify-center items-start gap-10">
-
-
       {/* hero section images  */}
 
-
       <div className="relative md:w-2/3 w-full flex flex-col gap-5">
-
         {/* Arrows Buttons*/}
         <button
           onClick={handlePrev}
@@ -102,13 +97,9 @@ const HomePackagesCardinnnerHeroSection = ({ TourDetails, HeroImgs, Heading, Map
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
         >
-
-          {
-
-            HeroImgs && HeroImgs.map((HeroImgs, HeroImgsIdx) => {
-
+          {HeroImgs &&
+            HeroImgs.map((HeroImgs, HeroImgsIdx) => {
               return (
-
                 <div
                   key={HeroImgsIdx}
                   className="flex-shrink-0 w-full  px-2 snap-start"
@@ -121,54 +112,41 @@ const HomePackagesCardinnnerHeroSection = ({ TourDetails, HeroImgs, Heading, Map
                       className="w-full h-100 object-cover"
                     />
                   </div>
-
                 </div>
-              )
-
-            })
-
-          }
-
-
+              );
+            })}
         </div>
 
         {/* map image section */}
 
         <div className="p-2 flex justify-center items-center">
-
           <img src={MapImg} alt="" className="w-full" />
-
         </div>
 
         {/* highlights section */}
 
         <div className="flex flex-col gap-5">
+          <h2 className="font-semibold text-[1.5rem] text-orange-color">
+            Highlights
+          </h2>
 
-          <h2 className="font-semibold text-[1.5rem] text-orange-color">Highlights</h2>
-
-          {
-
-            Highlight && Highlight.map((Val, Idx) => {
-
+          {Highlight &&
+            Highlight.map((Val, Idx) => {
               return (
-
-                <p className="text-gray-500 font-semibold text-[.9rem]" key={Idx}>{Val}</p>
-
-              )
-
-            })
-
-          }
-
+                <p
+                  className="text-gray-500 font-semibold text-[.9rem]"
+                  key={Idx}
+                >
+                  {Val}
+                </p>
+              );
+            })}
         </div>
-
       </div>
-
 
       {/* details section */}
 
       <div className="details-cont md:w-1/3 w-full p-2  flex flex-col md:gap-2 gap-5">
-
         {/* heading */}
 
         <h2 className="font-bold text-[1.3rem] text-orange-color">{Heading}</h2>
@@ -184,35 +162,26 @@ const HomePackagesCardinnnerHeroSection = ({ TourDetails, HeroImgs, Heading, Map
         {/* package attraction */}
 
         <h2 className="text-[1.3rem] font-semibold text-orange-color">
-
-          Attraction:{
-
-            TourDetails.Attractions && TourDetails.Attractions.map((val, idx) => {
-
+          Attraction:
+          {TourDetails.Attractions &&
+            TourDetails.Attractions.map((val, idx) => {
               return (
-
-                <li key={idx} className="text-[1rem] font-normal text-black mt-2">{val}</li>
-
-              )
-
-            })
-
-          }
-
+                <li
+                  key={idx}
+                  className="text-[1rem] font-normal text-black mt-2"
+                >
+                  {val}
+                </li>
+              );
+            })}
         </h2>
 
         {/* form section */}
 
         <InquiryForm />
-
-
-
-
       </div>
+    </div>
+  );
+};
 
-    </div >
-
-  )
-}
-
-export default HomePackagesCardinnnerHeroSection
+export default HomePackagesCardinnnerHeroSection;

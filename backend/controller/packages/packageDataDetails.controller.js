@@ -225,16 +225,6 @@ exports.restorePackageData = (req, res) => {
 };
 
 // Get data by package_name_id
-// exports.getPackageDataByPackageNameId = (req, res) => {
-//   const { id } = req.params;
-//   db.query("SELECT * FROM package_data_details WHERE package_name_id = ? AND deleted_at = 0", [id], (err, results) => {
-//     if (err) return res.status(500).json({ error: err.message });
-//     if (!results.length) return res.status(404).json({ error: "No data found for this package_name_id" });
-//     res.status(200).json({ status: "success", data: results });
-//   });
-// };
-
-// Get data by package_name_id
 exports.getPackageDataByPackageNameId = (req, res) => {
   const { id } = req.params;
   db.query(
@@ -247,8 +237,6 @@ exports.getPackageDataByPackageNameId = (req, res) => {
     }
   );
 };
-
-
 
 exports.getPackageNames = (req, res) => {
   db.query("SELECT id, package_name FROM package_name", (err, results) => {
