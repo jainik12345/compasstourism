@@ -198,13 +198,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import HomePackagesSlider from "../../../components/CommanSections/HomePackagesSlider/HomePackagesSlider";
+import BE_URL from "./../../../config";
 
 const HomePackages = () => {
   const [HomePackagesDataArr, setHomePackagesDataArr] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3030/packageName")
+      .get(`${BE_URL}/packageName`)
       .then(async (response) => {
         const packageNames = response.data.data;
 
@@ -212,17 +213,17 @@ const HomePackages = () => {
           packageNames.map(async (pkg) => {
             try {
               const res = await axios.get(
-                `http://localhost:3030/packageDataDetails/byPackageId/${pkg.id}`
+                `${BE_URL}/packageDataDetails/byPackageId/${pkg.id}`
               );
 
               const CardsData = res.data.data.map((item) => ({
-                ImgUrl: `http://localhost:3030/Images/PackageImages/PackageDataDetails/${item.single_image}`,
+                ImgUrl: `${BE_URL}/Images/PackageImages/PackageDataDetails/${item.single_image}`,
                 ImgTitle: item.data_title,
                 nights: `${item.night} Nights & ${item.day} Days`,
               }));
 
               return {
-                PackageHeading: pkg.package_name,  
+                PackageHeading: pkg.package_name,
                 CardsData,
               };
             } catch (error) {
