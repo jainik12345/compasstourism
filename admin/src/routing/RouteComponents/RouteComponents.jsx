@@ -72,6 +72,10 @@ import PackageDataDetails from "../../pages/Packages/PackageDataDetails/PackageD
 import PackageDataDetailsInsert from "../../pages/Packages/PackageDataDetails/PackageDataDetailsInsert";
 import PackageDataDetailsUpdate from "../../pages/Packages/PackageDataDetails/PackageDataDetailsUpdate";
 import PackageDataDetailsTrace from "../../pages/Packages/PackageDataDetails/PackageDataDetailsTrace";
+import PackageDataAreaName from "../../pages/Packages/PackageDataAreaName/PackageDataAreaName";
+import PackageDataAreaNameInsert from "../../pages/Packages/PackageDataAreaName/PackageDataAreaNameInsert";
+import PackageDataAreaNameUpdate from "../../pages/Packages/PackageDataAreaName/PackageDataAreaNameUpdate";
+import PackageDataAreaNameTrace from "../../pages/Packages/PackageDataAreaName/PackageDataAreaNameTrace";
 
 const RouteComponents = () => {
   return (
@@ -191,6 +195,10 @@ const RouteComponents = () => {
            <Route path="/package-data-details/trace" element={<PackageDataDetailsTrace/>} />
 
 
+           <Route path="/package-data-area-name" element={<PackageDataAreaName/>} />
+           <Route path="/package-data-area-name/insert" element={<PackageDataAreaNameInsert/>} />
+           <Route path="/package-data-area-name/update" element={<PackageDataAreaNameUpdate/>} />
+           <Route path="/package-data-area-name/trace" element={<PackageDataAreaNameTrace/>} />
 
         </Route>
       </Routes>

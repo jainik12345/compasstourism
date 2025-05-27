@@ -43,6 +43,7 @@ const packageStateName = require("./routes/packages/packageStateName");
 const packageAreaName = require("./routes/packages/packageAreaName");
 const packageName = require("./routes/packages/packageName");
 const packageDataDetails = require("./routes/packages/packageDataDetails");
+const packageDataAreaName = require("./routes/packages/packageDataAreaName");
 
 app.use("/admin", admin);
 app.use("/homeImageSlider", homeImageSlider);
@@ -60,6 +61,7 @@ app.use("/packageStateName", packageStateName);
 app.use("/packageAreaName", packageAreaName);
 app.use("/packageName", packageName);
 app.use("/packageDataDetails", packageDataDetails);
+app.use("/packageDataAreaName", packageDataAreaName);
 
 // Static Images
 app.use(

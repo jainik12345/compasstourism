@@ -65,6 +65,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: "/package-area-name", name: "Package Area Name" },
         { path: "/package-name", name: "Packages  Name" },
         { path: "/package-data-details", name: "Packages  Data Details" },
+        { path: "/package-data-area-name", name: "Packages Data Area Name" }
       ],
     },
     { path: "/private-policy", name: "Private Policy", icon: <FaLock /> },

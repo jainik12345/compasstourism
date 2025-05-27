@@ -2,10 +2,13 @@ const db = require("../../config/db");
 
 // Get all package areas
 module.exports.getAllPackageAreas = (req, res) => {
-  db.query("SELECT * FROM package_area_name WHERE deleted_at = 0", (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
-    return res.status(200).json({ status: "success", data: results });
-  });
+  db.query(
+    "SELECT * FROM package_area_name WHERE deleted_at = 0",
+    (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      return res.status(200).json({ status: "success", data: results });
+    }
+  );
 };
 
 // Insert new package area
@@ -52,13 +55,17 @@ module.exports.updatePackageArea = (req, res) => {
 // Soft delete package area
 module.exports.deletePackageArea = (req, res) => {
   const { id } = req.params;
-  db.query("UPDATE package_area_name SET deleted_at = 1 WHERE id = ?", [id], (err) => {
-    if (err) return res.status(500).json({ error: err.message });
-    return res.status(200).json({
-      status: "success",
-      message: "Package area soft deleted",
-    });
-  });
+  db.query(
+    "UPDATE package_area_name SET deleted_at = 1 WHERE id = ?",
+    [id],
+    (err) => {
+      if (err) return res.status(500).json({ error: err.message });
+      return res.status(200).json({
+        status: "success",
+        message: "Package area soft deleted",
+      });
+    }
+  );
 };
 
 // Get package areas by state ID
@@ -90,11 +97,15 @@ module.exports.getTrashedPackageAreasByStateId = (req, res) => {
 // Restore soft-deleted package area
 module.exports.restorePackageArea = (req, res) => {
   const { id } = req.params;
-  db.query("UPDATE package_area_name SET deleted_at = 0 WHERE id = ?", [id], (err) => {
-    if (err) return res.status(500).json({ error: err.message });
-    return res.status(200).json({
-      status: "success",
-      message: "Package area restored",
-    });
-  });
+  db.query(
+    "UPDATE package_area_name SET deleted_at = 0 WHERE id = ?",
+    [id],
+    (err) => {
+      if (err) return res.status(500).json({ error: err.message });
+      return res.status(200).json({
+        status: "success",
+        message: "Package area restored",
+      });
+    }
+  );
 };
