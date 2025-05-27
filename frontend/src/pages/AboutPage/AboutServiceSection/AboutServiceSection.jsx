@@ -64,7 +64,6 @@ const AboutServiceSection = () => {
 
                     <p className="text-[1rem] font-semibold text-gray-600 text-justify">{Val.Para}</p>
 
-
                   </div>
 
                   <div className="shadow-[0px_0px_20px_5px_rgba(0,0,0,0.1)] w-full rounded-2xl flex flex-col gap-5 p-5">

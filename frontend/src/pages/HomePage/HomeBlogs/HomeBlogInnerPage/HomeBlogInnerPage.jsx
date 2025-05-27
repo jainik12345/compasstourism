@@ -88,76 +88,76 @@ import BE_URL from "../../../../config";
 const slugify = (text) => text.toLowerCase().replace(/\s+/g, "-");
 
 export const HomeBlogInnerPage = () => {
-  const { blogSlag } = useParams();
-  const [blogData, setBlogData] = useState(null);
-  const [loading, setLoading] = useState(true);
+    const { blogSlag } = useParams();
+    const [blogData, setBlogData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchBlog = async () => {
-      try {
-        const response = await axios.get(`${BE_URL}/homeBlog`);
-        if (response.status === 200) {
-          const blogs = response.data.data;
+    useEffect(() => {
+        const fetchBlog = async () => {
+            try {
+                const response = await axios.get(`${BE_URL}/homeBlog`);
+                if (response.status === 200) {
+                    const blogs = response.data.data;
 
-          const foundBlog = blogs.find(
-            (item) => slugify(item.title) === blogSlag
-          );
+                    const foundBlog = blogs.find(
+                        (item) => slugify(item.title) === blogSlag
+                    );
 
-          setBlogData(foundBlog || null);
-        }
-      } catch (error) {
-        console.error("Error fetching blog data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+                    setBlogData(foundBlog || null);
+                }
+            } catch (error) {
+                console.error("Error fetching blog data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    fetchBlog();
-  }, [blogSlag]);
+        fetchBlog();
+    }, [blogSlag]);
 
-  if (loading) {
-    return <div className="text-center py-10">Loading...</div>;
-  }
+    if (loading) {
+        return <div className="text-center py-10">Loading...</div>;
+    }
 
-  if (!blogData) {
+    if (!blogData) {
+        return (
+            <div className="text-center py-10 text-red-500">Blog not found.</div>
+        );
+    }
+
+    const imageUrl = `${BE_URL}/Images/HomeImages/HomeBlog/${blogData.image}`;
+
     return (
-      <div className="text-center py-10 text-red-500">Blog not found.</div>
-    );
-  }
-
-  const imageUrl = `${BE_URL}/Images/HomeImages/HomeBlog/${blogData.image}`;
-
-  return (
-    <div className="container max-w-screen-xl mx-auto py-10 lg:px-20 md:px-10 px-5 flex flex-col items-center gap-10">
-      <div>
-        <img
-          src={imageUrl}
-          alt={blogData.title}
-          className="h-auto w-full object-cover rounded-xl"
-        />
-      </div>
-
-      <div className="heading">
-        <h2 className="md:text-[1.5rem] text-[1.3rem] font-[400] text-gray-700 text-center">
-          {blogData.title}
-        </h2>
-      </div>
-
-      <div className="content flex flex-col gap-5">
-        {blogData.data &&
-          blogData.data.map((block, idx) => (
-            <div key={idx}>
-              <h2 className="text-[1.2rem] font-semibold text-gray-800 mb-3">
-                {block.data_h}
-              </h2>
-              <p className="text-[.9rem] font-semibold text-gray-600 text-justify">
-                {block.data_p}
-              </p>
+        <div className="container max-w-screen-xl mx-auto py-10 lg:px-20 md:px-10 px-5 flex flex-col items-center gap-10">
+            <div>
+                <img
+                    src={imageUrl}
+                    alt={blogData.title}
+                    className="h-100  object-cover rounded-2xl"
+                />
             </div>
-          ))}
-      </div>
-    </div>
-  );
+
+            <div className="heading w-full ">
+                <h2 className="md:text-[1.5rem] text-[1.3rem] font-[400] text-gray-700 ">
+                    {blogData.title}
+                </h2>
+            </div>
+
+            <div className="content flex flex-col gap-5 w-full">
+                {blogData.data &&
+                    blogData.data.map((block, idx) => (
+                        <div key={idx}>
+                            <h2 className="heading text-[1.2rem] font-semibold text-gray-800 mb-3">
+                                {block.data_h}
+                            </h2>
+                            <p className="text-[.9rem] font-semibold text-gray-600 text-justify">
+                                {block.data_p}
+                            </p>
+                        </div>
+                    ))}
+            </div>
+        </div>
+    );
 };
 
 export default HomeBlogInnerPage;

@@ -104,6 +104,8 @@ const HomeCertificate = () => {
         containerRef.current.scrollLeft = scrollLeft.current - walk;
     };
 
+    console.log(certificateData)
+
     return (
         <div className='bg-gray-100'>
             <div className="container mx-auto max-w-screen-xl flex md:flex-row flex-col py-20 px-10">

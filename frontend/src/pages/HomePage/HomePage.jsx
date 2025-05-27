@@ -12,14 +12,14 @@ const HomePage = () => {
   return (
     <div>
 
-      {/* <HomeHeroSection />
+      <HomeHeroSection />
       <HomePackages />
       <HomeCompassSpotlight />
       <HomeImages />
       <HomeServices />
       <HomeBestHotelDeals />
       <HomeTestimonial />
-      <HomeCertificate /> */}
+      <HomeCertificate />
       <HomeBlogs />
 
     </div>
