@@ -34,6 +34,7 @@ const homeBlog = require("./routes/home/homeBlog");
 const homeCertificate = require("./routes/home/homeCertificate");
 const aboutHeroSection = require("./routes/about/aboutHeroSection");
 const aboutImageSection = require("./routes/about/aboutImageSection");
+const aboutConsultation = require("./routes/about/aboutConsultation");
 const contatForm = require("./routes/contactFormDetails");
 const contactSectionAddress = require("./routes/ContactSectionAddress");
 const privatePolicy = require("./routes/privatePolicy");
@@ -52,6 +53,7 @@ app.use("/homeBlog", homeBlog);
 app.use("/homeCertificate", homeCertificate);
 app.use("/aboutHeroSection", aboutHeroSection);
 app.use("/aboutImageSection", aboutImageSection);
+app.use("/aboutConsultation", aboutConsultation);
 app.use("/private-policy", privatePolicy);
 app.use("/contact-form", contatForm);
 app.use("/contact-section-address", contactSectionAddress);
@@ -99,6 +101,18 @@ app.use(
   express.static(
     path.join(__dirname, "Images/PackageImages/PackageDataDetails")
   )
+);
+
+app.use(
+  "/Images/PackageImages/PackageStateImages",
+  express.static(
+    path.join(__dirname, "Images/PackageImages/PackageStateImages")
+  )
+);
+
+app.use(
+  "/Images/PackageImages/PackageNameImages",
+  express.static(path.join(__dirname, "Images/PackageImages/PackageNameImages"))
 );
 
 /**---------------Start Server ---------------*/

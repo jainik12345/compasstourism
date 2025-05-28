@@ -13,4 +13,6 @@ router.get("/data/:stateId", controller.getPackageAreasByStateId);
 router.get("/trashed/:stateId", controller.getTrashedPackageAreasByStateId);
 router.put("/restore/:id", controller.restorePackageArea);
 
+
+
 module.exports = router;

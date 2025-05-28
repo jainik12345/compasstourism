@@ -43,7 +43,7 @@ const PackageStateNameTrace = () => {
   useEffect(() => {
     if (selectedCountryId) {
       axios
-        .get(`${BE_URL}/packageStateName/trashed/${selectedCountryId}`)
+        .get(`${BE_URL}/packageStateName/trashed/country/${selectedCountryId}`)
         .then((res) => setTrashedStates(res.data.data))
         .catch((err) => console.error("Trash fetch failed:", err));
     } else {
@@ -58,7 +58,7 @@ const PackageStateNameTrace = () => {
 
   const handleRestore = (id) => {
     axios
-      .put(`${BE_URL}/packageStateName/restore/${id}`)
+      .patch(`${BE_URL}/packageStateName/restore/${id}`)
       .then((res) => {
         if (res.data.status === "success") {
           setTrashedStates((prev) => prev.filter((item) => item.id !== id));
@@ -125,6 +125,12 @@ const PackageStateNameTrace = () => {
               <TableCell className="border-r font-bold text-base">
                 State Name
               </TableCell>
+              <TableCell className="border-r font-bold text-base">
+                Description
+              </TableCell>
+              <TableCell className="border-r font-bold text-base">
+                Image
+              </TableCell>
               <TableCell className="font-bold text-base text-center">
                 Restore
               </TableCell>
@@ -134,7 +140,7 @@ const PackageStateNameTrace = () => {
           <TableBody>
             {displayedRows.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3} align="center" className="py-6">
+                <TableCell colSpan={5} align="center" className="py-6">
                   First select country name, then state name will appear here.
                 </TableCell>
               </TableRow>
@@ -149,6 +155,20 @@ const PackageStateNameTrace = () => {
                   </TableCell>
                   <TableCell className="border-r">
                     {row.package_state_name}
+                  </TableCell>
+                  <TableCell className="border-r">
+                    {row.description || "-"}
+                  </TableCell>
+                  <TableCell className="border-r">
+                    {row.image ? (
+                      <img
+                        src={`${BE_URL}/Images/PackageImages/PackageStateImages/${row.image}`}
+                        alt="state"
+                        className="w-16 h-16 object-cover rounded-md border"
+                      />
+                    ) : (
+                      "-"
+                    )}
                   </TableCell>
                   <TableCell className="text-center">
                     <Tooltip title="Restore State" arrow>

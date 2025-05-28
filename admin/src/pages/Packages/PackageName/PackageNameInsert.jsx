@@ -9,6 +9,7 @@ import SubmitData from "../../../components/Popup/SubmitData";
 import BE_URL from "../../../config";
 
 const BlueTextField = styled(TextField)({
+  marginBottom: "1rem",
   "& label.Mui-focused": { color: "#1976d2" },
   "& .MuiInput-underline:after": { borderBottomColor: "#1976d2" },
   "& .MuiOutlinedInput-root": {
@@ -24,6 +25,7 @@ const PackageNameInsert = () => {
     package_country_id: "",
     package_name: "",
   });
+  const [imageFile, setImageFile] = useState(null);
 
   const [countryOptions, setCountryOptions] = useState([]);
   const [errors, setErrors] = useState({});
@@ -42,6 +44,11 @@ const PackageNameInsert = () => {
     setErrors((prev) => ({ ...prev, [name]: false }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -54,17 +61,20 @@ const PackageNameInsert = () => {
 
     if (Object.values(newErrors).some(Boolean)) return;
 
+    const data = new FormData();
+    data.append("package_country_id", formData.package_country_id);
+    data.append("package_name", formData.package_name);
+    if (imageFile) {
+      data.append("image", imageFile);
+    }
+
     try {
-      const res = await axios.post(`${BE_URL}/packageName`, formData);
+      const res = await axios.post(`${BE_URL}/packageName`, data);
       if (res.data.status === "success") {
         setSuccess(true);
-        setFormData({
-          package_country_id: "",
-          package_name: "",
-        });
-        setTimeout(() => {
-          setSuccess(false);
-        }, 2500);
+        setFormData({ package_country_id: "", package_name: "" });
+        setImageFile(null);
+        setTimeout(() => setSuccess(false), 2500);
       } else {
         alert("Insert failed");
       }
@@ -87,41 +97,53 @@ const PackageNameInsert = () => {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Country Dropdown */}
-          <div>
-            <BlueTextField
-              select
-              label="Select Country"
-              name="package_country_id"
-              value={formData.package_country_id}
-              onChange={handleInputChange}
-              fullWidth
-              required
-              error={errors.package_country_id}
-              helperText={
-                errors.package_country_id ? "Please select a country" : ""
-              }
-            >
-              {countryOptions.map((country) => (
-                <MenuItem key={country.id} value={country.id}>
-                  {country.package_country_name}
-                </MenuItem>
-              ))}
-            </BlueTextField>
-          </div>
+          <BlueTextField
+            select
+            label="Select Country"
+            name="package_country_id"
+            value={formData.package_country_id}
+            onChange={handleInputChange}
+            fullWidth
+            required
+            error={errors.package_country_id}
+            helperText={
+              errors.package_country_id ? "Please select a country" : ""
+            }
+          >
+            {countryOptions.map((country) => (
+              <MenuItem key={country.id} value={country.id}>
+                {country.package_country_name}
+              </MenuItem>
+            ))}
+          </BlueTextField>
 
           {/* Package Name Input */}
+          <BlueTextField
+            label="Package Name"
+            name="package_name"
+            value={formData.package_name}
+            onChange={handleInputChange}
+            fullWidth
+            required
+            error={errors.package_name}
+            helperText={errors.package_name ? "Please enter package name" : ""}
+          />
+
+          {/* Image Upload */}
           <div>
-            <BlueTextField
-              label="Package Name"
-              name="package_name"
-              value={formData.package_name}
-              onChange={handleInputChange}
-              fullWidth
-              required
-              error={errors.package_name}
-              helperText={
-                errors.package_name ? "Please enter package name" : ""
-              }
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Upload Package Image
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="block w-full text-sm text-gray-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-full file:border-0
+              file:text-sm file:font-semibold
+              file:bg-blue-50 file:text-blue-700
+              hover:file:bg-blue-100"
             />
           </div>
 

@@ -23,6 +23,8 @@ const PackageStateNameInsert = () => {
   const [formData, setFormData] = useState({
     package_country_id: "",
     package_state_name: "",
+    description: "",
+    image: null,
   });
 
   const [countryOptions, setCountryOptions] = useState([]);
@@ -55,16 +57,29 @@ const PackageStateNameInsert = () => {
     if (Object.values(newErrors).some(Boolean)) return;
 
     try {
-      const res = await axios.post(`${BE_URL}/packageStateName`, formData);
+      const data = new FormData();
+      data.append("package_country_id", formData.package_country_id);
+      data.append("package_state_name", formData.package_state_name);
+      data.append("description", formData.description);
+      if (formData.image) {
+        data.append("image", formData.image);
+      }
+
+      const res = await axios.post(`${BE_URL}/packageStateName`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       if (res.data.status === "success") {
         setSuccess(true);
         setFormData({
           package_country_id: "",
           package_state_name: "",
+          description: "",
+          image: null,
         });
-        setTimeout(() => {
-          setSuccess(false);
-        }, 2500);
+        setTimeout(() => setSuccess(false), 2500);
       } else {
         alert("Insert failed");
       }
@@ -121,6 +136,34 @@ const PackageStateNameInsert = () => {
               error={errors.package_state_name}
               helperText={
                 errors.package_state_name ? "Please enter state name" : ""
+              }
+            />
+          </div>
+
+          {/* Description Input */}
+          <div>
+            <BlueTextField
+              label="Description"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              fullWidth
+              multiline
+              rows={4}
+            />
+          </div>
+
+          {/* Image Upload */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Upload Image
+            </label>
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, image: e.target.files[0] }))
               }
             />
           </div>

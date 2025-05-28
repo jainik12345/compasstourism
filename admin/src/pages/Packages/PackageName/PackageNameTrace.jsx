@@ -125,6 +125,9 @@ const PackageNameTrace = () => {
               <TableCell className="border-r font-bold text-base">
                 Package Name
               </TableCell>
+              <TableCell className="border-r font-bold text-base">
+                Image
+              </TableCell>
               <TableCell className="font-bold text-base text-center">
                 Restore
               </TableCell>
@@ -148,6 +151,23 @@ const PackageNameTrace = () => {
                     {(page - 1) * rowsPerPage + index + 1}
                   </TableCell>
                   <TableCell className="border-r">{row.package_name}</TableCell>
+                  <TableCell className="border-r">
+                    {row.image ? (
+                      <img
+                        src={`${BE_URL}/Images/PackageImages/PackageNameImages/${row.image}`}
+                        alt={row.package_name}
+                        style={{
+                          width: "80px",
+                          height: "50px",
+                          objectFit: "cover",
+                          borderRadius: "4px",
+                        }}
+                      />
+                    ) : (
+                      <span>No Image</span>
+                    )}
+                  </TableCell>
+
                   <TableCell className="text-center">
                     <Tooltip title="Restore Package" arrow>
                       <button

@@ -134,6 +134,10 @@ const PackageName = () => {
               <TableCell className="border-r border-gray-300 font-bold text-base">
                 Package Name
               </TableCell>
+              <TableCell className="border-r border-gray-300 font-bold text-base">
+                Image
+              </TableCell>
+
               <TableCell className="font-bold text-base">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -150,6 +154,23 @@ const PackageName = () => {
                 <TableCell className="border-r border-gray-300">
                   {row.package_name}
                 </TableCell>
+                <TableCell className="border-r border-gray-300">
+                  {row.image ? (
+                    <img
+                      src={`${BE_URL}/Images/PackageImages/PackageNameImages/${row.image}`}
+                      alt={row.package_name}
+                      style={{
+                        width: "80px",
+                        height: "50px",
+                        objectFit: "cover",
+                        borderRadius: "6px",
+                      }}
+                    />
+                  ) : (
+                    <span>No Image</span>
+                  )}
+                </TableCell>
+
                 <TableCell>
                   <div className="flex space-x-4">
                     <button

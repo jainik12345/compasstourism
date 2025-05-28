@@ -15,7 +15,9 @@ module.exports.getAllMappings = (req, res) => {
 module.exports.insertMapping = (req, res) => {
   const { package_data_id, area_id } = req.body;
   if (!package_data_id || !area_id) {
-    return res.status(400).json({ error: "Both package_data_id and area_id are required" });
+    return res
+      .status(400)
+      .json({ error: "Both package_data_id and area_id are required" });
   }
 
   db.query(
@@ -55,7 +57,9 @@ module.exports.deleteMapping = (req, res) => {
     [id],
     (err) => {
       if (err) return res.status(500).json({ error: err.message });
-      res.status(200).json({ status: "success", message: "Mapping soft-deleted" });
+      res
+        .status(200)
+        .json({ status: "success", message: "Mapping soft-deleted" });
     }
   );
 };
@@ -97,4 +101,20 @@ module.exports.restoreMapping = (req, res) => {
       res.status(200).json({ status: "success", message: "Mapping restored" });
     }
   );
+};
+
+// GET /packageAreaName/area-names/:packageDataId
+module.exports.getAreaNamesByPackageDataId = (req, res) => {
+  const { packageDataId } = req.params;
+  const query = `
+    SELECT pan.id, pan.package_area_name
+    FROM package_data_area_map AS pdam
+    INNER JOIN package_area_name AS pan ON pdam.area_id = pan.id
+    WHERE pdam.package_data_id = ? AND pdam.deleted_at = 0 AND pan.deleted_at = 0
+  `;
+
+  db.query(query, [packageDataId], (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    return res.status(200).json({ status: "success", data: results });
+  });
 };

@@ -13,4 +13,9 @@ router.get("/data/:packageDataId", controller.getByPackageDataId);
 router.get("/trashed/:packageDataId", controller.getTrashedByPackageDataId);
 router.put("/restore/:id", controller.restoreMapping);
 
+router.get(
+  "/area-names/:packageDataId",
+  controller.getAreaNamesByPackageDataId
+);
+
 module.exports = router;

@@ -23,6 +23,9 @@ const PackageNameUpdate = () => {
   const location = useLocation();
   const packageData = location.state?.packageData;
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentImage, setCurrentImage] = useState(null);
+
   const [formData, setFormData] = useState({
     package_name: "",
     package_country_id: "",
@@ -47,13 +50,13 @@ const PackageNameUpdate = () => {
         console.error("Country fetch failed:", err);
       });
 
-    // Set initial data
     if (packageData) {
       setFormData({
         package_name: packageData.package_name,
         id: packageData.id,
         package_country_id: packageData.package_country_id,
       });
+      setCurrentImage(packageData.image || null);
     } else {
       navigate("/package-name");
     }
@@ -68,6 +71,38 @@ const PackageNameUpdate = () => {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const newErrors = {
+  //     package_name: formData.package_name.trim() === "",
+  //     package_country_id: formData.package_country_id === "",
+  //   };
+  //   setErrors(newErrors);
+
+  //   if (Object.values(newErrors).some((val) => val)) return;
+
+  //   try {
+  //     const res = await axios.put(
+  //       `${BE_URL}/packageName/${formData.id}`,
+  //       formData
+  //     );
+  //     if (res.data.status === "success") {
+  //       setSuccess(true);
+  //       setTimeout(() => setSuccess(false), 2500);
+  //       setFormData({
+  //         package_name: "",
+  //         id: "",
+  //         package_country_id: "",
+  //       });
+  //     } else {
+  //       console.error("Update failed");
+  //     }
+  //   } catch (err) {
+  //     console.error("Update error:", err);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -80,18 +115,27 @@ const PackageNameUpdate = () => {
     if (Object.values(newErrors).some((val) => val)) return;
 
     try {
+      const data = new FormData();
+      data.append("package_name", formData.package_name);
+      data.append("package_country_id", formData.package_country_id);
+      if (selectedImage) {
+        data.append("image", selectedImage);
+      }
+
       const res = await axios.put(
         `${BE_URL}/packageName/${formData.id}`,
-        formData
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
+
       if (res.data.status === "success") {
         setSuccess(true);
         setTimeout(() => setSuccess(false), 2500);
-        setFormData({
-          package_name: "",
-          id: "",
-          package_country_id: "",
-        });
+        // Optionally reset form or navigate away here
       } else {
         console.error("Update failed");
       }
@@ -148,6 +192,46 @@ const PackageNameUpdate = () => {
               helperText={
                 errors.package_name ? "Please enter package name" : ""
               }
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 font-semibold">Package Image</label>
+            {currentImage && !selectedImage && (
+              <img
+                src={`${BE_URL}/Images/PackageImages/PackageNameImages/${currentImage}`}
+                alt="Current Package"
+                style={{
+                  width: "120px",
+                  height: "70px",
+                  objectFit: "cover",
+                  borderRadius: "6px",
+                  marginBottom: "10px",
+                }}
+              />
+            )}
+
+            {selectedImage && (
+              <img
+                src={URL.createObjectURL(selectedImage)}
+                alt="Selected Preview"
+                style={{
+                  width: "120px",
+                  height: "70px",
+                  objectFit: "cover",
+                  borderRadius: "6px",
+                  marginBottom: "10px",
+                }}
+              />
+            )}
+
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                setSelectedImage(e.target.files[0]);
+                setCurrentImage(null);
+              }}
             />
           </div>
 

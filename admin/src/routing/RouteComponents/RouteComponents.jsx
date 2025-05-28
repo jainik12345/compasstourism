@@ -76,6 +76,7 @@ import PackageDataAreaName from "../../pages/Packages/PackageDataAreaName/Packag
 import PackageDataAreaNameInsert from "../../pages/Packages/PackageDataAreaName/PackageDataAreaNameInsert";
 import PackageDataAreaNameUpdate from "../../pages/Packages/PackageDataAreaName/PackageDataAreaNameUpdate";
 import PackageDataAreaNameTrace from "../../pages/Packages/PackageDataAreaName/PackageDataAreaNameTrace";
+import AboutConsultation from "../../pages/AboutPage/AboutConsultation/AboutConsultation";
 
 const RouteComponents = () => {
   return (
@@ -129,6 +130,8 @@ const RouteComponents = () => {
           <Route path="/about-details-section/insert" element={<AboutDetailsSectionInsert/>} />
           <Route path="/about-details-section/update" element={<AboutDetailsSectionUpdate/>} />
           <Route path="/about-details-section/trace" element={<AboutDetailsSectionTracs/>} />
+
+          <Route path="/about-consultation" element={<AboutConsultation/>} />
 
           {/* Contact Pages */}
 

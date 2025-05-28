@@ -43,6 +43,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: "/about-hero-section", name: "Hero Section" },
         { path: "/about-images-section", name: "Images Section" },
         { path: "/about-details-section", name: "Details Section" },
+        { path: "/about-consultation", name: "Consultation" },
       ],
     },
     {
