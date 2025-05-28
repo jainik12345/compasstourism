@@ -59,6 +59,7 @@ exports.insertPackageData = (req, res) => {
 
     const {
       package_name_id,
+      state_id,
       data_title,
       night,
       day,
@@ -83,13 +84,14 @@ exports.insertPackageData = (req, res) => {
 
     const query = `
       INSERT INTO package_data_details
-      (package_name_id, data_title, single_image, night, day, data_description,
+      (package_name_id,state_id, data_title, single_image, night, day, data_description,
        inclusions, highlight , multiple_images, from_city_id, to_city_id, attraction, faqs)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?)
+      VALUES (?, ? , ? , ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?)
     `;
 
     const values = [
       package_name_id,
+      state_id || null,
       data_title,
       singleImage,
       night || 0,
@@ -123,6 +125,7 @@ exports.updatePackageData = (req, res) => {
     const { id } = req.params;
     const {
       package_name_id,
+      state_id,
       data_title,
       night,
       day,
@@ -157,7 +160,7 @@ exports.updatePackageData = (req, res) => {
 
     const query = `
       UPDATE package_data_details SET
-      package_name_id = ?, data_title = ?, single_image = ?, night = ?, day = ?,
+      package_name_id = ?, state_id = ? , data_title = ?, single_image = ?, night = ?, day = ?,
       data_description = ?, inclusions = ?, highlight = ?  ,multiple_images = ?, from_city_id = ?,
       to_city_id = ?, attraction = ?, faqs = ?
       WHERE id = ? AND deleted_at = 0
@@ -165,6 +168,7 @@ exports.updatePackageData = (req, res) => {
 
     const values = [
       package_name_id,
+      state_id || null,
       data_title,
       singleImage,
       night || 0,
@@ -249,6 +253,19 @@ exports.getTrashedByPackageId = (req, res) => {
   const { id } = req.params;
   db.query(
     "SELECT * FROM package_data_details WHERE deleted_at = 1 AND package_name_id = ?",
+    [id],
+    (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(200).json({ status: "success", data: results });
+    }
+  );
+};
+
+// Create New Controller Function to Get Data by state_id
+exports.getPackageDataByStateId = (req, res) => {
+  const { id } = req.params;
+  db.query(
+    "SELECT * FROM package_data_details WHERE state_id = ? AND deleted_at = 0",
     [id],
     (err, results) => {
       if (err) return res.status(500).json({ error: err.message });

@@ -48,6 +48,7 @@ const PackageDataDetailsInsert = () => {
 
   const [packageNames, setPackageNames] = useState([]);
   const [packageAreas, setPackageAreas] = useState([]);
+  const [packageStates, setPackageStates] = useState([]);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -64,6 +65,11 @@ const PackageDataDetailsInsert = () => {
       .get(`${BE_URL}/packageAreaName`)
       .then((res) => setPackageAreas(res.data.data || []))
       .catch((err) => console.error("Failed to fetch area names", err));
+
+    axios
+      .get(`${BE_URL}/packageStateName`)
+      .then((res) => setPackageStates(res.data.data || []))
+      .catch((err) => console.error("Failed to fetch state names", err));
   }, []);
 
   // Handle input changes for normal text/select/number
@@ -157,6 +163,7 @@ const PackageDataDetailsInsert = () => {
       const formPayload = new FormData();
 
       formPayload.append("package_name_id", formData.package_name_id);
+      formPayload.append("state_id", formData.state_id || null);
       formPayload.append("data_title", formData.data_title);
       formPayload.append("single_image", formData.single_image);
       formPayload.append("night", formData.night);
@@ -189,6 +196,7 @@ const PackageDataDetailsInsert = () => {
         setSuccess(true);
         setFormData({
           package_name_id: "",
+          state_id: "",
           data_title: "",
           single_image: null,
           night: 0,
@@ -239,6 +247,25 @@ const PackageDataDetailsInsert = () => {
             {packageNames.map((pkg) => (
               <MenuItem key={pkg.id} value={pkg.id}>
                 {pkg.package_name}
+              </MenuItem>
+            ))}
+          </BlueTextField>
+
+          <BlueTextField
+            select
+            fullWidth
+            label="Select State"
+            name="state_id"
+            value={formData.state_id}
+            onChange={handleChange}
+            error={errors.state_id}
+            helperText={errors.state_id && "Please select a state"}
+            margin="normal"
+            required
+          >
+            {packageStates.map((state) => (
+              <MenuItem key={state.id} value={state.id}>
+                {state.package_state_name}
               </MenuItem>
             ))}
           </BlueTextField>

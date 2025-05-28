@@ -12,13 +12,13 @@ router.patch("/restore/:id", controller.restorePackageData);
 
 router.get("/byPackageId/:id", controller.getPackageDataByPackageNameId);
 
-
 // Get all package names
 router.get("/packageNames", controller.getPackageNames);
 
 // Get trashed package data by package_name_id
 router.get("/trashed/by-package/:id", controller.getTrashedByPackageId);
 
-
+// Get package data by state_id
+router.get("/byStateId/:id", controller.getPackageDataByStateId);
 
 module.exports = router;
