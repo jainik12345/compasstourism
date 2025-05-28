@@ -19,7 +19,7 @@ const cities = [
   "North East",
   "Rajasthan",
   "South India",
-  "Uttar Pradesh",
+  "Uttar Pradesh",  
   "Gujarat",
 ];
 
@@ -131,7 +131,7 @@ const Header = () => {
                     <NavLink
                       key={idx}
                       // to={`/india/${city}`}
-                      to={`/tours/${city.toLowerCase().replace(/\s+/g, "-")}`}
+                      to={`/tour/${city.toLowerCase().replace(/\s+/g, "-")}`}
                       className="hover:text-red-600  whitespace-nowrap"
                     >
                       {city}
@@ -226,7 +226,7 @@ const Header = () => {
                     <li key={idx}>
                       <NavLink
                         // to={`/india/${city}`}
-                        to={`/tours/${city.toLowerCase().replace(/\s+/g, "-")}`}
+                        to={`/tour/${city.toLowerCase().replace(/\s+/g, "-")}`}
                         className="block"
                         onClick={() => {
                           setMenuOpen(false);

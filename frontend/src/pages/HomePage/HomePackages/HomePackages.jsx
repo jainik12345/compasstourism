@@ -222,7 +222,7 @@ const HomePackages = () => {
                 nights: `${item.night} Nights & ${item.day} Days`,
               }));
 
-              return {
+              return {  
                 PackageHeading: pkg.package_name,
                 CardsData,
               };
@@ -241,7 +241,7 @@ const HomePackages = () => {
       });
   }, []);
 
-  console.log(HomePackagesDataArr);
+  console.log(HomePackagesDataArr)
 
   return (
     <div className="section">

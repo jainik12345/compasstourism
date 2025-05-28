@@ -3,6 +3,8 @@ import Inquiry from "../../butttons/inquiry";
 import { NavLink } from "react-router-dom";
 
 const TourPackageCard = ({ data_title, single_image, night, day, data_description, inclusions, }) => {
+
+
   return (
 
     <>
@@ -43,14 +45,14 @@ const TourPackageCard = ({ data_title, single_image, night, day, data_descriptio
 
                       return (
 
-                        <p className="flex text-[1rem] font-semibold text-gray-700 items-center gap-5 w-full"><IoMdCheckmark className="text-green-500 " size={20} /> {val}</p>
+                        <p key={idx} className="flex text-[1rem] font-semibold text-gray-700 items-center gap-5 w-full"><IoMdCheckmark className="text-green-500 " size={20} /> {val}</p>
 
                       )
                     })
 
                   }
                 </div>
-                <Inquiry Text="Inquire Now" />
+                <Inquiry Text="Inquire Now" Route={`/inquiry-now/${data_title}`} />
 
               </div>
 

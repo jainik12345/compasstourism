@@ -3,37 +3,43 @@ import { NavLink } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import comapassLogo from "../../assets/images/compass-logo.png";
 import { Link } from "react-router-dom";
-
-import AssociateImg1 from "../../assets/images/GUJARATTOURISM.jpg";
-import AssociateImg2 from "../../assets/images/usiic.png";
-import AssociateImg3 from "../../assets/images/ADTOI.jpg";
-import AssociateImg4 from "../../assets/images/atoai.jpg";
-import AssociateImg5 from "../../assets/images/etaa.jpg";
-import AssociateImg6 from "../../assets/images/gtaa.jpg";
-import AssociateImg7 from "../../assets/images/iato.jpg";
-import AssociateImg8 from "../../assets/images/incredible-india.jpg";
-import AssociateImg9 from "../../assets/images/tafi.jpg";
-import AssociateImg10 from "../../assets/images/tag.jpg";
-import AssociateImg11 from "../../assets/images/toa.jpg";
-
-
+import { useEffect, useState } from "react";
+import BE_URL from "../../config";
+import axios from "axios";
 
 const Footer = () => {
 
-  const clientLogos = [
-    { src: AssociateImg1, },
-    { src: AssociateImg2, },
-    { src: AssociateImg3, },
-    { src: AssociateImg4, },
-    { src: AssociateImg5, },
-    { src: AssociateImg6, },
-    { src: AssociateImg7, },
-    { src: AssociateImg8, },
-    { src: AssociateImg9, },
-    { src: AssociateImg10, },
-    { src: AssociateImg11, },
-  ];
+  const [ClientLogos, setClientLogos] = useState([]);
 
+  useEffect(() => {
+
+
+    const FetchClientLogosData = async () => {
+
+      try {
+
+        const Response = await axios.get(`${BE_URL}/ourAssociations`);
+
+        if (Response.status === 200) {
+
+          setClientLogos(Response.data.data.images);
+
+        } else {
+
+          console.error("Error fetching Footer Logos data:", Response.statusText);
+
+        }
+
+      } catch (error) {
+
+        console.error("Unable to fetch the data from the api", error)
+      }
+
+    }
+
+    FetchClientLogosData();
+
+  }, []);
 
   const linkStyle =
     "relative inline-block pb-1 transition-colors duration-300 hover:text-red-400";
@@ -49,8 +55,8 @@ const Footer = () => {
         <h2 className="text-center text-[1.5rem] font-semibold text-gray-300">Our Associations, We are recognized by</h2>
 
         <div className="client_logo_content">
-          {clientLogos.concat(clientLogos).map((logo, index) => (
-            <img key={index} src={logo.src} alt={logo.alt} />
+          {ClientLogos.concat(ClientLogos).map((logo, index) => (
+            <img key={index} src={`${BE_URL}/Images/OurAssociations/${logo}`} alt={logo.alt} className="object-cover " />
           ))}
         </div>
       </div>

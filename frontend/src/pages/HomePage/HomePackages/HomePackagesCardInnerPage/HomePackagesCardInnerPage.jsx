@@ -375,32 +375,11 @@ const HomePackagesCardInnerPage = () => {
         .replace(/\b\w/g, (char) => char.toUpperCase()); // capitalizes each word
 
     useEffect(() => {
-        axios
-            .get(`${BE_URL}/packageDataDetails`)
-            .then((response) => {
-                const allPackages = response.data.data;
-
-                const matchedPackage = allPackages.find((item) => {
-                    const formattedTitle = item.data_title
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")
-                        .replace(/[^a-z0-9-]/g, ""); // slugify like URL
-
-                    return formattedTitle === tourpackageSlag;
-                });
 
 
 
-                if (matchedPackage) {
-                    setTourPackagesInnerDataArr(matchedPackage);
-                }
-            })
-            .catch((error) => {
-                console.error("Failed to fetch package details:", error);
-            });
-    }, [tourpackageSlag]);
+    },[])
 
-    console.log("TourPackagesInnerDataArr", TourPackagesInnerDataArr.faqs);
 
     return (
 
@@ -408,7 +387,7 @@ const HomePackagesCardInnerPage = () => {
             <div className="container  flex flex-col gap-10 max-w-screen-xl mx-auto py-20 lg:px-10 px-2" >
                 {/* <HomePackagesCardinnnerHeroSection />
                 <HomePackagesCardinnnerSimilarTourSection /> */}
-                <HomePackagesCardinnnerFaqSection  FaqData={TourPackagesInnerDataArr.faqs}/>
+                <HomePackagesCardinnnerFaqSection FaqData={TourPackagesInnerDataArr.faqs} />
             </div>
         </div>
 

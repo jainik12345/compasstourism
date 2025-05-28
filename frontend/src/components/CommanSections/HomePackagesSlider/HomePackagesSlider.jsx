@@ -108,12 +108,7 @@ const HomePackagesSlider = ({ CardsData, PackageHeading, IdKey }) => {
                     key={CardIdx}
                     className="flex-shrink-0 w-full md:w-1/4 px-2 snap-start"
                   >
-                    <NavLink
-                      to={`/tour-package/${CardVal.ImgTitle.toLowerCase().replace(
-                        /\s+/g,
-                        "-"
-                      )}`}
-                    >
+                    <NavLink >
                       <div className="relative rounded-xl overflow-hidden group shadow-md">
                         <img
                           src={CardVal.ImgUrl}

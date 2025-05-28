@@ -63,6 +63,9 @@ import TermsConditions from "./../../pages/Terms/TermsConditions/TermsConditions
 import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
 import HomeBlogInnerPage from "../../pages/HomePage/HomeBlogs/HomeBlogInnerPage/HomeBlogInnerPage";
 import HomePackagesCardInnerPage from "../../pages/HomePage/HomePackages/HomePackagesCardInnerPage/HomePackagesCardInnerPage";
+import IndiaDropDownPages from "../../pages/IndiaDropDownPages/IndiaDropDownPages";
+import InquiryNowPage from "../../pages/InquiryNowPage/InquiryNowPage";
+
 
 const WebsitePage = ({ children }) => {
   return (
@@ -113,6 +116,16 @@ const RouteComponent = () => {
           }
         />
 
+        {/* ✅ Dynamic route for Indian drop down pages */}
+        <Route
+          path="/tour/:StateNameSlag"
+          element={
+            <WebsitePage>
+              <IndiaDropDownPages />
+            </WebsitePage>
+          }
+        />
+
         {/* ✅ Dynamic route for blogs */}
         <Route
           path="/blog/:blogSlag"
@@ -129,6 +142,15 @@ const RouteComponent = () => {
           element={
             <WebsitePage>
               <HomePackagesCardInnerPage />
+            </WebsitePage>
+          }
+        />
+
+        <Route
+          path="/inquiry-now/:InquiryNowSlag"
+          element={
+            <WebsitePage>
+              <InquiryNowPage />
             </WebsitePage>
           }
         />
