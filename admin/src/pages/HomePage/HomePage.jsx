@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 const HomePage = () => {
   return (
-    <div className="w-full  overflow-hidden flex flex-col justify-center items-center  text-center px-4">
+    <div className="w-full mt-[13%]  overflow-hidden flex flex-col justify-center items-center  text-center px-4">
       {/* Animated & Rotating Icon */}
       <motion.div
         initial={{ scale: 0, rotate: 0 }}

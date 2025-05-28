@@ -21,10 +21,6 @@ import AboutImagesSection from './../../pages/AboutPage/AboutImagesSection/About
 import AboutImagesSectionInsert from './../../pages/AboutPage/AboutImagesSection/AboutImagesSectionInsert';
 import AboutImagesSectionUpdate from './../../pages/AboutPage/AboutImagesSection/AboutImagesSectionUpdate';
 import AboutImagesSectionTrace from './../../pages/AboutPage/AboutImagesSection/AboutImagesSectionTrace';
-import AboutDetailsSection from './../../pages/AboutPage/AboutDetailsSection/AboutDetailsSection';
-import AboutDetailsSectionInsert from './../../pages/AboutPage/AboutDetailsSection/AboutDetailsSectionInsert';
-import AboutDetailsSectionUpdate from './../../pages/AboutPage/AboutDetailsSection/AboutDetailsSectionUpdate';
-import AboutDetailsSectionTracs from './../../pages/AboutPage/AboutDetailsSection/AboutDetailsSectionTracs';
 import ContactFormDetails from './../../pages/ContactPage/ContactFormDetails/ContactFormDetails';
 import ContactFormDetailsTrace from './../../pages/ContactPage/ContactFormDetails/ContactFormDetailsTrace';
 import ContactSectionAddress from './../../pages/ContactPage/ContactSectionAddress/ContactSectionAddress';
@@ -78,6 +74,10 @@ import PackageDataAreaNameUpdate from "../../pages/Packages/PackageDataAreaName/
 import PackageDataAreaNameTrace from "../../pages/Packages/PackageDataAreaName/PackageDataAreaNameTrace";
 import AboutConsultation from "../../pages/AboutPage/AboutConsultation/AboutConsultation";
 import HomeServices from "../../pages/HomePage/HomeServices/HomeServices";
+import AboutServiceSection from './../../pages/AboutPage/AboutServiceSection/AboutServiceSection';
+import AboutServiceSectionInsert from './../../pages/AboutPage/AboutServiceSection/AboutServiceSectionInsert';
+import AboutServiceSectionUpdate from './../../pages/AboutPage/AboutServiceSection/AboutServiceSectionUpdate';
+import AboutServiceSectionTrace from './../../pages/AboutPage/AboutServiceSection/AboutServiceSectionTrace';
  
 
 const RouteComponents = () => {
@@ -130,12 +130,12 @@ const RouteComponents = () => {
           <Route path="/about-images-section/update" element={<AboutImagesSectionUpdate/>} />
           <Route path="/about-images-section/trace" element={<AboutImagesSectionTrace/>} />
 
-          <Route path="/about-details-section" element={<AboutDetailsSection/>} />
-          <Route path="/about-details-section/insert" element={<AboutDetailsSectionInsert/>} />
-          <Route path="/about-details-section/update" element={<AboutDetailsSectionUpdate/>} />
-          <Route path="/about-details-section/trace" element={<AboutDetailsSectionTracs/>} />
-
           <Route path="/about-consultation" element={<AboutConsultation/>} />
+
+          <Route path="/about-service-section" element={<AboutServiceSection/>} />
+          <Route path="/about-service-section/insert" element={<AboutServiceSectionInsert/>} />
+          <Route path="/about-service-section/update" element={<AboutServiceSectionUpdate/>} />
+          <Route path="/about-service-section/trace" element={<AboutServiceSectionTrace/>} />
 
           {/* Contact Pages */}
 

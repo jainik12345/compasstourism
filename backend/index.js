@@ -36,6 +36,7 @@ const homeServices = require("./routes/home/homeServices");
 const aboutHeroSection = require("./routes/about/aboutHeroSection");
 const aboutImageSection = require("./routes/about/aboutImageSection");
 const aboutConsultation = require("./routes/about/aboutConsultation");
+const aboutServiceSection = require("./routes/about/aboutServiceSection")
 const contatForm = require("./routes/contactFormDetails");
 const contactSectionAddress = require("./routes/ContactSectionAddress");
 const privatePolicy = require("./routes/privatePolicy");
@@ -56,6 +57,7 @@ app.use("/homeServices", homeServices);
 app.use("/aboutHeroSection", aboutHeroSection);
 app.use("/aboutImageSection", aboutImageSection);
 app.use("/aboutConsultation", aboutConsultation);
+app.use("/aboutServiceSection", aboutServiceSection);
 app.use("/private-policy", privatePolicy);
 app.use("/contact-form", contatForm);
 app.use("/contact-section-address", contactSectionAddress);
@@ -97,6 +99,10 @@ app.use(
   "/Images/AboutImages/AboutImageSection",
   express.static(path.join(__dirname, "Images/AboutImages/AboutImageSection"))
 );
+app.use(
+  "/Images/AboutImages/AboutServiceSection",
+  express.static(path.join(__dirname, "Images/AboutImages/AboutServiceSection"))
+)
 
 app.use(
   "/Images/OurAssociations",

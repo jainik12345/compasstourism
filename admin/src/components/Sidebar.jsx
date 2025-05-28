@@ -42,9 +42,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       icon: <FaPhotoVideo />,
       children: [
         { path: "/about-hero-section", name: "Hero Section" },
-        { path: "/about-images-section", name: "Images Section" },
-        { path: "/about-details-section", name: "Details Section" },
+        { path: "/about-images-section", name: "Images Section" }, 
         { path: "/about-consultation", name: "Consultation" },
+        { path: "/about-service-section", name: "Service Section" },
       ],
     },
     {

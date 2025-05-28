@@ -74,30 +74,6 @@ exports.insertHomeCertificate = (req, res) => {
   });
 };
 
-// PUT update
-// exports.updateHomeCertificate = (req, res) => {
-//   upload(req, res, (err) => {
-//     if (err) return res.status(500).json({ error: err.message });
-
-//     const { id } = req.params;
-//     const { title, existingImage } = req.body;
-//     const newImage = req.file?.filename || existingImage;
-
-//     if (!title) {
-//       return res.status(400).json({ error: "Title is required" });
-//     }
-
-//     db.query(
-//       "UPDATE home_certificate SET title = ?, image = ? WHERE id = ? AND deleted_at = 0",
-//       [title, newImage, id],
-//       (err) => {
-//         if (err) return res.status(500).json({ error: err.message });
-//         res.status(200).json({ status: "success", message: "Updated" });
-//       }
-//     );
-//   });
-// };
-
 exports.updateHomeCertificate = (req, res) => {
   upload(req, res, (err) => {
     if (err) return res.status(500).json({ error: err.message });
