@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaInstagram, FaBars } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
@@ -6,6 +6,8 @@ import { FaPlus, FaMinus } from "react-icons/fa6";
 import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
 import campassLogo from "../../assets/images/compass-logo.png";
 import FloatingButtons from "./../ScrollToTop/FloatingButtons";
+import axios from "axios";
+import BE_URL from "../../config";
 
 const cities = [
   "Andaman & Nicobar",
@@ -25,6 +27,26 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showMobileIndia, setShowMobileIndia] = useState(false);
   const [hoverIndia, setHoverIndia] = useState(false);
+  const [states, setStates] = useState([]);
+
+  useEffect(() => {
+    const fetchStates = async () => {
+      try {
+        // const response = await axios.get(`${BE_URL}/packageStateName`);
+
+        const response = await axios.get(
+          `${BE_URL}/packageStateName/country/1`
+        );
+        if (response.data.status === "success") {
+          setStates(response.data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch states:", error);
+      }
+    };
+
+    fetchStates();
+  }, []);
 
   return (
     <header className="w-full top-0 left-0 sticky z-50">
@@ -93,8 +115,9 @@ const Header = () => {
               <button className="flex cursor-pointer items-center gap-1 py-5 transition-all hover:text-red-600 relative">
                 India
                 <span
-                  className={`transition-transform duration-500 ${hoverIndia ? "rotate-[360deg]" : ""
-                    }`}
+                  className={`transition-transform duration-500 ${
+                    hoverIndia ? "rotate-[360deg]" : ""
+                  }`}
                 >
                   {hoverIndia ? <IoChevronUpSharp /> : <IoChevronDownSharp />}
                 </span>
@@ -102,7 +125,7 @@ const Header = () => {
               </button>
 
               {/* DROPDOWN */}
-              {hoverIndia && (
+              {/* {hoverIndia && (
                 <div className="absolute -left-55 top-16 border bg-white shadow-lg  rounded-md grid grid-cols-2 gap-4 p-5 mt-0 w-[500px]">
                   {cities.map((city, idx) => (
                     <NavLink
@@ -112,6 +135,22 @@ const Header = () => {
                       className="hover:text-red-600  whitespace-nowrap"
                     >
                       {city}
+                    </NavLink>
+                  ))}
+                </div>
+              )} */}
+              {hoverIndia && (
+                <div className="absolute -left-55 top-16 border bg-white shadow-lg rounded-md grid grid-cols-2 gap-4 p-5 mt-0 w-[500px] z-50">
+                  {states.map((state) => (
+                    <NavLink
+                      key={state.id}
+                      to={`/tours/${state.package_state_name
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                      className="hover:text-red-600 whitespace-nowrap"
+                      onClick={() => setHoverIndia(false)}
+                    >
+                      {state.package_state_name}
                     </NavLink>
                   ))}
                 </div>
@@ -130,9 +169,10 @@ const Header = () => {
                 key={path}
                 to={path}
                 className={({ isActive }) =>
-                  `relative py-5 transition-all ${isActive
-                    ? "text-red-600 font-semibold border-b-4 border-red-600"
-                    : "hover:text-red-600"
+                  `relative py-5 transition-all ${
+                    isActive
+                      ? "text-red-600 font-semibold border-b-4 border-red-600"
+                      : "hover:text-red-600"
                   } after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 hover:after:w-full after:transition-all after:duration-300`
                 }
               >
@@ -202,8 +242,6 @@ const Header = () => {
             </div>
           </div>
         )}
-
-
       </div>
       <FloatingButtons />
     </header>
