@@ -10,15 +10,15 @@ import HomeCertificate from "./HomeCertificate/HomeCertificate";
 
 const HomePage = () => {
   return (
-    <div> 
+    <div>
 
-      {/* <HomeHeroSection /> */}
       <HomePackages />
+      {/* <HomeHeroSection />
       <HomeCompassSpotlight />
-      {/* <HomeImages />
+      <HomeImages />
       <HomeServices />
-      <HomeBestHotelDeals /> */}
-      {/* <HomeTestimonial />
+      <HomeBestHotelDeals />
+      <HomeTestimonial />
       <HomeCertificate />
       <HomeBlogs /> */}
 
