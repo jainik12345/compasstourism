@@ -38,6 +38,7 @@ const aboutImageSection = require("./routes/about/aboutImageSection");
 const aboutConsultation = require("./routes/about/aboutConsultation");
 const aboutServiceSection = require("./routes/about/aboutServiceSection")
 const contatForm = require("./routes/contactFormDetails");
+const inquire = require("./routes/Inquire");
 const contactSectionAddress = require("./routes/ContactSectionAddress");
 const privatePolicy = require("./routes/privatePolicy");
 const termsConditions = require("./routes/termsConditions")
@@ -62,6 +63,7 @@ app.use("/aboutServiceSection", aboutServiceSection);
 app.use("/private-policy", privatePolicy);
 app.use("/termsConditions", termsConditions)
 app.use("/contact-form", contatForm);
+app.use("/inquire", inquire);
 app.use("/contact-section-address", contactSectionAddress);
 app.use("/ourAssociations", ourAssociations);
 app.use("/packageCountry", packageCountry);

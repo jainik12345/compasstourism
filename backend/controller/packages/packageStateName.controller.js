@@ -258,3 +258,18 @@ exports.getTrashedPackageStatesByCountryId = (req, res) => {
     }
   );
 };
+
+
+
+// controllers/packageStateNameController.js
+exports.getPackageStateById = (req, res) => {
+  const { id } = req.params;
+  db.query(
+    "SELECT * FROM package_state_name WHERE id = ? AND deleted_at = 0",
+    [id],
+    (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(200).json({ status: "success", data: results });
+    }
+  );
+};

@@ -9,6 +9,7 @@ import {
   FaPhotoVideo,
   FaFileContract,
   FaHandshake,
+  FaWpforms ,
 } from "react-icons/fa";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { FaChevronRight } from "react-icons/fa";
@@ -42,7 +43,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       icon: <FaPhotoVideo />,
       children: [
         { path: "/about-hero-section", name: "Hero Section" },
-        { path: "/about-images-section", name: "Images Section" }, 
+        { path: "/about-images-section", name: "Images Section" },
         { path: "/about-consultation", name: "Consultation" },
         { path: "/about-service-section", name: "Service Section" },
       ],
@@ -80,6 +81,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       path: "/terms-conditions",
       name: "Terms & Conditions",
       icon: <FaFileContract />,
+    },
+    {
+      path: "/inquire",
+      name: "Inquire",
+      icon: <FaWpforms />,
     },
   ];
 

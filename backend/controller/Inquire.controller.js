@@ -11,9 +11,9 @@ const transporter = nodemailer.createTransport({
 });
 
 // Get all active (not soft-deleted)
-exports.getContactForm = (req, res) => {
+exports.getInquire  = (req, res) => {
   db.query(
-    "SELECT * FROM contact_form_details WHERE deleted_at = 0",
+    "SELECT * FROM inquire WHERE deleted_at = 0",
     (err, results) => {
       if (err) return res.status(500).json({ error: err.message });
       return res.status(200).json({ status: "success", data: results });
@@ -21,7 +21,7 @@ exports.getContactForm = (req, res) => {
   );
 };
 
-exports.insertContactForm = (req, res) => {
+exports.insertInquire = (req, res) => {
   const { firstname, lastname, email_id, mobile_number, message } = req.body;
 
   if (!firstname || !lastname || !email_id || !mobile_number) {
@@ -29,13 +29,13 @@ exports.insertContactForm = (req, res) => {
   }
 
   const insertQuery = `
-    INSERT INTO contact_form_details (firstname, lastname, email_id, mobile_number, message)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO inquire (firstname, lastname, email_id, mobile_number, message, inquire)
+    VALUES (?, ?, ?, ?, ?, ? )
   `;
 
   db.query(
     insertQuery,
-    [firstname, lastname, email_id, mobile_number, message],
+    [firstname, lastname, email_id, mobile_number, message, inquire],
     (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
 
@@ -50,6 +50,7 @@ exports.insertContactForm = (req, res) => {
         <p><strong>Email:</strong> ${email_id}</p>
         <p><strong>Mobile Number:</strong> ${mobile_number}</p>
         <p><strong>Message:</strong> ${message}</p>
+         <p><strong>Inquire:</strong> ${inquire}</p>
       `,
       };
 
@@ -75,7 +76,7 @@ exports.insertContactForm = (req, res) => {
 };
 
 // Reply to a contact form
-exports.replyToContactForm = async (req, res) => {
+exports.replyToInquire = async (req, res) => {
   const { toEmail, replyMessage } = req.body;
 
   if (!toEmail || !replyMessage) {
@@ -102,10 +103,10 @@ exports.replyToContactForm = async (req, res) => {
 };
 
 // Soft delete
-exports.deleteContactForm = (req, res) => {
+exports.deleteInquire = (req, res) => {
   const { id } = req.params;
 
-  const query = `UPDATE contact_form_details SET deleted_at = 1 WHERE id = ?`;
+  const query = `UPDATE inquire SET deleted_at = 1 WHERE id = ?`;
   db.query(query, [id], (err) => {
     if (err) return res.status(500).json({ error: err.message });
     return res
@@ -115,10 +116,10 @@ exports.deleteContactForm = (req, res) => {
 };
 
 // Restore soft-deleted form
-exports.restoreContactForm = (req, res) => {
+exports.restoreInquire = (req, res) => {
   const { id } = req.params;
 
-  const query = `UPDATE contact_form_details SET deleted_at = 0 WHERE id = ?`;
+  const query = `UPDATE inquire SET deleted_at = 0 WHERE id = ?`;
   db.query(query, [id], (err) => {
     if (err) return res.status(500).json({ error: err.message });
     return res
@@ -128,9 +129,9 @@ exports.restoreContactForm = (req, res) => {
 };
 
 // Get trashed (soft-deleted) records
-exports.getTrashedContactForm = (req, res) => {
+exports.getTrashedInquire = (req, res) => {
   db.query(
-    "SELECT * FROM contact_form_details WHERE deleted_at = 1",
+    "SELECT * FROM inquire WHERE deleted_at = 1",
     (err, results) => {
       if (err) return res.status(500).json({ error: err.message });
       return res.status(200).json({ status: "success", data: results });

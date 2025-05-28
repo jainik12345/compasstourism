@@ -35,4 +35,10 @@ router.get(
   controller.getTrashedPackageStatesByCountryId
 );
 
+// routes/packageStateName.js or wherever your routes are
+router.get("/data/:id", controller.getPackageStateById);
+
+
+
+
 module.exports = router;

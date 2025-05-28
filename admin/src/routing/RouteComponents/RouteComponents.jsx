@@ -78,6 +78,8 @@ import AboutServiceSection from './../../pages/AboutPage/AboutServiceSection/Abo
 import AboutServiceSectionInsert from './../../pages/AboutPage/AboutServiceSection/AboutServiceSectionInsert';
 import AboutServiceSectionUpdate from './../../pages/AboutPage/AboutServiceSection/AboutServiceSectionUpdate';
 import AboutServiceSectionTrace from './../../pages/AboutPage/AboutServiceSection/AboutServiceSectionTrace';
+import Inquire from "../../pages/Inquire/Inquire";
+import InquireTrace from "../../pages/Inquire/InquireTrace";
  
 
 const RouteComponents = () => {
@@ -206,6 +208,9 @@ const RouteComponents = () => {
            <Route path="/package-data-area-name/insert" element={<PackageDataAreaNameInsert/>} />
            <Route path="/package-data-area-name/update" element={<PackageDataAreaNameUpdate/>} />
            <Route path="/package-data-area-name/trace" element={<PackageDataAreaNameTrace/>} />
+
+           <Route path="/inquire" element={<Inquire/>} />
+           <Route path="/inquire/trace" element={<InquireTrace/>} />
 
         </Route>
       </Routes>

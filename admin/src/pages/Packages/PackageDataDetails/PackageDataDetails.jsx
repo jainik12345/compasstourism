@@ -37,10 +37,27 @@ const PackageDataDetails = () => {
   }, []);
 
   const fetchCityName = async (id) => {
-    if (!id) return "-";
+    if (!id || id === 0) return "-";
     try {
       const res = await axios.get(`${BE_URL}/packageAreaName/data/${id}`);
-      return res.data.data?.[0]?.package_area_name || "-";
+      if (
+        res.data &&
+        Array.isArray(res.data.data) &&
+        res.data.data.length > 0
+      ) {
+        return res.data.data[0].package_area_name || "-";
+      }
+      return "-";
+    } catch {
+      return "-";
+    }
+  };
+
+  const fetchStateName = async (id) => {
+    if (!id || id === 0) return "-";
+    try {
+      const res = await axios.get(`${BE_URL}/packageStateName/data/${id}`);
+      return res.data?.data?.[0]?.package_state_name || "-";
     } catch {
       return "-";
     }
@@ -63,8 +80,10 @@ const PackageDataDetails = () => {
           items.map(async (item) => {
             const fromCityName = await fetchCityName(item.from_city_id);
             const toCityName = await fetchCityName(item.to_city_id);
+            const stateName = await fetchStateName(item.state_id);
             return {
               ...item,
+              state_name: stateName,
               from_city_name: fromCityName,
               to_city_name: toCityName,
               multiple_images: item.multiple_images || [],
@@ -146,6 +165,7 @@ const PackageDataDetails = () => {
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
+                <TableCell>State Name</TableCell>
                 <TableCell>Data Title</TableCell>
                 <TableCell>Single Image</TableCell>
                 <TableCell>Night</TableCell>
@@ -165,6 +185,7 @@ const PackageDataDetails = () => {
               {details.map((item, index) => (
                 <TableRow key={item.id}>
                   <TableCell>{index + 1}</TableCell>
+                  <TableCell>{item.state_name}</TableCell>
                   <TableCell>{item.data_title}</TableCell>
                   <TableCell>
                     <img
