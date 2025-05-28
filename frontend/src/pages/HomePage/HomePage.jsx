@@ -15,9 +15,9 @@ const HomePage = () => {
       {/* <HomeHeroSection /> */}
       <HomePackages />
       <HomeCompassSpotlight />
-      <HomeImages />
+      {/* <HomeImages />
       <HomeServices />
-      <HomeBestHotelDeals />
+      <HomeBestHotelDeals /> */}
       {/* <HomeTestimonial />
       <HomeCertificate />
       <HomeBlogs /> */}

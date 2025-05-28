@@ -241,6 +241,8 @@ const HomePackages = () => {
       });
   }, []);
 
+  console.log(HomePackagesDataArr)
+
   return (
     <div className="section">
       {HomePackagesDataArr.map((Val, Idx) => (

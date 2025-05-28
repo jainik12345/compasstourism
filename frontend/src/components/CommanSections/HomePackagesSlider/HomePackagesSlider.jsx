@@ -69,11 +69,12 @@ const HomePackagesSlider = ({ CardsData, PackageHeading, IdKey }) => {
                 <div className="flex md:flex-row flex-col justify-between items-center gap-5 mb-4 p-5">
                     <h2 className="text-2xl font-bold text-[#2a3b57]">{PackageHeading}</h2>
 
-                    <NavLink>
+                    <NavLink to={`/tours/${PackageHeading.toLowerCase().replace(/\s+/g, "-")}`}>
                         <div className="text-[1rem] font-semibold px-4 py-2 transition-all duration-200 ease-in hover:text-white hover:bg-orange-color  shadow-[0px_0px_10px_5px_rgba(0,0,0,0.1)] rounded-full">
                             View More
                         </div>
                     </NavLink>
+
                 </div>
 
                 <div className="relative">
