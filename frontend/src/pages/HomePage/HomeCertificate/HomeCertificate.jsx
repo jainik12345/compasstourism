@@ -24,7 +24,6 @@ const HomeCertificate = () => {
                         ImgTitle: item.title,
                     }));
                     setCertificateData(formatted);
-                    console.log("Certificates fetched successfully:", formatted);
                 }
             } catch (error) {
                 console.error("Failed to fetch certificates:", error);

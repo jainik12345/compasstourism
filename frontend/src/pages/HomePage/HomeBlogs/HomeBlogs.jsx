@@ -22,7 +22,6 @@ export const HomeBlogs = () => {
     fetchBlogData();
   }, []);
 
-  console.log("BlogDataArr", BlogDataArr);
 
   return (
     <>
