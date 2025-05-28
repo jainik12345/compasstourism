@@ -241,7 +241,7 @@ const HomePackages = () => {
       });
   }, []);
 
-  console.log(HomePackagesDataArr)
+  console.log(HomePackagesDataArr);
 
   return (
     <div className="section">

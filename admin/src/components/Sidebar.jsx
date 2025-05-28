@@ -33,6 +33,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: "/home-blogs", name: "Home Blogs" },
         { path: "/home-testimonial", name: "Home Testimonial" },
         { path: "/home-certificate", name: "Home Certificate" },
+        { path: "/home-services", name: "Home Services" },
       ],
     },
     {
@@ -66,7 +67,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: "/package-area-name", name: "Package Area Name" },
         { path: "/package-name", name: "Packages  Name" },
         { path: "/package-data-details", name: "Packages  Data Details" },
-        { path: "/package-data-area-name", name: "Packages Data Area Name" }
+        { path: "/package-data-area-name", name: "Packages Data Area Name" },
       ],
     },
     { path: "/private-policy", name: "Private Policy", icon: <FaLock /> },
