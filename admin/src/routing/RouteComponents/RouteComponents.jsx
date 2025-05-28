@@ -77,6 +77,8 @@ import PackageDataAreaNameInsert from "../../pages/Packages/PackageDataAreaName/
 import PackageDataAreaNameUpdate from "../../pages/Packages/PackageDataAreaName/PackageDataAreaNameUpdate";
 import PackageDataAreaNameTrace from "../../pages/Packages/PackageDataAreaName/PackageDataAreaNameTrace";
 import AboutConsultation from "../../pages/AboutPage/AboutConsultation/AboutConsultation";
+import HomeServices from "../../pages/HomePage/HomeServices/HomeServices";
+ 
 
 const RouteComponents = () => {
   return (
@@ -112,6 +114,8 @@ const RouteComponents = () => {
           <Route path="/home-certificate/insert" element={<HomeCertificateInsert/>} />
           <Route path="/home-certificate/update" element={<HomeCertificateUpdate/>} />
           <Route path="/home-certificate/trace" element={<HomeCertificateTrace/>} />
+
+          <Route path="/home-services" element={<HomeServices/>} />
  
 
           {/* About Pages */}

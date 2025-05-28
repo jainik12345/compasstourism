@@ -32,6 +32,7 @@ const homeImageSlider = require("./routes/home/homeImageSlider");
 const homeTestimonial = require("./routes/home/homeTestimonial");
 const homeBlog = require("./routes/home/homeBlog");
 const homeCertificate = require("./routes/home/homeCertificate");
+const homeServices = require("./routes/home/homeServices");
 const aboutHeroSection = require("./routes/about/aboutHeroSection");
 const aboutImageSection = require("./routes/about/aboutImageSection");
 const aboutConsultation = require("./routes/about/aboutConsultation");
@@ -51,6 +52,7 @@ app.use("/homeImageSlider", homeImageSlider);
 app.use("/homeTestimonial", homeTestimonial);
 app.use("/homeBlog", homeBlog);
 app.use("/homeCertificate", homeCertificate);
+app.use("/homeServices", homeServices);
 app.use("/aboutHeroSection", aboutHeroSection);
 app.use("/aboutImageSection", aboutImageSection);
 app.use("/aboutConsultation", aboutConsultation);
@@ -79,6 +81,11 @@ app.use(
 app.use(
   "/Images/HomeImages/HomeCertificate",
   express.static(path.join(__dirname, "Images/HomeImages/HomeCertificate"))
+);
+
+app.use(
+  "/Images/HomeImages/HomeServices",
+  express.static(path.join(__dirname, "Images/HomeImages/HomeServices"))
 );
 
 app.use(
