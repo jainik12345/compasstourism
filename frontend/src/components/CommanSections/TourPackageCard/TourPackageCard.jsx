@@ -11,12 +11,13 @@ const TourPackageCard = ({
   inclusions,
   area_names,
 }) => {
+
   return (
     <>
       <div className="section">
         <div className="tour-package-card-container max-w-screen-xl mx-auto flex flex-col lg:px-10 px-5 py-10">
           <NavLink
-            to={""}
+            to={`/tour-package/${data_title.toLowerCase().replace(/\s+/g, "-")}`}
             className="flex lg:flex-row flex-col hover:shadow-[0px_0px_5px_5px_rgba(0,0,0,0.1)] transition-all duration-200 ease-in"
           >
             <div>
@@ -27,10 +28,20 @@ const TourPackageCard = ({
               />
             </div>
 
-            <div className="flex flex-col justify-around gap-2 p-3 md:w-2/2 border-t border-gray-400 md:border-b border-r border-l">
+            <div className="flex flex-col justify-between gap-2 py-7 px-5 md:w-2/2 border-t border-gray-400 md:border-b border-r border-l">
               <h2 className="text-[1.5rem] font-semibold text-justify">
                 {data_title}
               </h2>
+
+              {area_names && area_names.length > 0 ? (
+                <p className="text-gray-600">
+                  <strong>Areas:</strong> {area_names.join(" | ")}
+                </p>
+              ) : (
+                <p className="text-gray-600">
+                  <strong>Areas:</strong> No areas
+                </p>
+              )}
 
               <p className="text-gray-500 text-justify rounded-full border border-gray-400 w-fit py-1 px-3">
                 {night} Nights / {day} Days
@@ -44,15 +55,7 @@ const TourPackageCard = ({
                 <h2 className="font-semibold text-[1.3rem] text-gray-600">
                   Inclusions(Customizable)
                 </h2>
-                {area_names && area_names.length > 0 ? (
-                  <p className="text-gray-600">
-                    <strong>Areas:</strong> {area_names.join(" | ")}
-                  </p>
-                ) : (
-                  <p className="text-gray-600">
-                    <strong>Areas:</strong> No areas
-                  </p>
-                )}
+
 
                 <div className="flex flex-col gap-2">
                   {inclusions &&

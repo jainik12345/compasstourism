@@ -6,6 +6,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
 import BE_URL from "../../../config";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
+
 
 const HomeHeroSection = () => {
 
@@ -155,10 +157,11 @@ const HomeHeroSection = () => {
               className={`flex-shrink-0 w-full justify-items-center snap-start grid gap-6 ${cardsPerPage === 1
                 ? "grid-cols-1"
                 : "grid-cols-5"
-                }`}
-            >
+                }`}>
+
               {page.map((item, index) => (
-                <div
+                <NavLink
+                  to={""}
                   key={index}
                   className=" flex w-fit p-2 flex-col items-center bg-white rounded-2xl "
                 >
@@ -171,7 +174,7 @@ const HomeHeroSection = () => {
                   <p className="text-center font-semibold text-sm select-none">
                     {item.ImgTitle}
                   </p>
-                </div>
+                </NavLink>
               ))}
             </div>
           ))}

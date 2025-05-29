@@ -1,8 +1,10 @@
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useRef, useState, useEffect } from "react";
 import InquiryForm from "../../../../../components/CommanSections/InquiryForm/InquiryForm";
+import BE_URL from "../../../../../config";
 
-const HomePackagesCardinnnerHeroSection = ({}) => {
+
+const HomePackagesCardinnnerHeroSection = ({ attraction, multiple_images, faqs, day, night, highlight, data_title }) => {
   // Testimonial Cards Logic
 
   const containerRef = useRef(null);
@@ -62,48 +64,34 @@ const HomePackagesCardinnnerHeroSection = ({}) => {
   return (
     // hero section
 
-    <div className="hero-cont flex md:flex-row flex-col justify-center items-start gap-10">
+    <div className="hero-cont  flex md:flex-row flex-col justify-center items-start gap-10">
       {/* hero section images  */}
 
-      <div className="relative md:w-2/3 w-full flex flex-col gap-5">
-        {/* Arrows Buttons*/}
-        <button
-          onClick={handlePrev}
-          className="absolute left-5 top-[30%]  -translate-y-1/3 z-10 bg-white p-2 rounded-full shadow"
-        >
-          <IoIosArrowBack size={20} />
-        </button>
-
-        <button
-          onClick={handleNext}
-          className="absolute right-5 top-[30%] -translate-y-1/3 z-10 bg-white p-2 rounded-full shadow"
-        >
-          <IoIosArrowForward size={20} />
-        </button>
+      <div className=" md:w-2/3 w-full flex flex-col  gap-5">
 
         {/* hero images */}
 
         <div
           ref={containerRef}
-          className="flex overflow-hidden scroll-smooth snap-x snap-mandatory"
+          className="flex overflow-hidden scroll-smooth snap-x snap-mandatory "
           onMouseDown={handleMouseDown}
           onMouseLeave={handleMouseLeave}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
         >
-          {HeroImgs &&
-            HeroImgs.map((HeroImgs, HeroImgsIdx) => {
+          {multiple_images &&
+            multiple_images.map((HeroImgs, HeroImgsIdx) => {
               return (
                 <div
                   key={HeroImgsIdx}
                   className="flex-shrink-0 w-full  px-2 snap-start"
                 >
-                  <div className="relative rounded-xl overflow-hidden group shadow-md">
+                  <div className=" rounded-xl overflow-hidden group shadow-md ">
                     <img
-                      src={HeroImgs}
+                      src={`${BE_URL}/Images/PackageImages/PackageDataDetails/${HeroImgs}`}
                       alt={"IMg"}
                       draggable={false}
-                      className="w-full h-100 object-cover"
+                      className="w-full h-100 object-cover relative"
                     />
                   </div>
                 </div>
@@ -111,30 +99,44 @@ const HomePackagesCardinnnerHeroSection = ({}) => {
             })}
         </div>
 
+        {/* Arrows Buttons*/}
+        <div className="w-full">
+          <button
+            onClick={handlePrev}
+            className="absolute left-5 md:left-25 top-100 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow"
+          >
+            <IoIosArrowBack size={20} />
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="absolute right-5 md:right-[39%] top-100 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow"
+          >
+            <IoIosArrowForward size={20} />
+          </button>
+
+        </div>
+
         {/* map image section */}
 
-        <div className="p-2 flex justify-center items-center">
+        {/* <div className="p-2 flex justify-center items-center">
           <img src={MapImg} alt="" className="w-full" />
-        </div>
+        </div> */}
 
         {/* highlights section */}
 
         <div className="flex flex-col gap-5">
           <h2 className="font-semibold text-[1.5rem] text-orange-color">
-            Highlights
+            Highlight
           </h2>
 
-          {Highlight &&
-            Highlight.map((Val, Idx) => {
-              return (
-                <p
-                  className="text-gray-500 font-semibold text-[.9rem]"
-                  key={Idx}
-                >
-                  {Val}
-                </p>
-              );
-            })}
+
+          <p
+            className="text-gray-500 font-semibold text-[.9rem]"
+          >
+            {highlight}
+          </p>
+
         </div>
       </div>
 
@@ -143,22 +145,22 @@ const HomePackagesCardinnnerHeroSection = ({}) => {
       <div className="details-cont md:w-1/3 w-full p-2  flex flex-col md:gap-2 gap-5">
         {/* heading */}
 
-        <h2 className="font-bold text-[1.3rem] text-orange-color">{Heading}</h2>
+        <h2 className="font-bold text-[1.3rem] text-orange-color">{data_title}</h2>
 
         {/* total nights */}
 
-        <p className="font-semibold text-gray-600">{TourDetails.TourNights}</p>
+        {/* <p className="font-semibold text-gray-600">{night}</p> */}
 
         {/* package route */}
 
-        <p className="font-semibold text-gray-600">{TourDetails.TourRoute}</p>
+        <p className="font-bold text-gray-600">{day} Days</p>
 
         {/* package attraction */}
 
         <h2 className="text-[1.3rem] font-semibold text-orange-color">
           Attraction:
-          {TourDetails.Attractions &&
-            TourDetails.Attractions.map((val, idx) => {
+          {attraction &&
+            attraction.map((val, idx) => {
               return (
                 <li
                   key={idx}

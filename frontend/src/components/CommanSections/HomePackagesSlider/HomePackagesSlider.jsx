@@ -6,6 +6,7 @@ const HomePackagesSlider = ({ CardsData, PackageHeading, IdKey }) => {
   const containerRef = useRef(null);
   const [cardsPerPage, setCardsPerPage] = useState(4);
 
+
   useEffect(() => {
     const handleResize = () => {
       setCardsPerPage(window.innerWidth < 768 ? 1 : 4);
@@ -108,7 +109,8 @@ const HomePackagesSlider = ({ CardsData, PackageHeading, IdKey }) => {
                     key={CardIdx}
                     className="flex-shrink-0 w-full md:w-1/4 px-2 snap-start"
                   >
-                    <NavLink >
+                    <NavLink to={`/tour-package/${CardVal.ImgTitle.toLowerCase().replace(/\s+/g, "-")}`}
+                    >
                       <div className="relative rounded-xl overflow-hidden group shadow-md">
                         <img
                           src={CardVal.ImgUrl}
@@ -127,7 +129,7 @@ const HomePackagesSlider = ({ CardsData, PackageHeading, IdKey }) => {
               })}
           </div>
         </div>
-      </div>
+      </div >
     </>
   );
 };

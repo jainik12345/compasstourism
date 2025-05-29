@@ -3,7 +3,9 @@ import { FaChevronDown } from "react-icons/fa6";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
-const HomePackagesCardinnnerFaqSection = ({ FaqData }) => {
+const HomePackagesCardinnnerFaqSection = ({ faqs }) => {
+
+
   const [openIndex, setOpenIndex] = useState(null);
 
   const HandleFAQClick = (Idx) => {
@@ -13,6 +15,8 @@ const HomePackagesCardinnnerFaqSection = ({ FaqData }) => {
   };
 
 
+
+
   return (
     <>
       <div className="FAQ-cont gap-3 flex flex-col ">
@@ -20,7 +24,8 @@ const HomePackagesCardinnnerFaqSection = ({ FaqData }) => {
           Itinerary
         </h2>
 
-        {FaqData.map((Val, Idx) => {
+        {faqs && faqs.map((Val, Idx) => {
+
           return (
             <div
               className="fact-cont relative border border-gray-400 md:w-[65%] rounded-sm  p-2 select-none"
@@ -41,9 +46,8 @@ const HomePackagesCardinnnerFaqSection = ({ FaqData }) => {
                 <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-4">
                   <FaChevronUp
                     size={30}
-                    className={`bg-gray-300 p-2 rounded-full transition-transform duration-500 ${
-                      openIndex === Idx ? "rotate-[180deg]" : ""
-                    }`}
+                    className={`bg-gray-300 p-2 rounded-full transition-transform duration-500 ${openIndex === Idx ? "rotate-[180deg]" : ""
+                      }`}
                   />
                   {Val.question}
                 </h3>
@@ -67,7 +71,10 @@ const HomePackagesCardinnnerFaqSection = ({ FaqData }) => {
               </AnimatePresence>
             </div>
           );
-        })}
+        }
+
+        )}
+
       </div>
     </>
   );

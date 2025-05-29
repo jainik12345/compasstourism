@@ -376,18 +376,52 @@ const HomePackagesCardInnerPage = () => {
 
     useEffect(() => {
 
+        const FetchHomePackagesCardInnerPageData = async () => {
+
+            try {
 
 
-    },[])
+                const TmpResponse = await axios.get(`${BE_URL}/packageName`);
+
+                const PackagesDataArr = TmpResponse.data.data;
+
+
+                PackagesDataArr.map(async (Val) => {
+
+
+                    const PerResponse = await axios.get(`${BE_URL}/packageDataDetails/byPackageId/${Val.id}`);
+
+                    const CardsData = PerResponse.data.data.map((item) => {
+
+                        if (item.data_title.toLowerCase().replace(/\s+/g, "-") === tourpackageSlag) {
+
+                            setTourPackagesInnerDataArr(item);
+                        }
+                    })
+
+                    // console.log("this is Cards Data:- ", CardsData);
+                })
+
+            } catch (error) {
+
+                console.error("Error fetching details for", error);
+
+
+            }
+        }
+
+        FetchHomePackagesCardInnerPageData();
+
+    }, [])
 
 
     return (
 
         <div className="section">
             <div className="container  flex flex-col gap-10 max-w-screen-xl mx-auto py-20 lg:px-10 px-2" >
-                {/* <HomePackagesCardinnnerHeroSection />
-                <HomePackagesCardinnnerSimilarTourSection /> */}
-                <HomePackagesCardinnnerFaqSection FaqData={TourPackagesInnerDataArr.faqs} />
+                <HomePackagesCardinnnerHeroSection attraction={TourPackagesInnerDataArr.attraction} multiple_images={TourPackagesInnerDataArr.multiple_images} day={TourPackagesInnerDataArr.day} night={TourPackagesInnerDataArr.night} highlight={TourPackagesInnerDataArr.highlight} data_title={TourPackagesInnerDataArr.data_title} />
+                <HomePackagesCardinnnerFaqSection faqs={TourPackagesInnerDataArr.faqs} />
+                {/* <HomePackagesCardinnnerSimilarTourSection /> */}
             </div>
         </div>
 

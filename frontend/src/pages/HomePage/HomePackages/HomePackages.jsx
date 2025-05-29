@@ -211,6 +211,7 @@ const HomePackages = () => {
 
         const fetchAll = await Promise.all(
           packageNames.map(async (pkg) => {
+
             try {
               const res = await axios.get(
                 `${BE_URL}/packageDataDetails/byPackageId/${pkg.id}`
@@ -222,7 +223,7 @@ const HomePackages = () => {
                 nights: `${item.night} Nights & ${item.day} Days`,
               }));
 
-              return {  
+              return {
                 PackageHeading: pkg.package_name,
                 CardsData,
               };
@@ -241,13 +242,11 @@ const HomePackages = () => {
       });
   }, []);
 
-  console.log(HomePackagesDataArr)
-
   return (
     <div className="section">
       {HomePackagesDataArr.map((Val, Idx) => (
         <HomePackagesSlider
-          IdKey={Idx}
+          key={Idx}
           PackageHeading={Val.PackageHeading}
           CardsData={Val.CardsData}
         />

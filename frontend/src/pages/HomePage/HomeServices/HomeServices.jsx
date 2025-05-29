@@ -1,8 +1,44 @@
 import { NavLink } from "react-router-dom"
-import Img1 from "../../../assets/images/637921896094475779.png";
-import Img2 from "../../../assets/images/637921896896248600.png";
+import BE_URL from "../../../config"
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 
 const HomeServices = () => {
+
+  const [HomeServiceData, setHomeServiceData] = useState();
+
+  useEffect(() => {
+
+    const FetchHomeSerivceData = async () => {
+
+      try {
+
+        const Response = await axios.get(`${BE_URL}/homeServices`);
+
+        if (Response.status === 200) {
+
+          setHomeServiceData(Response.data.data);
+
+        } else {
+
+          console.log("Unable to Fetch the APi data ", Response.statusText)
+
+        }
+
+
+      } catch (error) {
+
+        console.log("Unable To Fetch The Data Of Home Service Section:- ", erro)
+
+      }
+
+    }
+
+    FetchHomeSerivceData();
+
+  })
+
   return (
 
     <>
@@ -13,9 +49,9 @@ const HomeServices = () => {
 
           <div className="flex flex-col md:items-start items-center md:w-2/3 w-full gap-5">
 
-            <h2 className="font-semibold text-2xl ">24/7 Customer Support</h2>
+            <h2 className="font-semibold text-2xl ">{HomeServiceData?.heading}</h2>
 
-            <p className="font-semibold text-[1rem] text-gray-500">Our team of experienced tour specialists have travelled to hundreds of countries around the globe and have decades of first-hand travel experience to share. Contact us now to have all of your tour-related questions answered!</p>
+            <p className="font-semibold text-[1rem] text-gray-500">{HomeServiceData?.description}</p>
 
             <NavLink className="bg-orange-color py-3 px-20 w-fit font-bold text-white rounded-sm" to={""}>
               Contact Us
@@ -25,11 +61,20 @@ const HomeServices = () => {
 
           <div className="flex justify-center items-center ps-20 w-fit">
 
-            <img src={Img2} alt="IMG" className="rounded-full z-45 h-20 w-20 object-cover" />
-            <img src={Img1} alt="IMG" className="rounded-full z-40 h-20 w-20 -translate-x-5 object-cover" />
-            <img src={Img2} alt="IMG" className="rounded-full z-30 h-20 w-20 -translate-x-10 object-cover" />
-            <img src={Img1} alt="IMG" className="rounded-full z-20 h-20 w-20 -translate-x-15 object-cover" />
-            <img src={Img2} alt="IMG" className="rounded-full z-10 h-20 w-20 -translate-x-20 object-cover" />
+            {
+
+              HomeServiceData?.images && HomeServiceData?.images.map((val, idx) => {
+
+                return (
+
+                  <img src={`${BE_URL}/Images/HomeImages/HomeServices/${val}`} alt="IMG" className={`rounded-full z-40 h-20 w-20  object-cover ${idx === 1 ? "-translate-x-5" : idx === 2 ? "-translate-x-10 " : idx === 3 ? "-translate-x-15" : idx === 4 ? "-translate-x-20" : ""}`} key={idx} />
+
+
+                )
+
+              })
+
+            }
 
           </div>
 

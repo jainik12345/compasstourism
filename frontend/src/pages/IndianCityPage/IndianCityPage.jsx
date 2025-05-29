@@ -1,138 +1,81 @@
+/**------------------------------------ Fetching Completed-------------------------------------------- */
 // import { useParams } from "react-router-dom";
-// import IndianCityPageBanner from "./IndianCityPageBanner/IndianCityPageBanner"; // ✅ Import your banner component
-// import BgImg from "../../assets/images/637921896094475779.png"
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+
+// import IndianCityPageBanner from "./IndianCityPageBanner/IndianCityPageBanner";
 // import TourPackageCard from "../../components/CommanSections/TourPackageCard/TourPackageCard";
-// import React, { useState } from "react";
-
-// import FormControl from '@mui/material/FormControl';
-// import InputLabel from '@mui/material/InputLabel';
-// import Select from '@mui/material/Select';
-// import MenuItem from '@mui/material/MenuItem';
-
-// import PackageImg from "../../assets/images/637921896094475779.png"
+// import FormControl from "@mui/material/FormControl";
+// import InputLabel from "@mui/material/InputLabel";
+// import Select from "@mui/material/Select";
+// import MenuItem from "@mui/material/MenuItem";
+// import BgImg from "../../assets/images/637921896094475779.png";
+// import BE_URL from "../../config";
 
 // const IndianCityPage = () => {
-//   // Extracting the city name from the URL parameters
 //   const { cityName } = useParams();
-
-//   // Formatting the city name for display
-//   // This will convert the city name to a more readable format
 
 //   const FormattedPath = cityName
 //     .toLowerCase()
 //     .replace(/-/g, " ")
-//     .replace(/[^a-z0-9\s]/g, "") // optional: remove non-alphanumeric
-//     .replace(/\b\w/g, (char) => char.toUpperCase()); // capitalizes each word
+//     .replace(/[^a-z0-9\s]/g, "")
+//     .replace(/\b\w/g, (char) => char.toUpperCase());
 
 //   const [city, setCity] = useState("ALL");
+//   const [packageData, setPackageData] = useState([]);
+
+//   useEffect(() => {
+//     const fetchPackageData = async () => {
+//       try {
+//         // 1. Fetch all package names
+//         const res = await axios.get(`${BE_URL}/packageName`);
+//         const allPackages = res.data.data;
+
+//         // 2. Find the one matching FormattedPath (e.g. "Weekend Gateways")
+//         const matchedPackage = allPackages.find(
+//           (pkg) =>
+//             pkg.package_name.toLowerCase().trim() ===
+//             FormattedPath.toLowerCase().trim()
+//         );
+
+//         if (!matchedPackage) {
+//           console.warn("No matching package found for:", FormattedPath);
+//           setPackageData([]);
+//           return;
+//         }
+
+//         // 3. Fetch package details by package ID
+//         const detailRes = await axios.get(
+//           `${BE_URL}/packageDataDetails/byPackageId/${matchedPackage.id}`
+//         );
+
+//         setPackageData(detailRes.data.data || []);
+//       } catch (error) {
+//         console.error("Error fetching package data:", error);
+//       }
+//     };
+
+//     fetchPackageData();
+//   }, [FormattedPath]);
+
 //   const handleChange = (event) => {
 //     setCity(event.target.value);
 //   };
 
-//   const IndiaCitiesTourData = [
-
-//     {
-
-//       data_title: "Wildlife Tour",
-//       single_image: PackageImg,
-//       night: 6,
-//       day: 7,
-//       data_description: "The Main Highlight of this itinerary is Visiting all the beautiful Beaches like Candolim Beach, Baga Beach, and all the UNESCO-listed Churches and doing all the adventure stuff like Parasailing, Scuba Diving, and Snorkeling.The Main Highlight of this itinerary is Visiting all the beautiful Beaches like Candolim Beach, Baga Beach, and all the UNESCO-listed Churches and doing all the adventure stuff like Parasailing, Scuba Diving, and Snorkeling.",
-//       inclusions: ["Breakfast", "Lunch", "Dinner"],
-//       multiple_images: [
-//         "1748241823440-about_bg_image.jpeg",
-//         "1748241823445-about_image_1.webp",
-//         "1748241823452-about_image_2.webp"
-//       ],
-//       highlight: null,
-//       from_city_id: 1,
-//       to_city_id: 3,
-//       attraction: ["Velavadar", "Gir", "Bajana", "Nal Sarovar"],
-//       faqs: [
-//         {
-//           answer: "Ahmedabad Answer",
-//           question: "Ahmedabad Question"
-//         }
-//       ],
-//     },
-//     {
-
-//       data_title: "Wildlife Tour",
-//       single_image: PackageImg,
-//       night: 6,
-//       day: 7,
-//       data_description: "The Main Highlight of this itinerary is Visiting all the beautiful Beaches like Candolim Beach, Baga Beach, and all the UNESCO-listed Churches and doing all the adventure stuff like Parasailing, Scuba Diving, and Snorkeling.The Main Highlight of this itinerary is Visiting all the beautiful Beaches like Candolim Beach, Baga Beach, and all the UNESCO-listed Churches and doing all the adventure stuff like Parasailing, Scuba Diving, and Snorkeling.",
-//       inclusions: ["Breakfast", "Lunch", "Dinner"],
-//       multiple_images: [
-//         "1748241823440-about_bg_image.jpeg",
-//         "1748241823445-about_image_1.webp",
-//         "1748241823452-about_image_2.webp"
-//       ],
-//       highlight: null,
-//       from_city_id: 1,
-//       to_city_id: 3,
-//       attraction: ["Velavadar", "Gir", "Bajana", "Nal Sarovar"],
-//       faqs: [
-//         {
-//           answer: "Ahmedabad Answer",
-//           question: "Ahmedabad Question"
-//         }
-//       ],
-//     },
-
-//   ]
-
-//   // Sample data for Indian cities
-
-//   const IndianCityNameData = [
-
-//     {
-//       name: "Goa",
-//     },
-//     {
-//       name: "Delhi",
-//     },
-//     {
-//       name: "Mumbai",
-//     },
-//     {
-//       name: "Bangalore",
-//     },
-//     {
-//       name: "Kolkata",
-//     },
-//     {
-//       name: "Chennai",
-//     },
-//     {
-//       name: "Hyderabad",
-//     },
-//     {
-//       name: "Pune",
-//     },
-
-//   ]
-
 //   return (
-
 //     <>
-//       {/* Banner section */}
 //       <IndianCityPageBanner Heading={FormattedPath} BgImg={BgImg} />
 
-//       {/* Package Details section */}
-
 //       <div className="package-details-container flex flex-col gap-5 py-10 md:px-10 px-5 max-w-screen-xl mx-auto">
-
-//         <h2 className="text-[1.5rem] font-bold ">{FormattedPath} Tour Packages</h2>
-
-//         <p className="text-[1rem] text-gray-600 text-justify">
-//           When in Goa, do as the Goans do; leave your watch at home. Honestly speaking, time is not of too much importance in this small state of India. Goa, an emerald land, is a ‘state’ of mind. A mind that is completely relaxed, content, and jubilant. Located on the West Coast of India in the Konkan Region, Goa is a major tourist attraction for domestic and foreign tourists alike. Panaji, a picturesque city by the river Mandovi is the capital of Goa. Margao is the largest city and Vasco da Gamais the largest port city. With endless stretches of white sand, palm-fringed beaches, brightly painted houses, and Portuguese heritage, Goa is breathtaking. Water sports, river cruises, ayurvedic massage centers, live music, restaurants, mouth-watering seafood, Goa has it all. A variety of accommodation options ranging from luxury hotels, and beautiful villas to moderately priced hotels and bed & breakfast units, is another feature of Goa that makes it a destination of choice for all. Dudhsagar waterfalls tumbling from a staggering height are a must-visit and so are the nearby wildlife sanctuaries. Spice farms, old heritage Portuguese villas, churches, temples, and architecture are other riveting aspects of Goa. Come, be part of the Goa Carnival in February and sing, dance, and be merry with the locals. Myriad experiences of Goa promise to make your holiday an everlasting experience.
-//         </p>
-
+//         <h2 className="text-[1.5rem] font-bold ">
+//           {FormattedPath} Tour Packages
+//         </h2>
+//         {/* <p className="text-[1rem] text-gray-600 text-justify">
+//           When in Goa, do as the Goans do; leave your watch at home.
+//         </p> */}
 //       </div>
 
-//       {/* City Select Dropdown */}
-//       <div className="max-w-screen-xl mx-auto  flex justify-end items-center">
+//       <div className="max-w-screen-xl mx-auto flex justify-end items-center">
 //         <FormControl className="w-50">
 //           <InputLabel id="city-select-label">Cities</InputLabel>
 //           <Select
@@ -144,42 +87,47 @@
 //             onChange={handleChange}
 //           >
 //             <MenuItem value="ALL">All</MenuItem>
-//             {IndianCityNameData.map((cityObj, index) => (
-//               <MenuItem key={index} value={cityObj.name}>
-//                 {cityObj.name}
-//               </MenuItem>
-//             ))}
+//             {/* Replace with dynamic cities if needed */}
+//             {["Goa", "Delhi", "Mumbai", "Bangalore", "Kolkata"].map(
+//               (cityName, index) => (
+//                 <MenuItem key={index} value={cityName}>
+//                   {cityName}
+//                 </MenuItem>
+//               )
+//             )}
 //           </Select>
 //         </FormControl>
 //       </div>
 
-//       {/* Tour Package Cards Section */}
-
-//       {
-
-//         IndiaCitiesTourData && IndiaCitiesTourData.map((val, idx) => {
-
-//           return (
-
-//             <TourPackageCard key={idx} data_title={val.data_title} single_image={val.single_image} night={val.night} day={val.day} data_description={val.data_description} inclusions={val.inclusions} multiple_images={val.multiple_images} from_city_id={val.from_city_id}  attraction={val.attraction} />
-
-//           )
-
-//         })
-
-//       }
+//       {packageData.length > 0 ? (
+//         packageData.map((val, idx) => (
+//           <TourPackageCard
+//             key={idx}
+//             data_title={val.data_title}
+//             single_image={`${BE_URL}/Images/PackageImages/PackageDataDetails/${val.single_image}`}
+//             night={val.night}
+//             day={val.day}
+//             data_description={val.data_description}
+//             inclusions={val.inclusions}
+//             multiple_images={val.multiple_images}
+//             from_city_id={val.from_city_id}
+//             attraction={val.attraction}
+//           />
+//         ))
+//       ) : (
+//         <p className="text-center text-gray-500 mt-10">
+//           No packages found for {FormattedPath}.
+//         </p>
+//       )}
 //     </>
 //   );
 // };
 
 // export default IndianCityPage;
 
-/**------------------------------------ Fetching Completed-------------------------------------------- */
-
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 import IndianCityPageBanner from "./IndianCityPageBanner/IndianCityPageBanner";
 import TourPackageCard from "../../components/CommanSections/TourPackageCard/TourPackageCard";
 import FormControl from "@mui/material/FormControl";
@@ -204,11 +152,9 @@ const IndianCityPage = () => {
   useEffect(() => {
     const fetchPackageData = async () => {
       try {
-        // 1. Fetch all package names
         const res = await axios.get(`${BE_URL}/packageName`);
         const allPackages = res.data.data;
 
-        // 2. Find the one matching FormattedPath (e.g. "Weekend Gateways")
         const matchedPackage = allPackages.find(
           (pkg) =>
             pkg.package_name.toLowerCase().trim() ===
@@ -221,23 +167,52 @@ const IndianCityPage = () => {
           return;
         }
 
-        // 3. Fetch package details by package ID
         const detailRes = await axios.get(
           `${BE_URL}/packageDataDetails/byPackageId/${matchedPackage.id}`
         );
+        const rawPackageData = detailRes.data.data || [];
 
-        setPackageData(detailRes.data.data || []);
+        const packagesWithAreas = await Promise.all(
+          rawPackageData.map(async (pkg) => {
+            try {
+              const areaRes = await axios.get(
+                `${BE_URL}/packageDataAreaName/area-names/${pkg.id}`
+              );
+              const areaNames = areaRes.data.data.map(
+                (area) => area.package_area_name
+              );
+              return {
+                ...pkg,
+                area_names: areaNames,
+              };
+            } catch (err) {
+              console.error("Error fetching area names for package:", pkg.id);
+              return { ...pkg, area_names: [] };
+            }
+          })
+        );
+
+        setPackageData(packagesWithAreas);
       } catch (error) {
         console.error("Error fetching package data:", error);
       }
     };
 
     fetchPackageData();
-  }, [FormattedPath]);
+  }, [cityName]);
 
   const handleChange = (event) => {
     setCity(event.target.value);
   };
+
+  const filteredPackages = packageData.filter((pkg) => {
+    if (city === "ALL") return true;
+    return pkg.area_names?.includes(city);
+  });
+
+  const allCities = [
+    ...new Set(packageData.flatMap((pkg) => pkg.area_names || [])),
+  ];
 
   return (
     <>
@@ -247,12 +222,9 @@ const IndianCityPage = () => {
         <h2 className="text-[1.5rem] font-bold ">
           {FormattedPath} Tour Packages
         </h2>
-        {/* <p className="text-[1rem] text-gray-600 text-justify">
-          When in Goa, do as the Goans do; leave your watch at home.
-        </p> */}
       </div>
 
-      <div className="max-w-screen-xl mx-auto flex justify-end items-center">
+      <div className="max-w-screen-xl mx-auto flex justify-end items-center mb-5">
         <FormControl className="w-50">
           <InputLabel id="city-select-label">Cities</InputLabel>
           <Select
@@ -264,20 +236,17 @@ const IndianCityPage = () => {
             onChange={handleChange}
           >
             <MenuItem value="ALL">All</MenuItem>
-            {/* Replace with dynamic cities if needed */}
-            {["Goa", "Delhi", "Mumbai", "Bangalore", "Kolkata"].map(
-              (cityName, index) => (
-                <MenuItem key={index} value={cityName}>
-                  {cityName}
-                </MenuItem>
-              )
-            )}
+            {[...new Set(packageData.flatMap(pkg => pkg.area_names))].map((area, index) => (
+              <MenuItem key={index} value={area}>
+                {area}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </div>
 
-      {packageData.length > 0 ? (
-        packageData.map((val, idx) => (
+      {filteredPackages.length > 0 ? (
+        filteredPackages.map((val, idx) => (
           <TourPackageCard
             key={idx}
             data_title={val.data_title}
@@ -289,6 +258,7 @@ const IndianCityPage = () => {
             multiple_images={val.multiple_images}
             from_city_id={val.from_city_id}
             attraction={val.attraction}
+            area_names={val.area_names}
           />
         ))
       ) : (
