@@ -1,0 +1,127 @@
+.client_logo_main_container {
+  width: 100%;
+  max-width: 1440px;
+  background-image: url(../../../assets/images/client_bg.png);
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  padding: 20px 25px;
+}
+
+.client_logo_content {
+  display: flex;
+  gap: 0px;
+  margin-top: 30px;
+  animation: marquee 20s linear infinite;
+  width: calc(200% + 40px);
+}
+
+.client_logo_main_container:hover .client_logo_content {
+  animation-play-state: paused;
+}
+
+.image_group_column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  height: 600px;
+  min-width: 240px;
+  position: relative;
+}
+
+.client_logo_item {
+  position: relative;
+  width: 240px;
+}
+
+.client_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.image_title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-align: center;
+  white-space: normal;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.client_logo_item:hover .image_title {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 768px) {
+  .client_logo_item {
+    width: 100px;
+    height: 100px;
+  }
+
+  .image_title {
+    font-size: 0.8rem;
+  }
+  .client_logo_content {
+    display: flex;
+    gap: 0px;
+    margin-top: 30px;
+    animation: marquee 20s linear infinite;
+    width: calc(800% + 40px);
+  }
+}
+
+/*  */
+.image_group_column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 600px;
+  width: 240px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.image_group_column.two-images {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  justify-content: space-between;
+}
+
+.client_logo_item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}
+
+.client_image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -80,6 +80,10 @@ import AboutServiceSectionUpdate from './../../pages/AboutPage/AboutServiceSecti
 import AboutServiceSectionTrace from './../../pages/AboutPage/AboutServiceSection/AboutServiceSectionTrace';
 import Inquire from "../../pages/Inquire/Inquire";
 import InquireTrace from "../../pages/Inquire/InquireTrace";
+import HomeMultipleImages from "../../pages/HomePage/HomeMultipleImages/HomeMultipleImages";
+import HomeMultipleImagesInsert from "../../pages/HomePage/HomeMultipleImages/HomeMultipleImagesInsert";
+import HomeMultipleImagesUpdate from "../../pages/HomePage/HomeMultipleImages/HomeMultipleImagesUpdate";
+import HomeMultipleImagesTrace from "../../pages/HomePage/HomeMultipleImages/HomeMultipleImagesTrace";
  
 
 const RouteComponents = () => {
@@ -118,6 +122,12 @@ const RouteComponents = () => {
           <Route path="/home-certificate/trace" element={<HomeCertificateTrace/>} />
 
           <Route path="/home-services" element={<HomeServices/>} />
+
+
+          <Route path="/home-multiple-images" element={<HomeMultipleImages/>} />
+          <Route path="/home-multiple-images/insert" element={<HomeMultipleImagesInsert/>} />
+          <Route path="/home-multiple-images/update" element={<HomeMultipleImagesUpdate/>} />
+          <Route path="/home-multiple-images/trace" element={<HomeMultipleImagesTrace/>} />
  
 
           {/* About Pages */}

@@ -10,7 +10,7 @@ import BE_URL from "../../../config";
 
 // Styled input field
 const BlueTextField = styled(TextField)({
-  color: "black", // <- Add this line
+  color: "black",
   "& label.Mui-focused": {
     color: "#1976d2",
   },

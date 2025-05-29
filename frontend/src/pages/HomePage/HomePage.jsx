@@ -13,14 +13,14 @@ const HomePage = () => {
     <div>
 
       <HomePackages />
-      {/* <HomeHeroSection />
+      <HomeHeroSection />
       <HomeCompassSpotlight />
       <HomeImages />
       <HomeServices />
       <HomeBestHotelDeals />
       <HomeTestimonial />
       <HomeCertificate />
-      <HomeBlogs /> */}
+      <HomeBlogs />
 
     </div>
   );

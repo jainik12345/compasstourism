@@ -501,7 +501,7 @@ const ContactForm = () => {
 
       {submitStatus && (
         <p
-          className={`mt-6 max-w-screen-xl mx-auto text-center font-semibold ${
+          className={`mt-6 max-w-screen-xl  text-[10px] md:text-[24px] mx-auto text-center font-semibold ${
             submitStatus.includes("successfully")
               ? "text-green-600"
               : "text-red-600"

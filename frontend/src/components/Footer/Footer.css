@@ -1,7 +1,6 @@
 .client_logo_main_container {
   width: 100%;
-  max-width: 1440px;
-  height: 150px;
+  max-width: 1440px; 
   background-image: url(../../../assets/images/client_bg.png);
   margin: 0 auto;
   overflow: hidden;
@@ -21,7 +20,6 @@
 
 .client_logo_content img {
   cursor: pointer;
-  
 }
 
 /* Pause animation on hover */
@@ -58,5 +56,5 @@
 @media (min-width: 481px) and (max-width: 767px) {
   .client_logo_content {
     justify-content: space-evenly;
-    }
+  }
 }

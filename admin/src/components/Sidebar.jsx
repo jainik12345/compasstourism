@@ -9,7 +9,7 @@ import {
   FaPhotoVideo,
   FaFileContract,
   FaHandshake,
-  FaWpforms ,
+  FaWpforms,
 } from "react-icons/fa";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { FaChevronRight } from "react-icons/fa";
@@ -35,6 +35,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         { path: "/home-testimonial", name: "Home Testimonial" },
         { path: "/home-certificate", name: "Home Certificate" },
         { path: "/home-services", name: "Home Services" },
+        { path: "/home-multiple-images", name: "Home Multiple Images" },
       ],
     },
     {
@@ -93,14 +94,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     setExpandedMenu((prev) => (prev === name ? "" : name));
   };
 
-  // const isActive = (item) => {
-  //   if (item.children && item.children.length > 0) {
-  //     return item.children.some((child) =>
-  //       location.pathname.startsWith(child.path)
-  //     );
-  //   }
-  //   return location.pathname.startsWith(item.path);
-  // };
   const isActive = (item) => {
     if (item.children && item.children.length > 0) {
       return item.children.some((child) =>
