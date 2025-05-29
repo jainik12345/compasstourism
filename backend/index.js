@@ -32,16 +32,17 @@ const homeImageSlider = require("./routes/home/homeImageSlider");
 const homeTestimonial = require("./routes/home/homeTestimonial");
 const homeBlog = require("./routes/home/homeBlog");
 const homeCertificate = require("./routes/home/homeCertificate");
+const homeMultipleImages = require("./routes/home/homeMultipleImages");
 const homeServices = require("./routes/home/homeServices");
 const aboutHeroSection = require("./routes/about/aboutHeroSection");
 const aboutImageSection = require("./routes/about/aboutImageSection");
 const aboutConsultation = require("./routes/about/aboutConsultation");
-const aboutServiceSection = require("./routes/about/aboutServiceSection")
+const aboutServiceSection = require("./routes/about/aboutServiceSection");
 const contatForm = require("./routes/contactFormDetails");
 const inquire = require("./routes/Inquire");
 const contactSectionAddress = require("./routes/ContactSectionAddress");
 const privatePolicy = require("./routes/privatePolicy");
-const termsConditions = require("./routes/termsConditions")
+const termsConditions = require("./routes/termsConditions");
 const ourAssociations = require("./routes/ourAssociations");
 const packageCountry = require("./routes/packages/packageCountry");
 const packageStateName = require("./routes/packages/packageStateName");
@@ -55,13 +56,14 @@ app.use("/homeImageSlider", homeImageSlider);
 app.use("/homeTestimonial", homeTestimonial);
 app.use("/homeBlog", homeBlog);
 app.use("/homeCertificate", homeCertificate);
+app.use("/homeMultipleImages", homeMultipleImages);
 app.use("/homeServices", homeServices);
 app.use("/aboutHeroSection", aboutHeroSection);
 app.use("/aboutImageSection", aboutImageSection);
 app.use("/aboutConsultation", aboutConsultation);
 app.use("/aboutServiceSection", aboutServiceSection);
 app.use("/private-policy", privatePolicy);
-app.use("/termsConditions", termsConditions)
+app.use("/termsConditions", termsConditions);
 app.use("/contact-form", contatForm);
 app.use("/inquire", inquire);
 app.use("/contact-section-address", contactSectionAddress);
@@ -90,6 +92,11 @@ app.use(
 );
 
 app.use(
+  "/Images/HomeImages/HomeMultipleImages",
+  express.static(path.join(__dirname, "Images/HomeImages/HomeMultipleImages"))
+);
+
+app.use(
   "/Images/HomeImages/HomeServices",
   express.static(path.join(__dirname, "Images/HomeImages/HomeServices"))
 );
@@ -106,7 +113,7 @@ app.use(
 app.use(
   "/Images/AboutImages/AboutServiceSection",
   express.static(path.join(__dirname, "Images/AboutImages/AboutServiceSection"))
-)
+);
 
 app.use(
   "/Images/OurAssociations",
@@ -133,10 +140,10 @@ app.use(
 );
 
 /**---------------Start Server ---------------*/
-app.listen(port, () => {
-  console.log(`Server Running On Port: ${port}`);
-});
-
-// app.listen(port, '0.0.0.0', () => {
+// app.listen(port, () => {
 //   console.log(`Server Running On Port: ${port}`);
 // });
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server Running On Port: ${port}`);
+});

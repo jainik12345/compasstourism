@@ -11,18 +11,17 @@ const transporter = nodemailer.createTransport({
 });
 
 // Get all active (not soft-deleted)
-exports.getInquire  = (req, res) => {
-  db.query(
-    "SELECT * FROM inquire WHERE deleted_at = 0",
-    (err, results) => {
-      if (err) return res.status(500).json({ error: err.message });
-      return res.status(200).json({ status: "success", data: results });
-    }
-  );
+exports.getInquire = (req, res) => {
+  db.query("SELECT * FROM inquire WHERE deleted_at = 0", (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    return res.status(200).json({ status: "success", data: results });
+  });
 };
 
 exports.insertInquire = (req, res) => {
-  const { firstname, lastname, email_id, mobile_number, message } = req.body;
+  // const { firstname, lastname, email_id, mobile_number, message } = req.body;
+  const { firstname, lastname, email_id, mobile_number, message, inquire } =
+    req.body;
 
   if (!firstname || !lastname || !email_id || !mobile_number) {
     return res.status(400).json({ error: "Missing required fields" });
@@ -50,7 +49,7 @@ exports.insertInquire = (req, res) => {
         <p><strong>Email:</strong> ${email_id}</p>
         <p><strong>Mobile Number:</strong> ${mobile_number}</p>
         <p><strong>Message:</strong> ${message}</p>
-         <p><strong>Inquire:</strong> ${inquire}</p>
+         <p><strong>Package Name :</strong> ${inquire}</p>
       `,
       };
 
@@ -130,11 +129,8 @@ exports.restoreInquire = (req, res) => {
 
 // Get trashed (soft-deleted) records
 exports.getTrashedInquire = (req, res) => {
-  db.query(
-    "SELECT * FROM inquire WHERE deleted_at = 1",
-    (err, results) => {
-      if (err) return res.status(500).json({ error: err.message });
-      return res.status(200).json({ status: "success", data: results });
-    }
-  );
+  db.query("SELECT * FROM inquire WHERE deleted_at = 1", (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    return res.status(200).json({ status: "success", data: results });
+  });
 };

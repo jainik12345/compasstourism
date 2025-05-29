@@ -1,6 +1,7 @@
 import { TextField, Button } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import BE_URL from "../../config";
 
 const InquiryNowPage = () => {
   const { InquiryNowSlag } = useParams();
@@ -34,15 +35,41 @@ const InquiryNowPage = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const HandleOnSubmit = (event) => {
+  const HandleOnSubmit = async (event) => {
     event.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
-    console.log("Form submitted", FormData);
-    HandleOnReset();
+    try {
+      const response = await fetch(`${BE_URL}/inquire`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstname: FormData.FirstName,
+          lastname: FormData.LastName,
+          email_id: FormData.Email,
+          mobile_number: FormData.Number,
+          message: FormData.Message,
+          inquire: FormData.PackageName,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Inquiry submitted successfully!");
+        HandleOnReset();
+      } else {
+        alert("Submission failed: " + data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while submitting the form.");
+    }
   };
 
   const HandleOnReset = () => {
@@ -209,7 +236,6 @@ const InquiryNowPage = () => {
               setFormData({ ...FormData, Message: e.target.value })
             }
           />
-
           <Button
             variant="outlined"
             type="submit"

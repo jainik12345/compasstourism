@@ -14,6 +14,7 @@ const HomePage = () => {
 
       <HomeHeroSection />
       <HomePackages />
+      <HomeHeroSection />
       <HomeCompassSpotlight />
       <HomeImages />
       <HomeServices />
