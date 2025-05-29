@@ -247,9 +247,9 @@ const IndianCityPage = () => {
         <h2 className="text-[1.5rem] font-bold ">
           {FormattedPath} Tour Packages
         </h2>
-        <p className="text-[1rem] text-gray-600 text-justify">
+        {/* <p className="text-[1rem] text-gray-600 text-justify">
           When in Goa, do as the Goans do; leave your watch at home.
-        </p>
+        </p> */}
       </div>
 
       <div className="max-w-screen-xl mx-auto flex justify-end items-center">

@@ -19,7 +19,7 @@ const cities = [
   "North East",
   "Rajasthan",
   "South India",
-  "Uttar Pradesh",  
+  "Uttar Pradesh",
   "Gujarat",
 ];
 
@@ -29,16 +29,33 @@ const Header = () => {
   const [hoverIndia, setHoverIndia] = useState(false);
   const [states, setStates] = useState([]);
 
+  // useEffect(() => {
+  //   const fetchStates = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${BE_URL}/packageStateName/country/1`
+  //       );
+  //       if (response.data.status === "success") {
+  //         setStates(response.data.data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch states:", error);
+  //     }
+  //   };
+
+  //   fetchStates();
+  // }, []);
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        // const response = await axios.get(`${BE_URL}/packageStateName`);
-
         const response = await axios.get(
           `${BE_URL}/packageStateName/country/1`
         );
         if (response.data.status === "success") {
-          setStates(response.data.data);
+          const filteredStates = response.data.data.filter(
+            (state) => state.package_state_name.toLowerCase() !== "gujarat"
+          );
+          setStates(filteredStates);
         }
       } catch (error) {
         console.error("Failed to fetch states:", error);
@@ -125,26 +142,12 @@ const Header = () => {
               </button>
 
               {/* DROPDOWN */}
-              {/* {hoverIndia && (
-                <div className="absolute -left-55 top-16 border bg-white shadow-lg  rounded-md grid grid-cols-2 gap-4 p-5 mt-0 w-[500px]">
-                  {cities.map((city, idx) => (
-                    <NavLink
-                      key={idx}
-                      // to={`/india/${city}`}
-                      to={`/tour/${city.toLowerCase().replace(/\s+/g, "-")}`}
-                      className="hover:text-red-600  whitespace-nowrap"
-                    >
-                      {city}
-                    </NavLink>
-                  ))}
-                </div>
-              )} */}
               {hoverIndia && (
                 <div className="absolute -left-55 top-16 border bg-white shadow-lg rounded-md grid grid-cols-2 gap-4 p-5 mt-0 w-[500px] z-50">
                   {states.map((state) => (
                     <NavLink
                       key={state.id}
-                      to={`/tours/${state.package_state_name
+                      to={`/tour/${state.package_state_name
                         .toLowerCase()
                         .replace(/\s+/g, "-")}`}
                       className="hover:text-red-600 whitespace-nowrap"
@@ -160,7 +163,7 @@ const Header = () => {
               { name: "Home", path: "/" },
               { name: "About Us", path: "/about-us" },
               { name: "Contact Us", path: "/contact-us" },
-              { name: "Gujarat", path: "/gujarat" },
+              { name: "Gujarat", path: "/tour/gujarat" },
               { name: "Statue Of Unity", path: "/unity" },
               { name: "Rann Utsav", path: "/rann-utsav" },
               { name: "Car Rental", path: "/car-rental" },

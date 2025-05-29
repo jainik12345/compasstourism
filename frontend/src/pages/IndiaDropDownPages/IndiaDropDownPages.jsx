@@ -1,102 +1,370 @@
+/* eslint-disable no-unused-vars */
+// import { useParams } from "react-router-dom";
+// import IndianCityPageBanner from "../IndianCityPage/IndianCityPageBanner/IndianCityPageBanner";
+// import { useState, useEffect } from "react";
+// import BgImg from "../../assets/images/637921896094475779.png";
+// import axios from "axios";
+// import BE_URL from "../../config";
+
+// const IndiaDropDownPages = () => {
+
+//   //  variable declaration
+
+//   const { StateNameSlag } = useParams();
+//   const [packages, setPackages] = useState([]);
+
+//   const FormattedPath = StateNameSlag.toLowerCase()
+//     .replace(/-/g, " ")
+//     .replace(/[^a-z0-9\s]/g, "")
+//     .replace(/\b\w/g, (char) => char.toUpperCase());
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         // Fetch all states
+//         const stateRes = await axios.get(`${BE_URL}/packageStateName`);
+//         const allStates = stateRes.data.data;
+
+//         // Find state that matches the slug
+//         const matchedState = allStates.find((state) => {
+//           const slug = state.package_state_name
+//             .toLowerCase()
+//             .replace(/\s+/g, "-");
+//           return slug === StateNameSlag;
+//         });
+
+//         if (matchedState) {
+//           const stateId = matchedState.id;
+
+//           // Fetch package details by stateId
+//           const packageRes = await axios.get(
+//             `${BE_URL}/packageDataDetails/byStateId/${stateId}`
+//           );
+//           console.log("Package Data:", packageRes.data.data);
+//           // Set this in state to render later
+//           setPackages(packageRes.data.data);
+//         } else {
+//           console.warn("No state matched slug:", StateNameSlag);
+//         }
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//       }
+//     };
+
+//     fetchData();
+//   }, [StateNameSlag]);
+
+//   return (
+//     <>
+//       <IndianCityPageBanner Heading={FormattedPath} BgImg={BgImg} />
+
+//       <div className="max-w-screen-xl mx-auto grid gap-4 py-10">
+//         {packages.map((item) => (
+//           <div key={item.id} className="border p-4 shadow rounded">
+//             <p>{item.data_description}</p>
+//             <img
+//               src={`${BE_URL}/Images/PackageImages/PackageDataDetails/${item.single_image}`}
+//               alt={item.data_title}
+//               className="w-60 h-auto mt-2"
+//             />
+//           </div>
+//         ))}
+//       </div>
+//     </>
+//   );
+// };
+
+// export default IndiaDropDownPages;
+
+/** Area Name is Not fetch Other All is fetch...*/
+
+// import { useParams } from "react-router-dom";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
+// import IndianCityPageBanner from "../IndianCityPage/IndianCityPageBanner/IndianCityPageBanner";
+// import TourPackageCard from "../../components/CommanSections/TourPackageCard/TourPackageCard";
+// import FormControl from "@mui/material/FormControl";
+// import InputLabel from "@mui/material/InputLabel";
+// import Select from "@mui/material/Select";
+// import MenuItem from "@mui/material/MenuItem";
+// import BgImg from "../../assets/images/637921896094475779.png";
+// import BE_URL from "../../config";
+
+// const IndiaDropDownPages = () => {
+//   const { StateNameSlag } = useParams();
+//   const [packages, setPackages] = useState([]);
+//   const [stateImage, setStateImage] = useState(null);
+//   const [city, setCity] = useState("ALL");
+//   const [stateDescription, setStateDescription] = useState("");
+
+//   const FormattedPath = StateNameSlag.toLowerCase()
+//     .replace(/-/g, " ")
+//     .replace(/[^a-z0-9\s]/g, "")
+//     .replace(/\b\w/g, (char) => char.toUpperCase());
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         const stateRes = await axios.get(`${BE_URL}/packageStateName`);
+//         const allStates = stateRes.data.data;
+
+//         const matchedState = allStates.find((state) => {
+//           const slug = state.package_state_name
+//             .toLowerCase()
+//             .replace(/\s+/g, "-");
+//           return slug === StateNameSlag;
+//         });
+
+//         if (matchedState) {
+//           const stateId = matchedState.id;
+//           setStateDescription(matchedState.description);
+//           setStateImage(matchedState.image);
+//           const packageRes = await axios.get(
+//             `${BE_URL}/packageDataDetails/byStateId/${stateId}`
+//           );
+//           setPackages(packageRes.data.data || []);
+//         } else {
+//           console.warn("No state matched slug:", StateNameSlag);
+//         }
+//       } catch (error) {
+//         console.error("Error fetching data:", error);
+//       }
+//     };
+
+//     fetchData();
+//   }, [StateNameSlag]);
+
+//   const handleChange = (event) => {
+//     setCity(event.target.value);
+//   };
+
+//   return (
+//     <>
+//       <IndianCityPageBanner
+//         Heading={FormattedPath}
+//         BgImg={
+//           stateImage
+//             ? `${BE_URL}/Images/PackageImages/PackageStateImages/${stateImage}`
+//             : BgImg
+//         }
+//       />
+
+//       <div className="package-details-container flex flex-col gap-5 py-10 md:px-10 px-5 max-w-screen-xl mx-auto">
+//         <h2 className="text-[2rem] font-semibold">
+//           {FormattedPath} Tour Packages
+//         </h2>
+//         {stateDescription && (
+//           <p className="text-[1rem] text-gray-600 text-justify">
+//             {stateDescription}
+//           </p>
+//         )}
+//       </div>
+
+//       <div className="max-w-screen-xl mx-auto flex justify-end items-center mb-5">
+//         <FormControl className="w-50">
+//           <InputLabel id="city-select-label">Cities</InputLabel>
+//           <Select
+//             labelId="city-select-label"
+//             id="cities"
+//             value={city}
+//             label="Cities"
+//             name="Cities"
+//             onChange={handleChange}
+//           >
+//             <MenuItem value="ALL">All</MenuItem>
+//             {["Goa", "Delhi", "Mumbai", "Bangalore", "Kolkata"].map(
+//               (cityName, index) => (
+//                 <MenuItem key={index} value={cityName}>
+//                   {cityName}
+//                 </MenuItem>
+//               )
+//             )}
+//           </Select>
+//         </FormControl>
+
+//       </div>
+
+//       {packages.length > 0 ? (
+//         packages.map((val, idx) => (
+//           <TourPackageCard
+//             key={idx}
+//             data_title={val.data_title}
+//             single_image={`${BE_URL}/Images/PackageImages/PackageDataDetails/${val.single_image}`}
+//             night={val.night}
+//             day={val.day}
+//             data_description={val.data_description}
+//             inclusions={val.inclusions}
+//             multiple_images={val.multiple_images}
+//             from_city_id={val.from_city_id}
+//             attraction={val.attraction}
+//           />
+//         ))
+//       ) : (
+//         <p className="text-center text-gray-500 mt-10">
+//           No packages found for {FormattedPath}.
+//         </p>
+//       )}
+//     </>
+//   );
+// };
+
+// export default IndiaDropDownPages;
+
+//** Tra Area Name fetching*/
+
 import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import IndianCityPageBanner from "../IndianCityPage/IndianCityPageBanner/IndianCityPageBanner";
+import TourPackageCard from "../../components/CommanSections/TourPackageCard/TourPackageCard";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
-import { useState, useEffect } from "react";
 import MenuItem from "@mui/material/MenuItem";
-import BgImg from "../../assets/images/637921896094475779.png"
-import axios from "axios";
+import BgImg from "../../assets/images/637921896094475779.png";
 import BE_URL from "../../config";
 
-
 const IndiaDropDownPages = () => {
+  const { StateNameSlag } = useParams();
+  const [packages, setPackages] = useState([]);
+  const [stateImage, setStateImage] = useState(null);
+  const [city, setCity] = useState("ALL");
+  const [stateDescription, setStateDescription] = useState("");
 
-    //  variable declaration
+  const FormattedPath = StateNameSlag.toLowerCase()
+    .replace(/-/g, " ")
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 
-    const { StateNameSlag } = useParams();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const stateRes = await axios.get(`${BE_URL}/packageStateName`);
+        const allStates = stateRes.data.data;
 
-    const FormattedPath = StateNameSlag
-        .toLowerCase()
-        .replace(/-/g, " ")
-        .replace(/[^a-z0-9\s]/g, "")
-        .replace(/\b\w/g, (char) => char.toUpperCase());
+        const matchedState = allStates.find((state) => {
+          const slug = state.package_state_name
+            .toLowerCase()
+            .replace(/\s+/g, "-");
+          return slug === StateNameSlag;
+        });
 
+        if (matchedState) {
+          const stateId = matchedState.id;
+          setStateDescription(matchedState.description);
+          setStateImage(matchedState.image);
 
-    const [city, setCity] = useState("ALL");
+          const packageRes = await axios.get(
+            `${BE_URL}/packageDataDetails/byStateId/${stateId}`
+          );
+          const packageList = packageRes.data.data || [];
 
+          const packagesWithAreas = await Promise.all(
+            packageRes.data.data.map(async (pkg) => {
+              try {
+                const areaRes = await axios.get(
+                  `${BE_URL}/packageDataAreaName/area-names/${pkg.id}`
+                );
+                const areaNames = areaRes.data.data.map(
+                  (area) => area.package_area_name
+                );
+                return {
+                  ...pkg,
+                  area_names: areaNames,
+                };
+              } catch (err) {
+                console.error("Error fetching area names for package:", pkg.id);
+                return { ...pkg, area_names: [] };
+              }
+            })
+          );
 
-    // Handle change function for selector 
+          setPackages(packagesWithAreas);
 
-    const handleChange = (event) => {
-        setCity(event.target.value);
+          setPackages(packagesWithAreas);
+        } else {
+          console.warn("No state matched slug:", StateNameSlag);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
+    fetchData();
+  }, [StateNameSlag]);
 
-    //fetching of this page 
+  const handleChange = (event) => {
+    setCity(event.target.value);
+  };
 
-
-    useEffect(() => {
-
-        const FetchIndiaDropDownData = async () => {
-
-            try {
-
-                // 1. Fetch all package names
-                const FetchResponse = await axios.get(`${BE_URL}/packageStateName`);
-                const allPackages = FetchResponse.data.data;
-
-                console.log(allPackages)
-                
-                
-            } catch (error) {
-                console.error("Error fetching package data:", error);
-
-            }
-
+  return (
+    <>
+      <IndianCityPageBanner
+        Heading={FormattedPath}
+        BgImg={
+          stateImage
+            ? `${BE_URL}/Images/PackageImages/PackageStateImages/${stateImage}`
+            : BgImg
         }
+      />
 
-        FetchIndiaDropDownData()
-    })
+      <div className="package-details-container flex flex-col gap-5 py-10 md:px-10 px-5 max-w-screen-xl mx-auto">
+        <h2 className="text-[2rem] font-semibold">
+          {FormattedPath} Tour Packages
+        </h2>
+        {stateDescription && (
+          <p className="text-[1rem] text-gray-600 text-justify">
+            {stateDescription}
+          </p>
+        )}
+      </div>
 
+      <div className="max-w-screen-xl mx-auto flex justify-end items-center mb-5">
+        <FormControl className="w-50">
+          <InputLabel id="city-select-label">Cities</InputLabel>
+          <Select
+            labelId="city-select-label"
+            id="cities"
+            value={city}
+            label="Cities"
+            name="Cities"
+            onChange={handleChange}
+          >
+            <MenuItem value="ALL">All</MenuItem>
+            {["Goa", "Delhi", "Mumbai", "Bangalore", "Kolkata"].map(
+              (cityName, index) => (
+                <MenuItem key={index} value={cityName}>
+                  {cityName}
+                </MenuItem>
+              )
+            )}
+          </Select>
+        </FormControl>
+      </div>
 
-    return (
+      {packages.length > 0 ? (
+        packages.map((val, idx) => (
+          <TourPackageCard
+            key={idx}
+            data_title={val.data_title}
+            single_image={`${BE_URL}/Images/PackageImages/PackageDataDetails/${val.single_image}`}
+            night={val.night}
+            day={val.day}
+            data_description={val.data_description}
+            inclusions={val.inclusions}
+            multiple_images={val.multiple_images}
+            from_city_id={val.from_city_id}
+            attraction={val.attraction}
+            area_names={val.area_names}
+          />
+        ))
+      ) : (
+        <p className="text-center text-gray-500 mt-10">
+          No packages found for {FormattedPath}.
+        </p>
+      )}
+    </>
+  );
+};
 
-        <>
-
-            <IndianCityPageBanner Heading={FormattedPath} BgImg={BgImg} />
-
-
-            <div className="max-w-screen-xl mx-auto flex justify-end items-center py-10">
-                <FormControl className="w-50">
-                    <InputLabel id="city-select-label">Cities</InputLabel>
-                    <Select
-                        labelId="city-select-label"
-                        id="cities"
-                        value={city}
-                        label="Cities"
-                        name="Cities"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value="ALL">All</MenuItem>
-
-                        {["Goa", "Delhi", "Mumbai", "Bangalore", "Kolkata"].map(
-                            (cityName, index) => (
-                                <MenuItem key={index} value={cityName}>
-                                    {cityName}
-                                </MenuItem>
-                            )
-                        )}
-                    </Select>
-                </FormControl>
-            </div>
-
-
-        </>
-
-
-
-    )
-}
-
-export default IndiaDropDownPages
+export default IndiaDropDownPages;
