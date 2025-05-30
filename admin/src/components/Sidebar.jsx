@@ -10,6 +10,7 @@ import {
   FaFileContract,
   FaHandshake,
   FaWpforms,
+  FaHotel,
 } from "react-icons/fa";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { FaChevronRight } from "react-icons/fa";
@@ -87,6 +88,69 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       path: "/inquire",
       name: "Inquire",
       icon: <FaWpforms />,
+    },
+    // {
+    //   path: "/gujarat-tourism",
+    //   name: "Gujarat Tourism",
+    //   icon: <FaPhotoVideo />,
+    //   children: [
+    //     {
+    //       path: "/gujarat-tourism-package-name",
+    //       name: "Gujarat Tourism Name",
+    //     },
+    //     {
+    //       path: "/gujarat-tourism-package-data",
+    //       name: "Gujarat Tourism Data",
+    //     },
+    //   ],
+    // },
+    {
+      path: "/hotels",
+      name: "Hotels",
+      icon: <FaHotel />,
+      children: [
+        {
+          path: "/hotels-city-name",
+          name: "Hotels City Name",
+        },
+        {
+          path: "/hotels-name",
+          name: "Hotels Name",
+        },
+        {
+          path: "/hotels-multiple-images",
+          name: "Hotels Multiple Images",
+        },
+
+        {
+          path: "/hotels-about",
+          name: "Hotels About",
+        },
+        {
+          path: "/hotels-facilities",
+          name: "Hotels Facilities",
+        },
+        {
+          path: "/hotels-facilitie-details",
+          name: "Hotels Facilitie Details",
+        },
+        {
+          path: "/hotels-testimonial",
+          name: "Hotels Testimonial",
+        },
+        {
+          path: "/hotels-rules",
+          name: "Hotels Rules",
+        },
+        {
+          path: "/hotels-rooms-category-name",
+          name: "Hotels Rooms Category Name",
+        },
+        {
+          path: "/hotels-room-category-name-details",
+          name: "Hotels Room Category Name Details",
+        },
+      ],
     },
   ];
 

@@ -84,6 +84,46 @@ import HomeMultipleImages from "../../pages/HomePage/HomeMultipleImages/HomeMult
 import HomeMultipleImagesInsert from "../../pages/HomePage/HomeMultipleImages/HomeMultipleImagesInsert";
 import HomeMultipleImagesUpdate from "../../pages/HomePage/HomeMultipleImages/HomeMultipleImagesUpdate";
 import HomeMultipleImagesTrace from "../../pages/HomePage/HomeMultipleImages/HomeMultipleImagesTrace";
+import HotelsCityName from './../../pages/Hotels/HotelsCityName/HotelsCityName';
+import HotelsCityNameInsert from './../../pages/Hotels/HotelsCityName/HotelsCityNameInsert';
+import HotelsCityNameUpdate from './../../pages/Hotels/HotelsCityName/HotelsCityNameUpdate';
+import HotelsCityNameTrace from './../../pages/Hotels/HotelsCityName/HotelsCityNameTrace';
+import HotelsName from './../../pages/Hotels/HotelsName/HotelsName';
+import HotelsMultipleImages from './../../pages/Hotels/HotelsMultipleImages/HotelsMultipleImages';
+import HotelsAbout from './../../pages/Hotels/HotelsAbout/HotelsAbout';
+import HotelsFacilities from './../../pages/Hotels/HotelsFacilities/HotelsFacilities';
+import HotelsFacilitiesDetails from './../../pages/Hotels/HotelsFacilitiesDetails/HotelsFacilitiesDetails';
+import HotelsTestimonial from "../../pages/Hotels/HotelsTestimonial/HotelsTestimonial";
+import HotelsRules from './../../pages/Hotels/HotelsRules/HotelsRules';
+import HotelsRoomsCategoryName from './../../pages/Hotels/HotelsRoomsCategoryName/HotelsRoomsCategoryName';
+import HotelsRoomsCategoryNameDetails from './../../pages/Hotels/HotelsRoomsCategoryNameDetails/HotelsRoomsCategoryNameDetails';
+import HotelsNameInsert from './../../pages/Hotels/HotelsName/HotelsNameInsert';
+import HotelsNameUpdate from './../../pages/Hotels/HotelsName/HotelsNameUpdate';
+import HotelsNameTrace from './../../pages/Hotels/HotelsName/HotelsNameTrace';
+import HotelsMultipleImagesInsert from './../../pages/Hotels/HotelsMultipleImages/HotelsMultipleImagesInsert';
+import HotelsMultipleImagesUpdate from './../../pages/Hotels/HotelsMultipleImages/HotelsMultipleImagesUpdate';
+import HotelsMultipleImagesTrace from './../../pages/Hotels/HotelsMultipleImages/HotelsMultipleImagesTrace';
+import HotelsAboutUpdate from './../../pages/Hotels/HotelsAbout/HotelsAboutUpdate';
+import HotelsAboutTrace from './../../pages/Hotels/HotelsAbout/HotelsAboutTrace';
+import HotelsAboutInsert from "../../pages/Hotels/HotelsAbout/HotelsAboutInsert";
+import HotelsFacilitiesInsert from './../../pages/Hotels/HotelsFacilities/HotelsFacilitiesInsert';
+import HotelsFacilitiesUpdate from './../../pages/Hotels/HotelsFacilities/HotelsFacilitiesUpdate';
+import HotelsFacilitiesTrace from './../../pages/Hotels/HotelsFacilities/HotelsFacilitiesTrace';
+import HotelsFacilitiesDetailsInsert from './../../pages/Hotels/HotelsFacilitiesDetails/HotelsFacilitiesDetailsInsert';
+import HotelsFacilitiesDetailsUpdate from './../../pages/Hotels/HotelsFacilitiesDetails/HotelsFacilitiesDetailsUpdate';
+import HotelsFacilitiesDetailsTrace from './../../pages/Hotels/HotelsFacilitiesDetails/HotelsFacilitiesDetailsTrace';
+import HotelsTestimonialInsert from './../../pages/Hotels/HotelsTestimonial/HotelsTestimonialInsert';
+import HotelsTestimonialUpdate from './../../pages/Hotels/HotelsTestimonial/HotelsTestimonialUpdate';
+import HotelsTestimonialTrace from './../../pages/Hotels/HotelsTestimonial/HotelsTestimonialTrace';
+import HotelsRulesInsert from './../../pages/Hotels/HotelsRules/HotelsRulesInsert';
+import HotelsRulesUpdate from './../../pages/Hotels/HotelsRules/HotelsRulesUpdate';
+import HotelsRulesTrace from './../../pages/Hotels/HotelsRules/HotelsRulesTrace';
+import HotelsRoomsCategoryNameInsert from './../../pages/Hotels/HotelsRoomsCategoryName/HotelsRoomsCategoryNameInsert';
+import HotelsRoomsCategoryNameUpdate from './../../pages/Hotels/HotelsRoomsCategoryName/HotelsRoomsCategoryNameUpdate';
+import HotelsRoomsCategoryNameTrace from './../../pages/Hotels/HotelsRoomsCategoryName/HotelsRoomsCategoryNameTrace';
+import HotelsRoomsCategoryNameDetailsInsert from './../../pages/Hotels/HotelsRoomsCategoryNameDetails/HotelsRoomsCategoryNameDetailsInsert';
+import HotelsRoomsCategoryNameDetailsUpdate from './../../pages/Hotels/HotelsRoomsCategoryNameDetails/HotelsRoomsCategoryNameDetailsUpdate';
+import HotelsRoomsCategoryNameDetailsTrace from './../../pages/Hotels/HotelsRoomsCategoryNameDetails/HotelsRoomsCategoryNameDetailsTrace';
  
 
 const RouteComponents = () => {
@@ -98,7 +138,9 @@ const RouteComponents = () => {
         {/* Redirect / to /admin */}
         <Route path="/" element={<Navigate to="/admin" replace />} />
         <Route path="/" element={<MainLayout />}>
-          {/* Home Pages */}
+
+
+          {/* -----------------------------------------------------Home Pages----------------------------------------------------- */}
 
           <Route path="/home-page" element={<HomePage/>} />
           <Route path="/home-image-slider" element={<HomeImageSlider/>} />
@@ -130,7 +172,7 @@ const RouteComponents = () => {
           <Route path="/home-multiple-images/trace" element={<HomeMultipleImagesTrace/>} />
  
 
-          {/* About Pages */}
+          {/*------------------------------------------------- About Pages -------------------------------------------------*/}
 
           <Route path="/about-hero-section" element={<AboutHeroSection/>} />
           <Route path="/about-hero-section/insert" element={<AboutHeroSectionInsert/>} />
@@ -149,7 +191,7 @@ const RouteComponents = () => {
           <Route path="/about-service-section/update" element={<AboutServiceSectionUpdate/>} />
           <Route path="/about-service-section/trace" element={<AboutServiceSectionTrace/>} />
 
-          {/* Contact Pages */}
+          {/*------------------------------------------------- Contact Pages------------------------------------------------- */}
 
           <Route path="/contact-form-details" element={<ContactFormDetails/>} />
           <Route path="/contact-form-details/trace" element={<ContactFormDetailsTrace/>} />
@@ -160,14 +202,14 @@ const RouteComponents = () => {
           <Route path="/contact-section-address/update" element={<ContactSectionAddressUpdate/>} />
           <Route path="/contact-section-address/trace" element={<ContactSectionAddressTrace/>} />
 
-          {/* Private Policy */}
+          {/*------------------------------------------------- Private Policy -------------------------------------------------*/}
 
           <Route path="/private-policy" element={<PrivatePolicy/>} />
           <Route path="/private-policy/insert" element={<PrivatePolicyInsert/>} />
           <Route path="/private-policy/update" element={<PrivatePolicyUpdate/>} />
           <Route path="/private-policy/trace" element={<PrivatePolicyTrace/>} />
 
-          {/* Terms & Conditions */}
+          {/*------------------------------------------------- Terms & Conditions------------------------------------------------- */}
 
           <Route path="/terms-conditions" element={<TermsConditions/>} />
           <Route path="/terms-conditions/insert" element={<TermsConditionsInsert/>} />
@@ -175,7 +217,7 @@ const RouteComponents = () => {
           <Route path="/terms-conditions/trace" element={<TermsConditionsTrace/>} />
 
 
-          {/* Our Associations */}
+          {/* -------------------------------------------------Our Associations---------------------------------------------------- */}
 
           <Route path="/our-associations" element={<OurAssociations/>} />
           <Route path="/our-associations/insert" element={<OurAssociationsInsert/>} />
@@ -183,7 +225,7 @@ const RouteComponents = () => {
           <Route path="/our-associations/trace" element={<OurAssociationsTrace/>} />
 
 
-           {/* Packages */}
+           {/*------------------------------------------------- Packages---------------------------------------------------------- */}
 
            <Route path="/package-country" element={<PackageCountry/>} />
            <Route path="/package-country/insert" element={<PackageCountryInsert/>} />
@@ -221,6 +263,69 @@ const RouteComponents = () => {
 
            <Route path="/inquire" element={<Inquire/>} />
            <Route path="/inquire/trace" element={<InquireTrace/>} />
+
+
+           {/*------------------------------------------------- Hotels All Sections-------------------------------------------*/}
+
+           <Route path="hotels-city-name" element={<HotelsCityName/>} />
+           <Route path="hotels-city-name/insert" element={<HotelsCityNameInsert/>} />
+           <Route path="hotels-city-name/update" element={<HotelsCityNameUpdate/>} />
+           <Route path="hotels-city-name/trace" element={<HotelsCityNameTrace/>} />
+
+
+           <Route path="hotels-name" element={<HotelsName/>} />
+           <Route path="hotels-name/insert" element={<HotelsNameInsert/>} />
+           <Route path="hotels-name/update" element={<HotelsNameUpdate/>} />
+           <Route path="hotels-name/trace" element={<HotelsNameTrace/>} />
+
+
+           <Route path="hotels-multiple-images" element={<HotelsMultipleImages/>} />
+           <Route path="hotels-multiple-images/insert" element={<HotelsMultipleImagesInsert/>} />
+           <Route path="hotels-multiple-images/update" element={<HotelsMultipleImagesUpdate/>} />
+           <Route path="hotels-multiple-images/trace" element={<HotelsMultipleImagesTrace/>} />
+
+
+           <Route path="hotels-about" element={<HotelsAbout/>} />
+           <Route path="hotels-about/insert" element={<HotelsAboutInsert/>} />
+           <Route path="hotels-about/update" element={<HotelsAboutUpdate/>} />
+           <Route path="hotels-about/trace" element={<HotelsAboutTrace/>} />
+
+
+           <Route path="hotels-facilities" element={<HotelsFacilities/>} />
+           <Route path="hotels-facilities/insert" element={<HotelsFacilitiesInsert/>} />
+           <Route path="hotels-facilities/update" element={<HotelsFacilitiesUpdate/>} />
+           <Route path="hotels-facilities/trace" element={<HotelsFacilitiesTrace/>} />
+
+
+           <Route path="hotels-facilitie-details" element={<HotelsFacilitiesDetails/>} />
+           <Route path="hotels-facilitie-details/insert" element={<HotelsFacilitiesDetailsInsert/>} />
+           <Route path="hotels-facilitie-details/update" element={<HotelsFacilitiesDetailsUpdate/>} />
+           <Route path="hotels-facilitie-details/trace" element={<HotelsFacilitiesDetailsTrace/>} />
+
+
+           <Route path="hotels-testimonial" element={<HotelsTestimonial/>} />
+           <Route path="hotels-testimonial/insert" element={<HotelsTestimonialInsert/>} />
+           <Route path="hotels-testimonial/update" element={<HotelsTestimonialUpdate/>} />
+           <Route path="hotels-testimonial/trace" element={<HotelsTestimonialTrace/>} />
+
+
+           <Route path="hotels-rules" element={<HotelsRules/>} />
+           <Route path="hotels-rules/insert" element={<HotelsRulesInsert/>} />
+           <Route path="hotels-rules/update" element={<HotelsRulesUpdate/>} />
+           <Route path="hotels-rules/trace" element={<HotelsRulesTrace/>} />
+
+
+           <Route path="hotels-rooms-category-name" element={<HotelsRoomsCategoryName/>} />
+           <Route path="hotels-rooms-category-name/insert" element={<HotelsRoomsCategoryNameInsert/>} />
+           <Route path="hotels-rooms-category-name/update" element={<HotelsRoomsCategoryNameUpdate/>} />
+           <Route path="hotels-rooms-category-name/trace" element={<HotelsRoomsCategoryNameTrace/>} />
+
+
+           <Route path="hotels-room-category-name-details" element={<HotelsRoomsCategoryNameDetails/>} />
+           <Route path="hotels-room-category-name-details/insert" element={<HotelsRoomsCategoryNameDetailsInsert/>} />
+           <Route path="hotels-room-category-name-details/update" element={<HotelsRoomsCategoryNameDetailsUpdate/>} />
+           <Route path="hotels-room-category-name-details/trace" element={<HotelsRoomsCategoryNameDetailsTrace/>} />
+
 
         </Route>
       </Routes>

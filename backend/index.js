@@ -28,12 +28,16 @@ app.get("/", (req, res) => {
 /**Call Routes.. */
 
 const admin = require("./routes/admin");
+/*---------------------------------------------------Home Section--------------------------------------------------- */
+
 const homeImageSlider = require("./routes/home/homeImageSlider");
 const homeTestimonial = require("./routes/home/homeTestimonial");
 const homeBlog = require("./routes/home/homeBlog");
 const homeCertificate = require("./routes/home/homeCertificate");
 const homeMultipleImages = require("./routes/home/homeMultipleImages");
 const homeServices = require("./routes/home/homeServices");
+/*---------------------------------------------------About Section--------------------------------------------------- */
+
 const aboutHeroSection = require("./routes/about/aboutHeroSection");
 const aboutImageSection = require("./routes/about/aboutImageSection");
 const aboutConsultation = require("./routes/about/aboutConsultation");
@@ -44,20 +48,31 @@ const contactSectionAddress = require("./routes/ContactSectionAddress");
 const privatePolicy = require("./routes/privatePolicy");
 const termsConditions = require("./routes/termsConditions");
 const ourAssociations = require("./routes/ourAssociations");
+/*---------------------------------------------------Package Section--------------------------------------------------- */
+
 const packageCountry = require("./routes/packages/packageCountry");
 const packageStateName = require("./routes/packages/packageStateName");
 const packageAreaName = require("./routes/packages/packageAreaName");
 const packageName = require("./routes/packages/packageName");
 const packageDataDetails = require("./routes/packages/packageDataDetails");
 const packageDataAreaName = require("./routes/packages/packageDataAreaName");
+/*---------------------------------------------------Hotels Section--------------------------------------------------- */
+
+const hotelCityName = require("./routes/hotel/hotelCityName")
+const hotelName = require("./routes/hotel/hotelName");
+
 
 app.use("/admin", admin);
+/*---------------------------------------------------Home Section--------------------------------------------------- */
+
 app.use("/homeImageSlider", homeImageSlider);
 app.use("/homeTestimonial", homeTestimonial);
 app.use("/homeBlog", homeBlog);
 app.use("/homeCertificate", homeCertificate);
 app.use("/homeMultipleImages", homeMultipleImages);
 app.use("/homeServices", homeServices);
+/*---------------------------------------------------About Section--------------------------------------------------- */
+
 app.use("/aboutHeroSection", aboutHeroSection);
 app.use("/aboutImageSection", aboutImageSection);
 app.use("/aboutConsultation", aboutConsultation);
@@ -68,12 +83,18 @@ app.use("/contact-form", contatForm);
 app.use("/inquire", inquire);
 app.use("/contact-section-address", contactSectionAddress);
 app.use("/ourAssociations", ourAssociations);
-app.use("/packageCountry", packageCountry); 
+/*---------------------------------------------------Package Section--------------------------------------------------- */
+
+app.use("/packageCountry", packageCountry);
 app.use("/packageStateName", packageStateName);
 app.use("/packageAreaName", packageAreaName);
 app.use("/packageName", packageName);
 app.use("/packageDataDetails", packageDataDetails);
 app.use("/packageDataAreaName", packageDataAreaName);
+/*---------------------------------------------------Hotels Section--------------------------------------------------- */
+
+app.use("/hotelCityName", hotelCityName)
+app.use("/hotelName", hotelName);
 
 // Static Images
 app.use(
@@ -137,6 +158,13 @@ app.use(
 app.use(
   "/Images/PackageImages/PackageNameImages",
   express.static(path.join(__dirname, "Images/PackageImages/PackageNameImages"))
+);
+
+/**-------------- */
+
+app.use(
+  "/Images/HotelImages/HotelsNameImage",
+  express.static(path.join(__dirname, "Images/HotelImages/HotelsNameImage"))
 );
 
 /**---------------Start Server ---------------*/
