@@ -17,74 +17,17 @@ const GujaratDropDownPage = () => {
 
   const { GujaratPackageName } = useParams();
 
-  //foramting path 
+  //foramting path
 
   const FormattedPath = GujaratPackageName.toLowerCase().replace(/-/g, " ").replace(/[^a-z0-9\s]/g, "").replace(/\b\w/g, (char) => char.toUpperCase());
 
-  //useStates declaring 
+  //useStates declaring
   const [packages, setPackages] = useState([]);
   const [stateImage, setStateImage] = useState(null);
   const [city, setCity] = useState("ALL");
   const [stateDescription, setStateDescription] = useState("");
 
-  //fetching api data
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const stateRes = await axios.get(`${BE_URL}/packageStateName`);
-  //       const allStates = stateRes.data.data;
-
-  //       const matchedState = allStates.find((state) => {
-  //         const slug = state.package_state_name
-  //           .toLowerCase()
-  //           .replace(/\s+/g, "-");
-  //         return slug === GujaratPackageName;
-  //       });
-
-  //       if (matchedState) {
-  //         const stateId = matchedState.id;
-  //         setStateDescription(matchedState.description);
-  //         setStateImage(matchedState.image);
-
-  //         const packageRes = await axios.get(
-  //           `${BE_URL}/packageDataDetails/byStateId/${stateId}`
-  //         );
-  //         const packageList = packageRes.data.data || [];
-
-  //         const packagesWithAreas = await Promise.all(
-  //           packageRes.data.data.map(async (pkg) => {
-  //             try {
-  //               const areaRes = await axios.get(
-  //                 `${BE_URL}/packageDataAreaName/area-names/${pkg.id}`
-  //               );
-  //               const areaNames = areaRes.data.data.map(
-  //                 (area) => area.package_area_name
-  //               );
-  //               return {
-  //                 ...pkg,
-  //                 area_names: areaNames,
-  //               };
-  //             } catch (err) {
-  //               console.error("Error fetching area names for package:", pkg.id);
-  //               return { ...pkg, area_names: [] };
-  //             }
-  //           })
-  //         );
-
-  //         setPackages(packagesWithAreas);
-
-  //         setPackages(packagesWithAreas);
-  //       } else {
-  //         console.warn("No state matched slug:", GujaratPackageName);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [GujaratPackageName]);
+  // fetching api data
 
   useEffect(() => {
 
@@ -92,31 +35,47 @@ const GujaratDropDownPage = () => {
 
       try {
 
-        // fetching data by state names
+        // 1. Fetch all state names
+
         const stateRes = await axios.get(`${BE_URL}/packageStateName`);
+        const stateList = stateRes.data.data || [];
 
-        //adding data in variable
+        //2. Find "Gujarat" state data
 
-        const FormatedstateResData = stateRes.data.data;
+        const MatchStates = stateList.find((state) => {
+          const slug = state.package_state_name.toLowerCase().replace(/\s+/g, "-");
+          return slug === "gujarat";
+        });
 
-        //finding which state is matching with gujarat 
+        // 3. Fetch all Gujarat packages
 
-        const MatchState = FormatedstateResData.find((state) => {
+        const AllGujaratPackages = await axios.get(`${BE_URL}/packageDataDetails/byStateId/${MatchStates.id}`);
+        const AllGujaratPackagesList = AllGujaratPackages.data.data;
 
-          //returing the purticular object which matched with gujarat state
+        //4. Fetch all packages 
 
-          return state.package_state_name.toLowerCase().replace(/\s+/g, "-") === "gujarat"
+        const AllPackagesNames = await axios.get(`${BE_URL}/packageName`);
+        const AllPackagesNamesList = AllPackagesNames.data.data;
+
+        //5.Match the routing with All pacakges name from step 4
+
+        const MatchPackageName = AllPackagesNamesList && AllPackagesNamesList.find((pkg) => {
+
+          return pkg.package_name.toLowerCase().replace(/\s+/g, "-") === GujaratPackageName.toLowerCase().replace(/\s+/g, "-");
 
         })
 
-        //getting only those packages which has state name gujarat
+        setStateImage(MatchPackageName.image);
 
-        const FetchGujaratPackagesData = await axios.get(`${BE_URL}/packageDataDetails/byStateId/${MatchState.id}`)
+        //6. Filter Gujarat Packages by Package_name_id
 
-        const FetchPacakgesNamesData = await axios.get(`${BE_URL}/packageName`);
+        const FilteredPackages = AllGujaratPackagesList.filter((pkg) =>
 
-        console.log("FetchGujaratPackagesData:- ", FetchGujaratPackagesData)
-        console.log("FetchPacakgesNamesData:- ", FetchPacakgesNamesData)
+          pkg.package_name_id === MatchPackageName.id
+
+        )
+
+        setPackages(FilteredPackages);
 
       } catch (error) {
 
@@ -128,21 +87,18 @@ const GujaratDropDownPage = () => {
 
     FetchGujaratDropwDownInnerPageData();
 
-  }, [])
+  }, [GujaratPackageName])
 
   const handleChange = (event) => {
     setCity(event.target.value);
   };
 
+
   return (
     <>
       <IndianCityPageBanner
         Heading={FormattedPath}
-        BgImg={
-          stateImage
-            ? `${BE_URL}/Images/PackageImages/PackageStateImages/${stateImage}`
-            : BgImg
-        }
+        BgImg={`${BE_URL}/Images/PackageImages/PackageStateImages/${stateImage}`}
       />
 
       <div className="package-details-container flex flex-col gap-5 py-10 md:px-10 px-5 max-w-screen-xl mx-auto">
@@ -209,4 +165,4 @@ const GujaratDropDownPage = () => {
   )
 }
 
-export default GujaratDropDownPage
+export default GujaratDropDownPage;
