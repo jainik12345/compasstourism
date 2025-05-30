@@ -140,10 +140,10 @@ app.use(
 );
 
 /**---------------Start Server ---------------*/
-// app.listen(port, () => {
-//   console.log(`Server Running On Port: ${port}`);
-// });
-
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, () => {
   console.log(`Server Running On Port: ${port}`);
 });
+
+// app.listen(port, '0.0.0.0', () => {
+//   console.log(`Server Running On Port: ${port}`);
+// });
