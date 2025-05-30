@@ -60,12 +60,6 @@ const Header = () => {
 
   }, []);
 
-
-  gujaratPackages.map((val) => {
-
-    console.log(val.package_name)
-  });
-
   return (
     <header className="w-full top-0 left-0 sticky z-50">
       {/* Top Bar */}

@@ -47,6 +47,9 @@ const GujaratDropDownPage = () => {
           return slug === "gujarat";
         });
 
+        setStateImage(MatchStates.image);
+        setStateDescription(MatchStates.description);
+
         // 3. Fetch all Gujarat packages
 
         const AllGujaratPackages = await axios.get(`${BE_URL}/packageDataDetails/byStateId/${MatchStates.id}`);
@@ -64,8 +67,6 @@ const GujaratDropDownPage = () => {
           return pkg.package_name.toLowerCase().replace(/\s+/g, "-") === GujaratPackageName.toLowerCase().replace(/\s+/g, "-");
 
         })
-
-        setStateImage(MatchPackageName.image);
 
         //6. Filter Gujarat Packages by Package_name_id
 
@@ -94,11 +95,16 @@ const GujaratDropDownPage = () => {
   };
 
 
+
   return (
     <>
       <IndianCityPageBanner
         Heading={FormattedPath}
-        BgImg={`${BE_URL}/Images/PackageImages/PackageStateImages/${stateImage}`}
+        BgImg={
+          stateImage
+            ? `${BE_URL}/Images/PackageImages/PackageStateImages/${stateImage}`
+            : BgImg
+        }
       />
 
       <div className="package-details-container flex flex-col gap-5 py-10 md:px-10 px-5 max-w-screen-xl mx-auto">
