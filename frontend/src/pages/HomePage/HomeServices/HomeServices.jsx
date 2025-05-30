@@ -29,7 +29,7 @@ const HomeServices = () => {
 
       } catch (error) {
 
-        console.log("Unable To Fetch The Data Of Home Service Section:- ", erro)
+        console.log("Unable To Fetch The Data Of Home Service Section:- ", error)
 
       }
 
@@ -37,7 +37,7 @@ const HomeServices = () => {
 
     FetchHomeSerivceData();
 
-  })
+  },[])
 
   return (
 

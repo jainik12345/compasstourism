@@ -65,7 +65,7 @@ import HomeBlogInnerPage from "../../pages/HomePage/HomeBlogs/HomeBlogInnerPage/
 import HomePackagesCardInnerPage from "../../pages/HomePage/HomePackages/HomePackagesCardInnerPage/HomePackagesCardInnerPage";
 import IndiaDropDownPages from "../../pages/IndiaDropDownPages/IndiaDropDownPages";
 import InquiryNowPage from "../../pages/InquiryNowPage/InquiryNowPage";
-
+import GujaratDropDownPage from "../../pages/GujaratDropDownPage/GujaratDropDownPage";
 
 const WebsitePage = ({ children }) => {
   return (
@@ -112,6 +112,17 @@ const RouteComponent = () => {
           element={
             <WebsitePage>
               <IndianCityPage />
+            </WebsitePage>
+          }
+        />
+
+        {/*✅ Dynamic route for Gujarat Packages */}
+
+        <Route
+          path="/gujarat-tours/:GujaratPackageName"
+          element={
+            <WebsitePage>
+              <GujaratDropDownPage />
             </WebsitePage>
           }
         />

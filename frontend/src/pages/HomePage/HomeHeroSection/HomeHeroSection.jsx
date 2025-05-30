@@ -39,7 +39,7 @@
 //   }, []);
 
 
-//   const ImgTestimonialArr = [
+//   const HeroPackagesTestimonial = [
 //     { ImgUrl: SliderImg1, ImgTitle: "Weekend Getaways" },
 //     { ImgUrl: SliderImg2, ImgTitle: "Offbeat Holidays" },
 //     { ImgUrl: SliderImg1, ImgTitle: "Spiritual Holidays" },
@@ -67,7 +67,7 @@
 //     return () => window.removeEventListener("resize", handleResize);
 //   }, []);
 
-//   const totalPages = Math.ceil(ImgTestimonialArr.length / cardsPerPage);
+//   const totalPages = Math.ceil(HeroPackagesTestimonial.length / cardsPerPage);
 
 //   // Drag logic
 //   const isDragging = useRef(false);
@@ -115,7 +115,7 @@
 //   const pages = Array.from({ length: totalPages }, (_, pageIndex) => {
 //     const start = pageIndex * cardsPerPage;
 //     const end = start + cardsPerPage;
-//     return ImgTestimonialArr.slice(start, end);
+//     return HeroPackagesTestimonial.slice(start, end);
 //   });
 
 //   return (
@@ -194,8 +194,6 @@
 
 
 import { useRef, useState, useEffect } from "react";
-import SliderImg1 from "../../../assets/images/637921896094475779.png";
-import SliderImg2 from "../../../assets/images/637921896896248600.png";
 import ImageSlider from "../../../components/CommanSections/ImageSlider/ImageSlider";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoIosArrowBack } from "react-icons/io";
@@ -204,10 +202,25 @@ import axios from "axios";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-
 const HomeHeroSection = () => {
 
   const [SliderImgArr, setSliderImgArr] = useState([]);
+
+  const [HeroPackagesTestimonial, setHeroPackagesTestimonial] = useState();
+
+  const { cityName } = useParams();
+
+
+  // const FormattedPath = cityName.toLowerCase().replace(/-/g, " ").replace(/[^a-z0-9\s]/g, "").replace(/\b\w/g, (char) => char.toUpperCase()); // capitalizes each word
+
+
+  // const FormattedPath = cityName
+  // ? cityName.toLowerCase()
+  //     .replace(/-/g, " ")
+  //     .replace(/[^a-z0-9\s]/g, "")
+  //     .replace(/\b\w/g, (char) => char.toUpperCase())
+  // : "";
+
 
 
   //fetching this data for hero image slider 
@@ -248,7 +261,11 @@ const HomeHeroSection = () => {
 
         const Response = await axios.get(`${BE_URL}/packageName`);
 
-        console.log("Response:- ", Response.data.data);
+        if (Response.status === 200) {
+
+          setHeroPackagesTestimonial(Response.data.data);
+
+        }
 
       } catch (error) {
 
@@ -259,21 +276,21 @@ const HomeHeroSection = () => {
 
     FetchHeroPackagesData();
 
-  })
+  }, []);
 
-
-  const ImgTestimonialArr = [
-    { ImgUrl: SliderImg1, ImgTitle: "Weekend Getaways" },
-    { ImgUrl: SliderImg2, ImgTitle: "Offbeat Holidays" },
-    { ImgUrl: SliderImg1, ImgTitle: "Spiritual Holidays" },
-    { ImgUrl: SliderImg2, ImgTitle: "Festival Tours" },
-    { ImgUrl: SliderImg1, ImgTitle: "Indian Holidays" },
-    { ImgUrl: SliderImg2, ImgTitle: "Wildlife Safaris" },
-    { ImgUrl: SliderImg1, ImgTitle: "Luxury Stays" },
-    { ImgUrl: SliderImg2, ImgTitle: "Adventure Trips" },
-    { ImgUrl: SliderImg1, ImgTitle: "Beach Vacations" },
-    { ImgUrl: SliderImg2, ImgTitle: "Mountain Escapes" },
-  ];
+  
+  // const HeroPackagesTestimonial = [
+  //   { ImgUrl: SliderImg1, ImgTitle: "Weekend Getaways" },
+  //   { ImgUrl: SliderImg2, ImgTitle: "Offbeat Holidays" },
+  //   { ImgUrl: SliderImg1, ImgTitle: "Spiritual Holidays" },
+  //   { ImgUrl: SliderImg2, ImgTitle: "Festival Tours" },
+  //   { ImgUrl: SliderImg1, ImgTitle: "Indian Holidays" },
+  //   { ImgUrl: SliderImg2, ImgTitle: "Wildlife Safaris" },
+  //   { ImgUrl: SliderImg1, ImgTitle: "Luxury Stays" },
+  //   { ImgUrl: SliderImg2, ImgTitle: "Adventure Trips" },
+  //   { ImgUrl: SliderImg1, ImgTitle: "Beach Vacations" },
+  //   { ImgUrl: SliderImg2, ImgTitle: "Mountain Escapes" },
+  // ];
 
   const containerRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
@@ -290,7 +307,8 @@ const HomeHeroSection = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const totalPages = Math.ceil(ImgTestimonialArr.length / cardsPerPage);
+  // const totalPages = Math.ceil(HeroPackagesTestimonial.length / cardsPerPage);
+  const totalPages = Math.ceil((HeroPackagesTestimonial?.length || 0) / cardsPerPage);
 
   // Drag logic
   const isDragging = useRef(false);
@@ -338,8 +356,10 @@ const HomeHeroSection = () => {
   const pages = Array.from({ length: totalPages }, (_, pageIndex) => {
     const start = pageIndex * cardsPerPage;
     const end = start + cardsPerPage;
-    return ImgTestimonialArr.slice(start, end);
+    return HeroPackagesTestimonial.slice(start, end);
   });
+
+
 
   return (
     <div className="carousel-section relative mb-40">
@@ -382,23 +402,33 @@ const HomeHeroSection = () => {
                 : "grid-cols-5"
                 }`}>
 
-              {page.map((item, index) => (
-                <NavLink
-                  to={""}
-                  key={index}
-                  className=" flex w-fit p-2 flex-col items-center bg-white rounded-2xl "
-                >
-                  <img
-                    src={item.ImgUrl}
-                    draggable={false}
-                    alt={item.ImgTitle}
-                    className="lg:w-[180px] md:[100px] w-full lg:h-[110px] md:h-[100px]  h-50 rounded-2xl object-cover mb-2 select-none"
-                  />
-                  <p className="text-center font-semibold text-sm select-none">
-                    {item.ImgTitle}
-                  </p>
-                </NavLink>
-              ))}
+              {page.map((item, index) => {
+                const FormattedPath = item.package_name
+                  ?.toLowerCase()
+                  .replace(/-/g, " ")
+                  .replace(/[^a-z0-9\s]/g, "")
+                  .replace(/\b\w/g, (char) => char.toUpperCase()) || "";
+
+                return (
+                  <NavLink
+                    to={`/tours/${FormattedPath}`}
+                    key={index}
+                    className="flex w-fit p-2 flex-col items-center bg-white rounded-2xl"
+                  >
+                    <img
+                      src={`${BE_URL}/Images/PackageImages/PackageNameImages/${item.image}`}
+                      draggable={false}
+                      alt={item.ImgTitle}
+                      className="lg:w-[180px] md:[100px] w-full lg:h-[110px] md:h-[100px]  h-50 rounded-2xl object-cover mb-2 select-none"
+                    />
+                    <p className="text-center font-semibold text-sm select-none">
+                      {item.package_name}
+                    </p>
+                  </NavLink>
+                );
+              })}
+
+
             </div>
           ))}
         </div>
