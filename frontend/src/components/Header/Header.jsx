@@ -579,6 +579,42 @@ const Header = () => {
   //   fetchStates();
   // }, []);
 
+  // useEffect(() => {
+  //   const fetchStatesAndPackages = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${BE_URL}/packageStateName/country/1`
+  //       );
+  //       if (response.data.status === "success") {
+  //         const allStates = response.data.data;
+  //         const gujarat = allStates.find(
+  //           (state) => state.package_state_name.toLowerCase() === "gujarat"
+  //         );
+
+  //         // Save other states excluding Gujarat
+  //         const filteredStates = allStates.filter(
+  //           (state) => state.package_state_name.toLowerCase() !== "gujarat"
+  //         );
+  //         setStates(filteredStates);
+
+  //         // Fetch Gujarat-specific packages
+  //         if (gujarat) {
+  //           const pkgRes = await axios.get(
+  //             `${BE_URL}/packageDataDetails/byStateId/${gujarat.id}`
+  //           );
+  //           if (pkgRes.data.status === "success") {
+  //             setGujaratPackages(pkgRes.data.data);
+  //           }
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch state or Gujarat package data:", error);
+  //     }
+  //   };
+
+  //   fetchStatesAndPackages();
+  // }, []);
+
   useEffect(() => {
     const fetchStatesAndPackages = async () => {
       try {
@@ -587,28 +623,27 @@ const Header = () => {
         );
         if (response.data.status === "success") {
           const allStates = response.data.data;
-          const gujarat = allStates.find(
-            (state) => state.package_state_name.toLowerCase() === "gujarat"
-          );
 
-          // Save other states excluding Gujarat
+          // Filter out Gujarat from the India dropdown
           const filteredStates = allStates.filter(
             (state) => state.package_state_name.toLowerCase() !== "gujarat"
           );
           setStates(filteredStates);
 
-          // Fetch Gujarat-specific packages
-          if (gujarat) {
-            const pkgRes = await axios.get(
-              `${BE_URL}/packageDataDetails/byStateId/${gujarat.id}`
-            );
-            if (pkgRes.data.status === "success") {
-              setGujaratPackages(pkgRes.data.data);
-            }
+          // Fetch Gujarat Package Names from package_name table (assuming API exists)
+          const gujaratPkgNamesRes = await axios.get(
+            `${BE_URL}/packageName/by-state/1`
+          );
+
+          if (gujaratPkgNamesRes.data.status === "success") {
+            setGujaratPackages(gujaratPkgNamesRes.data.data);
           }
         }
       } catch (error) {
-        console.error("Failed to fetch state or Gujarat package data:", error);
+        console.error(
+          "Failed to fetch states or Gujarat package names:",
+          error
+        );
       }
     };
 
@@ -744,13 +779,13 @@ const Header = () => {
                   {gujaratPackages.map((item) => (
                     <NavLink
                       key={item.id}
-                      to={`/gujarat-tours/${item.data_title
+                      to={`/gujarat-tours/${item.package_name
                         .toLowerCase()
                         .replace(/\s+/g, "-")}`}
                       className="hover:text-red-600 py-1"
                       onClick={() => setHoverGujarat(false)}
                     >
-                      {item.data_title}
+                      {item.package_name}
                     </NavLink>
                   ))}
                 </div>

@@ -158,5 +158,24 @@ exports.getTrashedPackagesByCountryId = (req, res) => {
 };
 
 
+// Get package_name entries mapped to a specific state (like Gujarat)
+exports.getPackageNamesByStateId = (req, res) => {
+  const { stateId } = req.params;
+
+  const query = `
+    SELECT pn.id, pn.package_name
+    FROM package_name pn
+    JOIN package_data_details pdd ON pn.id = pdd.package_name_id
+    WHERE pdd.state_id = ? AND pn.deleted_at = 0 AND pdd.deleted_at = 0
+    GROUP BY pn.id
+  `;
+
+  db.query(query, [stateId], (err, results) => {
+    if (err) return res.status(500).json({ error: err.message });
+    res.status(200).json({ status: "success", data: results });
+  });
+};
+
+
 
  

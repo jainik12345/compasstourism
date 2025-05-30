@@ -13,6 +13,8 @@ router.get(
 );
 router.put("/restore/:id", controller.restorePackage);
 
+router.get("/by-state/:stateId", controller.getPackageNamesByStateId);
+
 
  
 
