@@ -253,8 +253,6 @@
 
 // export default Header;
 
-
-
 // import { useState, useEffect } from "react";
 // import { NavLink } from "react-router-dom";
 // import { FaFacebookF, FaTwitter, FaInstagram, FaBars } from "react-icons/fa";
@@ -279,8 +277,6 @@
 //   "Uttar Pradesh",
 //   "Gujarat",
 // ];
-
-
 
 // const gujaratDropdown = [
 //   { name: "Regular Tour Package", slug: "Regular Tour Package" },
@@ -519,10 +515,6 @@
 
 // export default Header;
 
-
-
-
-
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { FaFacebookF, FaTwitter, FaInstagram, FaBars } from "react-icons/fa";
@@ -548,15 +540,14 @@ const cities = [
   "Gujarat",
 ];
 
-
-
-const gujaratDropdown = [
-  { name: "Regular Tour Package", slug: "Regular Tour Package" },
-  { name: "Offbeat Tour Package", slug: "Offbeat Tour Package" },
-  {
-    name: "Fairs and Festival Tour Package", slug: "Fairs and Festival Tour Package"
-  },
-];
+// const gujaratDropdown = [
+//   { name: "Regular Tour Package", slug: "Regular Tour Package" },
+//   { name: "Offbeat Tour Package", slug: "Offbeat Tour Package" },
+//   {
+//     name: "Fairs and Festival Tour Package",
+//     slug: "Fairs and Festival Tour Package",
+//   },
+// ];
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -566,22 +557,62 @@ const Header = () => {
   const [hoverGujarat, setHoverGujarat] = useState(false);
   const [states, setStates] = useState([]);
 
+  const [gujaratPackages, setGujaratPackages] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchStates = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${BE_URL}/packageStateName/country/1`
+  //       );
+  //       if (response.data.status === "success") {
+  //         const filteredStates = response.data.data.filter(
+  //           (state) => state.package_state_name.toLowerCase() !== "gujarat"
+  //         );
+  //         setStates(filteredStates);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch states:", error);
+  //     }
+  //   };
+
+  //   fetchStates();
+  // }, []);
+
   useEffect(() => {
-    const fetchStates = async () => {
+    const fetchStatesAndPackages = async () => {
       try {
-        const response = await axios.get(`${BE_URL}/packageStateName/country/1`);
+        const response = await axios.get(
+          `${BE_URL}/packageStateName/country/1`
+        );
         if (response.data.status === "success") {
-          const filteredStates = response.data.data.filter(
+          const allStates = response.data.data;
+          const gujarat = allStates.find(
+            (state) => state.package_state_name.toLowerCase() === "gujarat"
+          );
+
+          // Save other states excluding Gujarat
+          const filteredStates = allStates.filter(
             (state) => state.package_state_name.toLowerCase() !== "gujarat"
           );
           setStates(filteredStates);
+
+          // Fetch Gujarat-specific packages
+          if (gujarat) {
+            const pkgRes = await axios.get(
+              `${BE_URL}/packageDataDetails/byStateId/${gujarat.id}`
+            );
+            if (pkgRes.data.status === "success") {
+              setGujaratPackages(pkgRes.data.data);
+            }
+          }
         }
       } catch (error) {
-        console.error("Failed to fetch states:", error);
+        console.error("Failed to fetch state or Gujarat package data:", error);
       }
     };
 
-    fetchStates();
+    fetchStatesAndPackages();
   }, []);
 
   return (
@@ -589,13 +620,44 @@ const Header = () => {
       {/* Top Bar */}
       <div className="bg-orange-500 text-white py-2 px-4 flex justify-between items-center text-sm">
         <div className="flex space-x-4">
-          <a href="https://facebook.com" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition"><FaFacebookF size={22} /></a>
-          <a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-blue-300 transition"><FaTwitter size={22} /></a>
-          <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-red-600 transition"><FaInstagram size={22} /></a>
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-blue-400 transition"
+          >
+            <FaFacebookF size={22} />
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-blue-300 transition"
+          >
+            <FaTwitter size={22} />
+          </a>
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:text-red-600 transition"
+          >
+            <FaInstagram size={22} />
+          </a>
         </div>
         <div className="space-x-4">
-          <a href="tel:+918347622244" className="hover:text-gray-200 transition">+91 83476 22244</a>
-          <a href="tel:+919723450099" className="hover:text-gray-200 transition">+91 97234 50099</a>
+          <a
+            href="tel:+918347622244"
+            className="hover:text-gray-200 transition"
+          >
+            +91 83476 22244
+          </a>
+          <a
+            href="tel:+919723450099"
+            className="hover:text-gray-200 transition"
+          >
+            +91 97234 50099
+          </a>
         </div>
       </div>
 
@@ -619,7 +681,11 @@ const Header = () => {
             >
               <button className="flex cursor-pointer items-center gap-1 py-5 transition-all hover:text-red-600">
                 India
-                <span className={`transition-transform duration-500 ${hoverIndia ? "rotate-[360deg]" : ""}`}>
+                <span
+                  className={`transition-transform duration-500 ${
+                    hoverIndia ? "rotate-[360deg]" : ""
+                  }`}
+                >
                   {hoverIndia ? <IoChevronUpSharp /> : <IoChevronDownSharp />}
                 </span>
               </button>
@@ -628,7 +694,9 @@ const Header = () => {
                   {states.map((state) => (
                     <NavLink
                       key={state.id}
-                      to={`/tour/${state.package_state_name.toLowerCase().replace(/\s+/g, "-")}`}
+                      to={`/tour/${state.package_state_name
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
                       className="hover:text-red-600 whitespace-nowrap"
                       onClick={() => setHoverIndia(false)}
                     >
@@ -647,20 +715,42 @@ const Header = () => {
             >
               <button className="flex cursor-pointer items-center gap-1 py-5 transition-all hover:text-red-600">
                 Gujarat
-                <span className={`transition-transform duration-500 ${hoverGujarat ? "rotate-[360deg]" : ""}`}>
+                <span
+                  className={`transition-transform duration-500 ${
+                    hoverGujarat ? "rotate-[360deg]" : ""
+                  }`}
+                >
                   {hoverGujarat ? <IoChevronUpSharp /> : <IoChevronDownSharp />}
                 </span>
               </button>
-              {hoverGujarat && (
+              {/* {hoverGujarat && (
                 <div className="absolute top-16 left-0 border bg-white shadow-lg rounded-md flex flex-col p-4 w-[250px] z-50">
                   {gujaratDropdown.map((item, index) => (
                     <NavLink
                       key={index}
-                      to={`/gujarat-tours/${item.slug.toLowerCase().replace(/\s+/g, "-")}`}
+                      to={`/gujarat-tours/${item.slug
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
                       className="hover:text-red-600 py-1"
                       onClick={() => setHoverGujarat(false)}
                     >
                       {item.name}
+                    </NavLink>
+                  ))}
+                </div>
+              )} */}
+              {hoverGujarat && (
+                <div className="absolute top-16 left-0 border bg-white shadow-lg rounded-md flex flex-col p-4 w-[250px] z-50">
+                  {gujaratPackages.map((item) => (
+                    <NavLink
+                      key={item.id}
+                      to={`/gujarat-tours/${item.data_title
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`}
+                      className="hover:text-red-600 py-1"
+                      onClick={() => setHoverGujarat(false)}
+                    >
+                      {item.data_title}
                     </NavLink>
                   ))}
                 </div>
@@ -680,9 +770,10 @@ const Header = () => {
                 key={path}
                 to={path}
                 className={({ isActive }) =>
-                  `relative py-5 transition-all ${isActive
-                    ? "text-red-600 font-semibold border-b-4 border-red-600"
-                    : "hover:text-red-600"
+                  `relative py-5 transition-all ${
+                    isActive
+                      ? "text-red-600 font-semibold border-b-4 border-red-600"
+                      : "hover:text-red-600"
                   } after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 hover:after:w-full after:transition-all after:duration-300`
                 }
               >
@@ -758,12 +849,14 @@ const Header = () => {
                 <span>Gujarat</span>
                 {showMobileGujarat ? <FaMinus /> : <FaPlus />}
               </div>
-              {showMobileGujarat && (
+              {/* {showMobileGujarat && (
                 <ul className="pl-4 mt-1 space-y-1">
                   {gujaratDropdown.map((item, idx) => (
                     <li key={idx}>
                       <NavLink
-                        to={`/gujarat-tours/${item.slug.toLowerCase().replace(/\s+/g, "-")}`}
+                        to={`/gujarat-tours/${item.slug
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
                         className="block"
                         onClick={() => {
                           setMenuOpen(false);
@@ -771,6 +864,26 @@ const Header = () => {
                         }}
                       >
                         {item.name}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              )} */}
+              {showMobileGujarat && (
+                <ul className="pl-4 mt-1 space-y-1">
+                  {gujaratPackages.map((item) => (
+                    <li key={item.id}>
+                      <NavLink
+                        to={`/gujarat-tours/${item.data_title
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")}`}
+                        className="block"
+                        onClick={() => {
+                          setMenuOpen(false);
+                          setShowMobileGujarat(false);
+                        }}
+                      >
+                        {item.data_title}
                       </NavLink>
                     </li>
                   ))}
