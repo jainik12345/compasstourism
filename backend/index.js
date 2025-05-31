@@ -58,9 +58,16 @@ const packageDataDetails = require("./routes/packages/packageDataDetails");
 const packageDataAreaName = require("./routes/packages/packageDataAreaName");
 /*---------------------------------------------------Hotels Section--------------------------------------------------- */
 
-const hotelCityName = require("./routes/hotel/hotelCityName")
+const hotelCityName = require("./routes/hotel/hotelCityName");
 const hotelName = require("./routes/hotel/hotelName");
-
+const hotelMultipleImages = require("./routes/hotel/hotelMultipleImages");
+const hotelAbout = require("./routes/hotel/hotelAbout");
+const hotelFacilities = require("./routes/hotel/hotelFacilities");
+const hotelFacilitiesDetails = require("./routes/hotel/hotelFacilitiesDetails");
+const hotelTestimonial = require("./routes/hotel/hotelTestimonial");
+const hotelRules = require("./routes/hotel/hotelRules");
+const hotelRoomCategoryName = require("./routes/hotel/hotelRoomCategoryName");
+const hotelRoomCategoryNameDetails = require("./routes/hotel/hotelRoomCategoryNameDetails");
 
 app.use("/admin", admin);
 /*---------------------------------------------------Home Section--------------------------------------------------- */
@@ -93,8 +100,16 @@ app.use("/packageDataDetails", packageDataDetails);
 app.use("/packageDataAreaName", packageDataAreaName);
 /*---------------------------------------------------Hotels Section--------------------------------------------------- */
 
-app.use("/hotelCityName", hotelCityName)
+app.use("/hotelCityName", hotelCityName);
 app.use("/hotelName", hotelName);
+app.use("/hotelMultipleImages", hotelMultipleImages);
+app.use("/hotelAbout", hotelAbout);
+app.use("/hotelFacilities", hotelFacilities);
+app.use("/hotelFacilitiesDetails", hotelFacilitiesDetails);
+app.use("/hotelTestimonial", hotelTestimonial);
+app.use("/hotelRules", hotelRules);
+app.use("/hotelRoomCategoryName", hotelRoomCategoryName);
+app.use("/hotelRoomCategoryNameDetails", hotelRoomCategoryNameDetails);
 
 // Static Images
 app.use(
@@ -165,6 +180,23 @@ app.use(
 app.use(
   "/Images/HotelImages/HotelsNameImage",
   express.static(path.join(__dirname, "Images/HotelImages/HotelsNameImage"))
+);
+
+app.use(
+  "/Images/HotelImages/HotelMultipleImages",
+  express.static(path.join(__dirname, "Images/HotelImages/HotelMultipleImages"))
+);
+
+app.use(
+  "/Images/HotelImages/HotelFacilities",
+  express.static(path.join(__dirname, "Images/HotelImages/HotelFacilities"))
+);
+
+app.use(
+  "/Images/HotelImages/RoomCategoryDetailsImages",
+  express.static(
+    path.join(__dirname, "Images/HotelImages/RoomCategoryDetailsImages")
+  )
 );
 
 /**---------------Start Server ---------------*/

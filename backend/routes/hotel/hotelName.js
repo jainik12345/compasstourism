@@ -9,7 +9,6 @@ router.delete("/:id", controller.deleteHotel);
 
 router.patch("/restore/:id", controller.restoreHotel);
 router.get("/city/:cityId", controller.getHotelsByCityId);
-router.get("/trashed/city/:cityId", controller.getTrashedHotelsByCityId);
-// router.get("/data/:id", controller.getHotelById);
+router.get("/trashed/city/:cityId", controller.getTrashedHotelsByCityId); 
 
 module.exports = router;
