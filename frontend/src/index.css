@@ -12,13 +12,12 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
-
-
 @theme {
   --color-orange-color: #f68121;
-  --color-bg-color: #E6F2F8;
-  --color-blog-color: #2C3E50;
-  --color-hoverblog-color:#9A404C;
+  --color-bg-color: #e6f2f8;
+  --color-bghotel-color: #2291e6;
+  --color-blog-color: #2c3e50;
+  --color-hoverblog-color: #9a404c;
   --font-text-font: "Quicksand", sans-serif;
   --font-title-font: "Dancing Script", cursive;
   --font-heading-font: "Yellowtail", cursive;

@@ -66,6 +66,8 @@ import HomePackagesCardInnerPage from "../../pages/HomePage/HomePackages/HomePac
 import IndiaDropDownPages from "../../pages/IndiaDropDownPages/IndiaDropDownPages";
 import InquiryNowPage from "../../pages/InquiryNowPage/InquiryNowPage";
 import GujaratDropDownPage from "../../pages/GujaratDropDownPage/GujaratDropDownPage";
+import HotelPage from "../../pages/HotelPage/HotelPage";
+import HotelAfterSearchNames from "../../pages/HotelPage/HotelAfterSearchNames/HotelAfterSearchNames";
 
 const WebsitePage = ({ children }) => {
   return (
@@ -106,6 +108,36 @@ const RouteComponent = () => {
             </WebsitePage>
           }
         />
+
+        <Route
+          path="/hotel"
+          element={
+            <WebsitePage>
+              <HotelPage />
+            </WebsitePage>
+          }
+        />
+
+        {/* <Route
+          path="/hotel/:hotelNameSlag"
+          element={
+            <WebsitePage>
+              <HotelAfterSearchNames />
+            </WebsitePage>
+          }
+        /> */}
+
+        <Route
+          path="/hotel/:hotelNameSlag"
+          element={
+            <WebsitePage>
+                <HotelAfterSearchNames />
+            </WebsitePage>
+          }
+        />
+
+
+
         {/* ✅ Dynamic route for Indian cities */}
         <Route
           path="/tours/:cityName"
