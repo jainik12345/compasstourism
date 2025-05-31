@@ -66,6 +66,8 @@ import HomePackagesCardInnerPage from "../../pages/HomePage/HomePackages/HomePac
 import IndiaDropDownPages from "../../pages/IndiaDropDownPages/IndiaDropDownPages";
 import InquiryNowPage from "../../pages/InquiryNowPage/InquiryNowPage";
 import GujaratDropDownPage from "../../pages/GujaratDropDownPage/GujaratDropDownPage";
+import DummyMainPage from "../../pages/Dummy/DummyMainPage";
+import DummyDetils from "../../pages/Dummy/DummyDetils/DummyDetils";
 
 const WebsitePage = ({ children }) => {
   return (
@@ -182,6 +184,8 @@ const RouteComponent = () => {
             </WebsitePage>
           }
         />
+        <Route path="/dummy" element={<DummyMainPage/>} />
+        <Route path="/dummy-details" element={<DummyDetils/>} />
       </Routes>
     </>
   );
